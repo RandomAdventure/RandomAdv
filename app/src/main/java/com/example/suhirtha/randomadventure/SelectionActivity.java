@@ -23,14 +23,15 @@ public class SelectionActivity extends AppCompatActivity {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(this, SelectionActivity.class, RandomizeActivity.class);
+                Intent i = new Intent(view.getContext(), RandomizeActivity.class);
             }
         });
 
         mDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i = new Intent(this, SelectionActivity.class, ResultActivity.class);
+                Intent i = new Intent(this, SelectionActivity.class, ResultActivity.class);
+                startActivity(i);
             }
         });
 
