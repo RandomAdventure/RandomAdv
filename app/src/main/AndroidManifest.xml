@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.RandomizeActivity"></activity>
+        <activity android:name=".ResultActivity"></activity>
     </application>
 
 </manifest>

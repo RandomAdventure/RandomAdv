@@ -19,18 +19,20 @@ public class SelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selection);
 
         mSearch = findViewById(R.id.btnSearch);
+        mDone = findViewById(R.id.btnDone);
 
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), RandomizeActivity.class);
+                startActivity(i);
             }
         });
 
         mDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(this, SelectionActivity.class, ResultActivity.class);
+                Intent i = new Intent(view.getContext(), ResultActivity.class);
                 startActivity(i);
             }
         });
