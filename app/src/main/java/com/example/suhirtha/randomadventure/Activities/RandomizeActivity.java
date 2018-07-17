@@ -22,7 +22,6 @@ public class RandomizeActivity extends AppCompatActivity {
     int generator;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
