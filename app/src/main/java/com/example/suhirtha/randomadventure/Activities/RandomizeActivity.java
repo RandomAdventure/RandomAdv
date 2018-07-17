@@ -40,25 +40,26 @@ public class RandomizeActivity extends AppCompatActivity {
         generator = random.nextInt(5); //randomly generates a number between 1 and 5
         spinWheel.setRotation(0);
         switch (generator){
-            case 0:
+            case 4:
                 spinWheel.startAnimation(clockwise); //1440 + 36
                 Log.d("RandomizeActivity", generator + "Selected");
                 break;
-            case 1:
+            case 3:
                 spinWheel.startAnimation(clockwise1);//1440 + +108
                 Log.d("RandomizeActivity", generator + "Selected");
+                break;
             case 2:
                 spinWheel.startAnimation(clockwise2); //1440 + 180
                 Log.d("RandomizeActivity", generator + "Selected");
-            break;
-            case 3:
+                break;
+            case 1:
                 spinWheel.startAnimation(clockwise3); //1440 + 252
                 Log.d("RandomizeActivity", generator + "Selected");
-            break;
-            case 4:
+                break;
+            case 0:
                 spinWheel.startAnimation(clockwise4); //1440 + 324
                 Log.d("RandomizeActivity", generator + "Selected");
-            break;
+                break;
         }
 
     }
