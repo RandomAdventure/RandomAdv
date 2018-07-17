@@ -17,7 +17,7 @@ public class RandomizeActivity extends AppCompatActivity {
     Button rButton;
     ImageView spinWheel;
     Context context;
-    Animation clockwise, clockwise1, clockwise2,clockwise3, clockwise4;
+    Animation clockwise, clockwise1, clockwise2 ,clockwise3, clockwise4;
     Random random = new Random();
     int generator;
 
@@ -42,22 +42,22 @@ public class RandomizeActivity extends AppCompatActivity {
         spinWheel.setRotation(0);
         switch (generator){
             case 0:
-                spinWheel.startAnimation(clockwise); //1440 + 30
+                spinWheel.startAnimation(clockwise); //1440 + 36
                 Log.d("RandomizeActivity", generator + "Selected");
                 break;
             case 1:
-                spinWheel.startAnimation(clockwise1);//1440 + +100
+                spinWheel.startAnimation(clockwise1);//1440 + +108
                 Log.d("RandomizeActivity", generator + "Selected");
             case 2:
                 spinWheel.startAnimation(clockwise2); //1440 + 180
                 Log.d("RandomizeActivity", generator + "Selected");
             break;
             case 3:
-                spinWheel.startAnimation(clockwise3); //1440 + 270
+                spinWheel.startAnimation(clockwise3); //1440 + 252
                 Log.d("RandomizeActivity", generator + "Selected");
             break;
             case 4:
-                spinWheel.startAnimation(clockwise4); //1440 + 315
+                spinWheel.startAnimation(clockwise4); //1440 + 324
                 Log.d("RandomizeActivity", generator + "Selected");
             break;
         }
