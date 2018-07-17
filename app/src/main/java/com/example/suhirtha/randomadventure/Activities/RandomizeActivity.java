@@ -30,8 +30,7 @@ public class RandomizeActivity extends AppCompatActivity {
     }
 
     public void onClickRandom(View view) {
-        //clockwise.setTarget(spinWheel);
-        //clockwise.setDuration(3000);
+        clockwise.setDuration(3000);
         spinWheel.startAnimation(clockwise);
 
     }
