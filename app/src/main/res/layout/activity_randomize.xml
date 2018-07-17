@@ -24,5 +24,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="86dp"
-        app:srcCompat="@drawable/color_wheel_template_test" />
+        app:srcCompat="@drawable/color_wheel"
+        />
 </RelativeLayout>
