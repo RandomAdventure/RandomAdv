@@ -58,7 +58,7 @@ public class RandomizeActivity extends AppCompatActivity {
                 clockwise.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
+                        spinWheel.setEnabled(false);
                     }
 
                     @Override
