@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class SelectionActivity extends AppCompatActivity {
@@ -40,8 +39,6 @@ public class SelectionActivity extends AppCompatActivity {
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
-        mRadius = findViewById(R.id.sbRadius2);
-        mRadiusDisplay = findViewById(R.id.tvDisplayRadius);
 
         //onClickListener for 'Search' button - leads to Anna's randomizer activity
         //TODO - figure out how to pass on information entered by the user to client,
@@ -65,9 +62,10 @@ public class SelectionActivity extends AppCompatActivity {
             }
         });
 
+        /**
         //TODO - temporary test code for seekBar, remove eventually
         // Initialize the textview with '0'.
-        mRadiusDisplay.setText("Covered: " + mRadius.getProgress() + "/" + mRadius.getMax());
+        //mRadiusDisplay.setText("Covered: " + mRadius.getProgress() + "/" + mRadius.getMax());
 
         mRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
@@ -85,13 +83,15 @@ public class SelectionActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mRadiusDisplay.setText("Covered: " + progress + "/" + seekBar.getMax());
+                //mRadiusDisplay.setText("Covered: " + progress + "/" + seekBar.getMax());
                 Toast.makeText(getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+            **/
 
 
+    }
 }
 

@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.suhirtha.randomadventure.models.MenuRow;
+import com.sysdata.widget.accordion.ItemAdapter;
 
 
 /**
@@ -26,8 +30,41 @@ public class AccordionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_accordion, container, false);
+
+
+    }
+
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
+        //TODO - initialize fields
+        //TODO - onClickListeners
+
+        ItemAdapter.OnItemClickedListener mListener = new ItemAdapter.OnItemClickedListener() {
+            @Override
+            public void onItemClicked(ItemAdapter.ItemViewHolder<?> viewHolder, int id) {
+                ItemAdapter.ItemHolder itemHolder = viewHolder.getItemHolder();
+                MenuRow item = ((MenuRow) itemHolder.item);
+
+                switch (id) {
+                    case ItemAdapter.OnItemClickedListener.ACTION_ID_COLLAPSED_VIEW:
+                        Toast.makeText(view.getContext(), String.format("Collapsed %s clicked!", item.getTitle()), Toast.LENGTH_LONG).show();
+
+                        break;
+                    case ItemAdapter.OnItemClickedListener.ACTION_ID_EXPANDED_VIEW:
+                        Toast.makeText(view.getContext(), String.format("Expanded %s clicked!", item.getTitle()), Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        // do nothing
+                        break;
+                }
+            }
+        };
+
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

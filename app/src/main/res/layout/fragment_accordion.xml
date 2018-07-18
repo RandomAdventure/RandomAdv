@@ -7,16 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".AccordionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.sysdata.widget.accordion.FancyAccordionView
+        android:id="@+id/fancy_accordion_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hey there" />
+        android:clipToPadding="false"
+        android:descendantFocusability="beforeDescendants"
+        android:fadingEdgeLength="0dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        android:splitMotionEvents="false"
+        tools:listitem="@layout/layout_collapsed"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="196dp"
-        android:layout_height="167dp"
-        android:src="@android:drawable/star_big_on" />
 
 </FrameLayout>
