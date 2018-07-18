@@ -28,7 +28,7 @@ public class RandomizeActivity extends AppCompatActivity {
     Random random = new Random();
     int generator;
     int REQUEST_CODE_SELECTION = 10;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
