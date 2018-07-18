@@ -59,13 +59,7 @@ public class ResultActivity extends AppCompatActivity {
 
             }
         };
-
-        /*try {
-            YelpClient hello = new YelpClient(this);
-            mTest.setText("hi");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+        
         mContext = this;
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
