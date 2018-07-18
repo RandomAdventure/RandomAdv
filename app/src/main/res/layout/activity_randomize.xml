@@ -6,24 +6,23 @@
     android:layout_height="match_parent"
     tools:context="com.example.suhirtha.randomadventure.Activities.RandomizeActivity">
 
-
-    <Button
-        android:id="@+id/raButton"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp"
-        android:text="Spin"
-        android:onClick="onClickRandom"/>
+        app:titleTextColor="@android:color/black"
+        android:background="@color/colorPrimary">
+
+    </android.support.v7.widget.Toolbar>
 
     <ImageView
         android:id="@+id/raImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="86dp"
-        app:srcCompat="@drawable/color_wheel"
-        />
+        android:onClick="onClickRandom"
+        app:srcCompat="@drawable/color_wheel" />
 </RelativeLayout>
