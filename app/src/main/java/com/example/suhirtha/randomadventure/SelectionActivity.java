@@ -37,7 +37,6 @@ public class SelectionActivity extends AppCompatActivity {
 
 
 
-
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
