@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suhirtha.randomadventure.Activities.RandomizeActivity;
-//comment
+//comment hello
 public class SelectionActivity extends AppCompatActivity {
 
     Button mSearch;
