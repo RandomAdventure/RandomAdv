@@ -15,8 +15,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by togata on 7/16/18.
@@ -24,15 +28,39 @@ import android.widget.Toast;
 
 public class ResultActivity extends AppCompatActivity {
 
-    TextView mTest;
+    TextView mName;
+    RatingBar mRating;
+    TextView mAddress;
+    YelpClient client;
+    JSONObject restuarant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        com.example.suhirtha.randomadventure.Location location = new com.example.suhirtha.randomadventure.Location(this.getApplicationContext(), this);
-        Log.d("location", "class Latitude: "+location.getLatitude());
-        Log.d("location", "class Longitude: "+location.getLongitude());
+        mName = (TextView) findViewById(R.id.rsaName);
+        mAddress = (TextView) findViewById(R.id.rsaAddress);
+        mRating = (RatingBar) findViewById(R.id.rsaRating);
+
+        client = new YelpClient();
+        try {
+            JSONObject restuarant = client.getBusinessInfo("w2TF4BebYFT2soafP28smw", this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    public void notifyRestuarantUpdated(JSONObject restuarant){
+        this.restuarant = restuarant;
+        try {
+            mName.setText(restuarant.getString("name"));
+            mRating.setRating((float)restuarant.getDouble("rating"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
