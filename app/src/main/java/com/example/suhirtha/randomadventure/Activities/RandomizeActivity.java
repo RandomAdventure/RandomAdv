@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure.Activities;
+package com.example.suhirtha.randomadventure.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +26,8 @@ public class RandomizeActivity extends AppCompatActivity {
     Random random = new Random();
     int generator;
     int REQUEST_CODE_SELECTION = 10;
-
+    String[] restaurants= {"Pizzeria", "Italian", "Mexican", "Chuck E Cheese", "Fancy", "Barbeque", "French", "Brazilian", "Cuban", "Vegetarian"};
+    String[] chosen = new String[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,18 @@ public class RandomizeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        for(int i=0; i< chosen.length; i++){ //assigns restaurant to fixed array
+            chosen[i] = restaurants[random.nextInt(restaurants.length)];
+        }
+        for(int i=0; i<chosen.length; i++){ //replace pre-existing restaurants
+            for (int k = i + 1; k < chosen.length; k++) {
+                while (chosen[i] == chosen[k]){
+                    chosen[k] = restaurants[random.nextInt(restaurants.length)];
+                }
+            }
+            Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
+        }
     }
 
     public void onClickRandom(View view) {
