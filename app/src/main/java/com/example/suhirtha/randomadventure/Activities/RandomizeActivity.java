@@ -28,8 +28,7 @@ public class RandomizeActivity extends AppCompatActivity {
     Random random = new Random();
     int generator;
     int REQUEST_CODE_SELECTION = 10;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +52,47 @@ public class RandomizeActivity extends AppCompatActivity {
         spinWheel.setRotation(0);
         switch (generator){
             case 4:
-                spinWheel.startAnimation(clockwise); //1440 + 36
+                spinWheel.startAnimation(clockwise); //1440 + 36 === 6 rotations
                 Log.d("RandomizeActivity", generator + "Selected");
                 clockwise.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Intent i = new Intent(context, ResultActivity.class);
+                        startActivity(i);
+                        Log.d("RandomizeActivity", generator + "Animation ended");
+                        spinWheel.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
+                });
+                break;
+            case 3:
+                spinWheel.startAnimation(clockwise1);//2160 + +108
+                Log.d("RandomizeActivity", generator + "Selected");
+                clockwise1.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Intent i = new Intent(context, ResultActivity.class);
+                        startActivity(i);
+                        Log.d("RandomizeActivity", generator + "Animation ended");
+                        spinWheel.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
+                });
+                break;
+            case 2:
+                spinWheel.startAnimation(clockwise2); //2160 + 180
+                Log.d("RandomizeActivity", generator + "Selected");
+                clockwise2.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
                         spinWheel.setEnabled(false);
@@ -66,90 +103,49 @@ public class RandomizeActivity extends AppCompatActivity {
                         Intent i = new Intent(context, ResultActivity.class);
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
+                        spinWheel.setEnabled(true);
                     }
 
                     @Override
-                    public void onAnimationRepeat(Animation animation) {}
-                });
-                break;
-            case 3:
-                spinWheel.startAnimation(clockwise1);//1440 + +108
-                Log.d("RandomizeActivity", generator + "Selected");
-                clockwise1.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        Intent i = new Intent(context, ResultActivity.class);
-                        startActivity(i);
-                        Log.d("RandomizeActivity", generator + "Animation ended");
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
-                });
-                break;
-            case 2:
-                spinWheel.startAnimation(clockwise2); //1440 + 180
-                Log.d("RandomizeActivity", generator + "Selected");
-                clockwise2.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        Intent i = new Intent(context, ResultActivity.class);
-                        startActivity(i);
-                        Log.d("RandomizeActivity", generator + "Animation ended");
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
+                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
                 });
                 break;
             case 1:
-                spinWheel.startAnimation(clockwise3); //1440 + 252
+                spinWheel.startAnimation(clockwise3); //2160+ 252
                 Log.d("RandomizeActivity", generator + "Selected");
                 clockwise3.setAnimationListener(new Animation.AnimationListener() {
                     @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
+                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         Intent i = new Intent(context, ResultActivity.class);
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
+                        spinWheel.setEnabled(true);
                     }
 
                     @Override
-                    public void onAnimationRepeat(Animation animation) {}
+                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
                 });
                 break;
             case 0:
-                spinWheel.startAnimation(clockwise4); //1440 + 324
+                spinWheel.startAnimation(clockwise4); //2160 + 324
                 Log.d("RandomizeActivity", generator + "Selected");
                 clockwise4.setAnimationListener(new Animation.AnimationListener() {
                     @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
+                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         Intent i = new Intent(context, ResultActivity.class);
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
+                        spinWheel.setEnabled(true);
                     }
 
                     @Override
-                    public void onAnimationRepeat(Animation animation) {}
+                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
                 });
                 break;
         }
