@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.suhirtha.randomadventure.RandomizeActivity">
+    tools:context="com.example.suhirtha.randomadventure.RandomizeActivity"
+    android:background="@color/lightTeal">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -12,7 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@android:color/black"
-        android:background="@color/colorPrimary">
+        android:background="@color/darkTeal">
+
+        <ImageView
+            android:id="@+id/toolbar_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="center" />
 
     </android.support.v7.widget.Toolbar>
 

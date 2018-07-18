@@ -13,10 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.example.suhirtha.randomadventure.R;
-import com.example.suhirtha.randomadventure.ResultActivity;
-import com.example.suhirtha.randomadventure.SelectionActivity;
-
 import java.util.Random;
 
 public class RandomizeActivity extends AppCompatActivity {
@@ -46,14 +42,29 @@ public class RandomizeActivity extends AppCompatActivity {
         for(int i=0; i< chosen.length; i++){ //assigns restaurant to fixed array
             chosen[i] = restaurants[random.nextInt(restaurants.length)];
         }
-        for(int i=0; i<chosen.length; i++){ //replace pre-existing restaurants
-            for (int k = i + 1; k < chosen.length; k++) {
-                while (chosen[i] == chosen[k]){
-                    chosen[k] = restaurants[random.nextInt(restaurants.length)];
+
+        if(restaurants.length >= chosen.length){ //if the length of the array of restaurants
+            //is more than the length of the chosen restaurants, recheck for repeated restaurants
+            for(int i=0; i<chosen.length; i++){ //replace pre-existing restaurants
+                for (int k = i + 1; k < chosen.length; k++) {
+                    while (chosen[i] == chosen[k]){
+                        chosen[k] = restaurants[random.nextInt(restaurants.length)];
+                    }
                 }
+                Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
             }
-            Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
         }
+        else{ //if length of restaurants is less than length chosen, to avoid infinite loop, rechecks once for maximun efficency
+            for(int i=0; i<chosen.length; i++){ //replace pre-existing restaurants
+                for (int k = i + 1; k < chosen.length; k++) {
+                    if (chosen[i] == chosen[k]){
+                        chosen[k] = restaurants[random.nextInt(restaurants.length)];
+                    }
+                }
+                Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
+            }
+        }
+
     }
 
     public void onClickRandom(View view) {
