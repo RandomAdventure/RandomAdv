@@ -19,20 +19,18 @@ import android.widget.Toast;
 
 public class Location{
 
-    LocationManager locationManager;
-    LocationListener locationListener;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
     private double latitude;
     private double longitude;
 
-    public Location(final View v, Activity activity){
-
+    public Location(Context context, Activity activity){
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(android.location.Location location) {
                 latitude=location.getLatitude();
                 longitude=location.getLongitude();
                 String msg="New Latitude: "+latitude + "New Longitude: "+longitude;
-                Toast.makeText(v.getContext(),msg,Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -51,9 +49,8 @@ public class Location{
             }
         };
 
-        locationManager = (LocationManager) v.getContext().getSystemService(Context.LOCATION_SERVICE);
-
-        if (ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
@@ -63,7 +60,13 @@ public class Location{
         longitude = location.getLongitude();
         Log.d("location", "Latitude: "+latitude+"");
         Log.d("location", "Longitude: "+longitude+"");
-
     }
 
+    public double getLatitude(){
+        return latitude;
+    }
+
+    public double getLongitude(){
+        return longitude;
+    }
 }
