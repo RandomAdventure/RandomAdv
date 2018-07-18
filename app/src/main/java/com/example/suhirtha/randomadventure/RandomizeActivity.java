@@ -12,29 +12,36 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Random;
 
 public class RandomizeActivity extends AppCompatActivity {
     ImageView spinWheel;
+    TextView[] res = new TextView[5];
     Context context;
     Animation clockwise, clockwise1, clockwise2 ,clockwise3, clockwise4;
     Random random = new Random();
     int generator;
     int REQUEST_CODE_SELECTION = 10;
-    String[] restaurants= {"Pizzeria", "Italian", "Mexican", "Chuck E Cheese", "Fancy", "Barbeque", "French", "Brazilian", "Cuban", "Vegetarian"};
+    String[] restaurants= {"Pizzeria", "Italian", "Mexican", "Chuck E Cheese", "Fancy", "Barbeque", "French", "Brazilian", "Cuban", "Vegetarian"}; //hardcode
     String[] chosen = new String[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_randomize);
-        spinWheel = findViewById(R.id.raImageView);
+        spinWheel = findViewById(R.id.raWheel);
         context = getApplicationContext();
         clockwise = AnimationUtils.loadAnimation(context,R.anim.clockwise);
         clockwise1 = AnimationUtils.loadAnimation(context,R.anim.clockwise1);
         clockwise2 = AnimationUtils.loadAnimation(context,R.anim.clockwise2);
         clockwise3 = AnimationUtils.loadAnimation(context,R.anim.clockwise3);
         clockwise4 = AnimationUtils.loadAnimation(context,R.anim.clockwise4);
+        res[0] = findViewById(R.id.raRestaurant);
+        res[1] = findViewById(R.id.raRestaurant1);
+        res[2] = findViewById(R.id.raRestaurant2);
+        res[3] = findViewById(R.id.raRestaurant3);
+        res[4] = findViewById(R.id.raRestaurant4);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,6 +60,7 @@ public class RandomizeActivity extends AppCompatActivity {
                     }
                 }
                 Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
+                res[i].setText(chosen[i]);
             }
         }
         else{ //if length of restaurants is less than length chosen, to avoid infinite loop, rechecks once for maximun efficency
@@ -63,6 +71,7 @@ public class RandomizeActivity extends AppCompatActivity {
                     }
                 }
                 Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
+                res[i].setText(chosen[i]);
             }
         }
 
