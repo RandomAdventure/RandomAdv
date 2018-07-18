@@ -59,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
 
             }
         };
-        
+
         mContext = this;
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
