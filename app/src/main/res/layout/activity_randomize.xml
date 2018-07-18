@@ -17,12 +17,23 @@
 
         <ImageView
             android:id="@+id/toolbar_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:src="@drawable/logo75" />
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
             android:layout_marginRight="?attr/actionBarSize"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="start|center_vertical"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:onClick="onClickBack"
+            android:backgroundTint="@android:color/white"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -30,9 +41,31 @@
         android:id="@+id/raImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
         android:onClick="onClickRandom"
-        app:srcCompat="@drawable/color_wheel" />
+        app:srcCompat="@drawable/true_color_wheel" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/raImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Tap to spin!"
+        android:textColor="@color/darkPurple" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/spindle" />
+
 </RelativeLayout>

@@ -39,6 +39,7 @@ public class RandomizeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         for(int i=0; i< chosen.length; i++){ //assigns restaurant to fixed array
             chosen[i] = restaurants[random.nextInt(restaurants.length)];
         }
@@ -180,17 +181,13 @@ public class RandomizeActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.mrBack:
-                Intent intent = new Intent(this, SelectionActivity.class);
-                startActivityForResult(intent,REQUEST_CODE_SELECTION); //wrapping
-                //shows post after composing on timeline, UNLIKE startActivity
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public boolean onOptionsItemSelected(MenuItem item) { //empty on purpose
+        return true;
     }
 
+    public void onClickBack(View view) {
+        Intent intent = new Intent(this, SelectionActivity.class);
+        startActivityForResult(intent,REQUEST_CODE_SELECTION); //wrapping
+        //shows post after composing on timeline, UNLIKE startActivity
+    }
 }
