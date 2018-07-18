@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.suhirtha.randomadventure.R;
@@ -21,7 +20,6 @@ import com.example.suhirtha.randomadventure.SelectionActivity;
 import java.util.Random;
 
 public class RandomizeActivity extends AppCompatActivity {
-    Button rButton;
     ImageView spinWheel;
     Context context;
     Animation clockwise, clockwise1, clockwise2 ,clockwise3, clockwise4;
@@ -41,9 +39,7 @@ public class RandomizeActivity extends AppCompatActivity {
         clockwise3 = AnimationUtils.loadAnimation(context,R.anim.clockwise3);
         clockwise4 = AnimationUtils.loadAnimation(context,R.anim.clockwise4);
 
-        // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
         setSupportActionBar(toolbar);
     }
 
