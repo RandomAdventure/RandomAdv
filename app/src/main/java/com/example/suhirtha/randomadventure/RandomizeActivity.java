@@ -45,7 +45,7 @@ public class RandomizeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         for(int i=0; i< chosen.length; i++){ //assigns restaurant to fixed array
             chosen[i] = restaurants[random.nextInt(restaurants.length)];
