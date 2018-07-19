@@ -113,7 +113,9 @@ public class RandomizeActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
+
                         Intent i = new Intent(context, ResultActivity.class);
+                        i.putExtra("test1", Parcels.wrap(testChosen.get(4)));
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
                         spinWheel.setEnabled(true);
@@ -133,6 +135,7 @@ public class RandomizeActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         Intent i = new Intent(context, ResultActivity.class);
+                        i.putExtra("test1", Parcels.wrap(testChosen.get(3)));
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
                         spinWheel.setEnabled(true);
@@ -154,6 +157,7 @@ public class RandomizeActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         Intent i = new Intent(context, ResultActivity.class);
+                        i.putExtra("test1", Parcels.wrap(testChosen.get(2)));
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
                         spinWheel.setEnabled(true);
@@ -173,6 +177,7 @@ public class RandomizeActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         Intent i = new Intent(context, ResultActivity.class);
+                        i.putExtra("test1", Parcels.wrap(testChosen.get(1)));
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
                         spinWheel.setEnabled(true);
@@ -192,6 +197,7 @@ public class RandomizeActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         Intent i = new Intent(context, ResultActivity.class);
+                        i.putExtra("test1", Parcels.wrap(testChosen.get(0)));
                         startActivity(i);
                         Log.d("RandomizeActivity", generator + "Animation ended");
                         spinWheel.setEnabled(true);
