@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Movie;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,9 +23,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suhirtha.randomadventure.models.Restaurant;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 /**
  * Created by togata on 7/16/18.
@@ -41,6 +45,7 @@ public class ResultActivity extends AppCompatActivity {
     private YelpClient client;
     private String phoneNumber;
     private JSONObject restuarant;
+    private Restaurant passedRestaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +61,9 @@ public class ResultActivity extends AppCompatActivity {
         mDelivery.setClickable(false);
 
         client = new YelpClient();
+        passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
         try {
-            JSONObject restuarant = client.getBusinessInfo("kg_DZXn2PothfiFmR4QWgA", this);
+            JSONObject restuarant = client.getBusinessInfo(passedRestaurant.getId(), this);
 
         } catch (Exception e) {
             e.printStackTrace();
