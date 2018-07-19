@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.346" />
 
-    <CheckedTextView
+    <CheckBox
         android:id="@+id/rsaReservation"
         android:layout_width="133dp"
         android:layout_height="21dp"
@@ -97,7 +97,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.32" />
 
-    <CheckedTextView
+    <CheckBox
         android:id="@+id/rsaDelivery"
         android:layout_width="133dp"
         android:layout_height="21dp"
@@ -112,8 +112,6 @@
         app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
-
-
+        app:layout_constraintVertical_bias="0.373" />
 
 </android.support.constraint.ConstraintLayout>

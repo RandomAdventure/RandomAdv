@@ -16,11 +16,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,8 +36,8 @@ public class ResultActivity extends AppCompatActivity {
     private RatingBar mRating;
     private TextView mAddress;
     private TextView mPhoneNumber;
-    private CheckedTextView mDelivery;
-    private CheckedTextView mReservation;
+    private CheckBox mDelivery;
+    private CheckBox mReservation;
     private YelpClient client;
     private String phoneNumber;
     private JSONObject restuarant;
@@ -48,14 +50,14 @@ public class ResultActivity extends AppCompatActivity {
         mAddress = (TextView) findViewById(R.id.rsaAddress);
         mRating = (RatingBar) findViewById(R.id.rsaRating);
         mPhoneNumber = (TextView) findViewById(R.id.rsaPhoneNumber);
-        mReservation = (CheckedTextView) findViewById(R.id.rsaReservation);
-        mDelivery = (CheckedTextView) findViewById(R.id.rsaDelivery);
-
-
+        mReservation = (CheckBox) findViewById(R.id.rsaReservation);
+        mReservation.setClickable(false);
+        mDelivery = (CheckBox) findViewById(R.id.rsaDelivery);
+        mDelivery.setClickable(false);
 
         client = new YelpClient();
         try {
-            JSONObject restuarant = client.getBusinessInfo("w2TF4BebYFT2soafP28smw", this);
+            JSONObject restuarant = client.getBusinessInfo("kg_DZXn2PothfiFmR4QWgA", this);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,9 +74,18 @@ public class ResultActivity extends AppCompatActivity {
             mAddress.setText(address);
             phoneNumber = restuarant.getString("display_phone");
             mPhoneNumber.setText(phoneNumber);
-            String[] transactions = (String[]) restuarant.get("transactions");
+            //String[] transactions = (String[]) restuarant.get("transactions");
+            JSONArray transactions = restuarant.getJSONArray("transactions");
+            for (int i=0; i<transactions.length(); i++){
+                if (transactions.get(i).equals("delivery")){
+                    mDelivery.setChecked(true);
+                }
+                if (transactions.get(i).equals("restaurant_reservation")){
+                    mReservation.setChecked(true);
+                }
+            }
         } catch (JSONException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
 
