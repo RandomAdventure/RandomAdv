@@ -78,7 +78,7 @@ public class SelectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent anna = new Intent(SelectionActivity.this, RandomizeActivity.class);
-                anna.putExtra("restaurants", testRestaurants);
+                anna.putExtra("restaurants", Parcels.wrap(testRestaurants));
                 startActivity(anna);
 
                 /*
