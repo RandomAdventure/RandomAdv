@@ -1,12 +1,15 @@
 package com.example.suhirtha.randomadventure.models;
 
 import org.parceler.Parcel;
+
+import java.io.Serializable;
+
 /**
  * Created by togata on 7/19/18.
  */
 
 @Parcel
-public class Restaurant {
+public class Restaurant implements Serializable {
     private String name;
     private String id;
 
@@ -26,4 +29,5 @@ public class Restaurant {
     public String getId() {
         return id;
     }
+
 }

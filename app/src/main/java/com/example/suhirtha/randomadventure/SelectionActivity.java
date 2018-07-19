@@ -62,11 +62,8 @@ public class SelectionActivity extends AppCompatActivity {
         fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.saPlaceholderFragment, accordionList).commit();
 
-        /**
-        Intent i = new Intent(SelectionActivity.this, RandomizeActivity.class);
-        i.putExtra("restaurant", testRestaurants);
-        startActivity(i);
-         **/
+
+
 
 
         //initialize fields
@@ -80,9 +77,15 @@ public class SelectionActivity extends AppCompatActivity {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent anna = new Intent(SelectionActivity.this, RandomizeActivity.class);
+                anna.putExtra("restaurants", testRestaurants);
+                startActivity(anna);
+
+                /*
                 Intent anna = new Intent(view.getContext(), RandomizeActivity.class);
                 anna.putExtra("test1", Parcels.wrap(test1));
                 startActivity(anna);
+                */
             }
         });
 
