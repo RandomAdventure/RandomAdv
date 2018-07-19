@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ public class ResultActivity extends AppCompatActivity {
     private RatingBar mRating;
     private TextView mAddress;
     private TextView mPhoneNumber;
+    private CheckedTextView mDelivery;
+    private CheckedTextView mReservation;
     private YelpClient client;
     private String phoneNumber;
     private JSONObject restuarant;
@@ -45,20 +48,10 @@ public class ResultActivity extends AppCompatActivity {
         mAddress = (TextView) findViewById(R.id.rsaAddress);
         mRating = (RatingBar) findViewById(R.id.rsaRating);
         mPhoneNumber = (TextView) findViewById(R.id.rsaPhoneNumber);
-        mPhoneNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                if (phoneNumber.length()>11) {
-                    callIntent.setData(Uri.parse("tel:" + phoneNumber.substring(1, 4) + phoneNumber.substring(6, 10) + phoneNumber.substring(11, phoneNumber.length())));
-                }
-                if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(ResultActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                    return;
-                }
-                startActivity(callIntent);
-            }
-        });
+        mReservation = (CheckedTextView) findViewById(R.id.rsaReservation);
+        mDelivery = (CheckedTextView) findViewById(R.id.rsaDelivery);
+
+
 
         client = new YelpClient();
         try {
@@ -79,9 +72,23 @@ public class ResultActivity extends AppCompatActivity {
             mAddress.setText(address);
             phoneNumber = restuarant.getString("display_phone");
             mPhoneNumber.setText(phoneNumber);
+            String[] transactions = (String[]) restuarant.get("transactions");
         } catch (JSONException e) {
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
+    }
+
+    public void callRestuarant(View view){
+        Toast.makeText(view.getContext(), "clicked", Toast.LENGTH_SHORT);
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        if (phoneNumber.length()>11) {
+            callIntent.setData(Uri.parse("tel:" + phoneNumber.substring(1, 4) + phoneNumber.substring(6, 9) + phoneNumber.substring(10, phoneNumber.length())));
+        }
+        if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ResultActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+            return;
+        }
+        startActivity(callIntent);
     }
 
 
