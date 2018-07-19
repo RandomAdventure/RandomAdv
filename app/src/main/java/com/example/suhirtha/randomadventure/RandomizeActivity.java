@@ -45,14 +45,16 @@ public class RandomizeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); //removes title
 
         for(int i=0; i< chosen.length; i++){ //assigns restaurant to fixed array
             chosen[i] = restaurants[random.nextInt(restaurants.length)];
         }
 
-        if(restaurants.length >= chosen.length){ //if the length of the array of restaurants
-            //is more than the length of the chosen restaurants, recheck for repeated restaurants
+        if(restaurants.length >= chosen.length){
+            //if the length of the array of restaurants
+            // is more than the length of the chosen restaurants,
+            // recheck for repeated restaurants
             for(int i=0; i<chosen.length; i++){ //replace pre-existing restaurants
                 for (int k = i + 1; k < chosen.length; k++) {
                     while (chosen[i] == chosen[k]){
