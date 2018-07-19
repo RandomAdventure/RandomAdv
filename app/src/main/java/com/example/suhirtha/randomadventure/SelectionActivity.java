@@ -13,8 +13,25 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.suhirtha.randomadventure.models.Restaurant;
+
 
 public class SelectionActivity extends AppCompatActivity {
+
+    //10 random restaurants (in the SF area) for testing purposes
+    Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria & Seafood");
+    Restaurant test2 = new Restaurant ("msT3LrLB4fhN04HYHuFsew", "Bella Trattoria");
+    Restaurant test3 = new Restaurant ("FRpULkKmvD9caSKabQzq5w", "The Italian Homemade Company");
+    Restaurant test4 = new Restaurant("4KfQnlcSu4bbTqnvGdGptw", "Beretta");
+    Restaurant test5 = new Restaurant("1toCkhuD0b57iFotMu3XEQ", "La Ciccia");
+    Restaurant test6 = new Restaurant("F6SOy6-3tP4i-ipACZUS0g", "È Tutto Qua");
+    Restaurant test7 = new Restaurant("dTWMVRcMVC4zynbFQC7A2A", "Seven Hills");
+    Restaurant test8 = new Restaurant("aVskw5NKrs7ibAQ54E_bZw", "U :Dessert Story");
+    Restaurant test9 = new Restaurant("eEAhtNTKpDDgI5M1_Zkiew", "Kome Japanese  Seafood & Grill Buffet");
+    Restaurant test10 = new Restaurant("rwiL8C8989DlHMD88bxi3A", "Gracias Madre");
+
+
+
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
     final Fragment accordionList = new AccordionFragment();
@@ -74,34 +91,8 @@ public class SelectionActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        /**
-        //TODO - temporary test code for seekBar, remove eventually
-        // Initialize the textview with '0'.
-        //mRadiusDisplay.setText("Covered: " + mRadius.getProgress() + "/" + mRadius.getMax());
 
-        mRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progress = 0;
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                progress = progresValue;
-                Toast.makeText(getApplicationContext(), "Changing seekbar's progress", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(getApplicationContext(), "Started tracking seekbar", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                //mRadiusDisplay.setText("Covered: " + progress + "/" + seekBar.getMax());
-                Toast.makeText(getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-            **/
 
 
     }
