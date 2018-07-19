@@ -15,6 +15,11 @@ import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.models.Restaurant;
 
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class SelectionActivity extends AppCompatActivity {
 
@@ -30,6 +35,7 @@ public class SelectionActivity extends AppCompatActivity {
     Restaurant test9 = new Restaurant("eEAhtNTKpDDgI5M1_Zkiew", "Kome Japanese  Seafood & Grill Buffet");
     Restaurant test10 = new Restaurant("rwiL8C8989DlHMD88bxi3A", "Gracias Madre");
 
+    ArrayList<Restaurant> testRestaurants = new ArrayList<>();
 
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -51,9 +57,16 @@ public class SelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
+        testRestaurants.addAll(Arrays.asList(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10));
+
         fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.saPlaceholderFragment, accordionList).commit();
 
+        /**
+        Intent i = new Intent(SelectionActivity.this, RandomizeActivity.class);
+        i.putExtra("restaurant", testRestaurants);
+        startActivity(i);
+         **/
 
 
         //initialize fields
@@ -61,8 +74,8 @@ public class SelectionActivity extends AppCompatActivity {
         mDone = findViewById(R.id.btnDone);
 
         //onClickListener for 'Search' button - leads to Anna's randomizer activity
-        //TODO - figure out how to pass on information entered by the user to client,
-        //TODO - and then pass array of restaurants to Anna
+        //TODO - create rest
+        //TODO - and then pass array of restaurant to Anna
 
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +90,11 @@ public class SelectionActivity extends AppCompatActivity {
         mDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), ResultActivity.class);
-                startActivity(i);
+                //Intent i = new Intent(view.getContext(), ResultActivity.class);
+                Intent tatum = new Intent(SelectionActivity.this, ResultActivity.class);
+                tatum.putExtra("test1", Parcels.wrap(test1));
+                startActivity(tatum);
+                //startActivity(i);
             }
         });
 

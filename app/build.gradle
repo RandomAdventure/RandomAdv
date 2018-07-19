@@ -30,5 +30,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     compile 'com.xw.repo:bubbleseekbar:3.18-lite'
     implementation 'it.sysdata.mobile:fancyaccordionview:1.0.0'
+    implementation 'org.parceler:parceler-api:1.1.6'
+    annotationProcessor 'org.parceler:parceler:1.1.6'
 
 }
