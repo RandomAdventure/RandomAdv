@@ -8,7 +8,7 @@ public class Restaurant {
     private String name;
     private String id;
 
-    public Restaurant(String name, String id){
+    public Restaurant(String id, String name){
         this.name = name;
         this.id = id;
     }
