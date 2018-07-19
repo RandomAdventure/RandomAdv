@@ -80,8 +80,9 @@ public class SelectionActivity extends AppCompatActivity {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), RandomizeActivity.class);
-                startActivity(i);
+                Intent anna = new Intent(view.getContext(), RandomizeActivity.class);
+                anna.putExtra("test1", Parcels.wrap(test1));
+                startActivity(anna);
             }
         });
 
