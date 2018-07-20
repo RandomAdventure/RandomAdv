@@ -32,6 +32,6 @@ dependencies {
     implementation 'it.sysdata.mobile:fancyaccordionview:1.0.0'
     implementation 'org.parceler:parceler-api:1.1.6'
     annotationProcessor 'org.parceler:parceler:1.1.6'
-
+    compile 'com.google.android.gms:play-services:7.5.0'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
 }
