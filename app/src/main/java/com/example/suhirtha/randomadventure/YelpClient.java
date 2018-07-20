@@ -23,38 +23,44 @@ import okhttp3.ResponseBody;
 
 public class YelpClient{
 
-    //TODO - Suhi (07/19)
+//--------------------------------------------------------------------------------------------------
+    //TODO - All (07/19)
     //TODO - put keys and client id in secrets.xml and stop pushing it to github :(
-
     public static final String URL = "https://api.yelp.com/v3/businesses/search";
     public static final String API_KEY = "-zQ4y50-JDbyywxHfjTw5QVtT-dg40f5xhBGzRrQX8VCSmiV1pofn7k_ki1OLhuPP7fzAqZQRfxrszgoHlFQitLoffkl7AJZYO36xmpz2LoJLdm0mzvG5SD8nNlMW3Yx";
-    public static final String CLIENT_ID = "tTmiwin5LV1jvFNL51ng4A";
-    public static final String CALLBACK_URL_TEMPLATE = "intent://%s#Intent;action=android.intent.action.VIEW;scheme=%s;package=%s;S.browser_fallback_url=%s;end";
     public JSONArray restaurantList;
     public JSONObject selectedRestaurant;
-
-
+//--------------------------------------------------------------------------------------------------
     private final OkHttpClient client = new OkHttpClient();
     public JSONObject firstRestaurant;
+//--------------------------------------------------------------------------------------------------
+
+    /**
+     * default constructor
+     */
+    public YelpClient(){
+
+    }
 
     //TODO - Suhi (07/19)
     //TODO - enable reading in user input: (user-entered) location, attributes/cuisine,
     //TODO - automatic location, rating, price (in that order of implementation) by tomorrow?
-    //TODO - call class from Selection Activity (or resulting fragment)
-
     /**
-     * Populates the restaurantList arrayList with a list of restaurants that matches user requirements
+     * Populates the restaurantList with a list of restaurants that matches user requirements
      * @param location - currently, user-entered location as a string literal
-     * @param activity - not sure about passing in an instance of an activity, there has to be a better way
-     * @throws Exception - JSONException
+     * TODO - create helper method for URL builder? and take in user parameters there?
+     * @param activity - not sure about passing in instance of an activity, there has to be a better way
      */
-    public JSONArray run(String location, final SelectionActivity activity) throws Exception {
+    public JSONArray getBusinesses(String location, final SelectionActivity activity)  {
+
+        //Build URL according to user parameters: temporary
         Request request = new Request.Builder()
                 .url(URL+"?location=" + location)
                 .addHeader("Authorization", "Bearer "+API_KEY)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
+
             @Override public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
@@ -62,33 +68,33 @@ public class YelpClient{
             @Override public void onResponse(Call call, Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                    String data = responseBody.string(); //retrieve JSON response as String
 
-                    String data = responseBody.string();
-
-
+            //--------------------------------------------------------------------------------------
                     try {
                         JSONObject object = new JSONObject(data);
-                        JSONArray resultArray = object.getJSONArray("businesses"); //TODO: stop hard-coding strings
+                        JSONArray resultArray = object.getJSONArray("businesses");
+                        //TODO: stop hard-coding strings
+
                         if (resultArray.length() > 0) { //ensures that there is at least one result
                             restaurantList = resultArray;
-                            try {
-                                activity.resultsReturned(restaurantList);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            activity.resultsReturned(restaurantList);
                         } else {
-                            Log.e("NoResults", "No restaurants seem to match your requirements. You're picky.");
+                            Log.e("NoResults", "No restaurants seem to match your " +
+                                    "requirements. You're picky.");
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+            //--------------------------------------------------------------------------------------
                 }
             }
         });
 
         return restaurantList;
     }
+
 
     public JSONObject getBusinessInfo(String businessId, final ResultActivity activity) throws Exception {
         Request request = new Request.Builder()
@@ -124,9 +130,6 @@ public class YelpClient{
             }
         });
         return selectedRestaurant;
-    }
-
-    public YelpClient(){
     }
 
 }
