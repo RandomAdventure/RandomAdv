@@ -30,11 +30,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 /**
  * Created by togata on 7/16/18.
  */
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TextView mName;
     private RatingBar mRating;
@@ -42,8 +53,12 @@ public class ResultActivity extends AppCompatActivity {
     private TextView mPhoneNumber;
     private CheckBox mDelivery;
     private CheckBox mReservation;
+    private MapView mMap;
+    private GoogleMap googleMap;
     private YelpClient client;
     private String phoneNumber;
+    private double latitude;
+    private double longitude;
     private JSONObject restuarant;
     private Restaurant passedRestaurant;
 
@@ -59,12 +74,14 @@ public class ResultActivity extends AppCompatActivity {
         mReservation.setClickable(false);
         mDelivery = (CheckBox) findViewById(R.id.rsaDelivery);
         mDelivery.setClickable(false);
+        mMap = (MapView) findViewById(R.id.rsaMap);
+        mMap.onCreate(savedInstanceState);
+        mMap.getMapAsync(this);
 
         client = new YelpClient();
         passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
         try {
             JSONObject restuarant = client.getBusinessInfo(passedRestaurant.getId(), this);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,13 +97,19 @@ public class ResultActivity extends AppCompatActivity {
             mAddress.setText(address);
             phoneNumber = restuarant.getString("display_phone");
             mPhoneNumber.setText(phoneNumber);
-            //String[] transactions = (String[]) restuarant.get("transactions");
+
+            JSONObject coordinates = restuarant.getJSONObject("coordinates");
+            latitude = (double) coordinates.get("latitude");
+            longitude = (double) coordinates.get("longitude");
+            LatLng latLng = new LatLng(latitude, longitude);
+            updateLocation(latLng);
+
             JSONArray transactions = restuarant.getJSONArray("transactions");
-            for (int i=0; i<transactions.length(); i++){
-                if (transactions.get(i).equals("delivery")){
+            for (int i = 0; i < transactions.length(); i++) {
+                if (transactions.get(i).equals("delivery")) {
                     mDelivery.setChecked(true);
                 }
-                if (transactions.get(i).equals("restaurant_reservation")){
+                if (transactions.get(i).equals("restaurant_reservation")) {
                     mReservation.setChecked(true);
                 }
             }
@@ -95,10 +118,9 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
-    public void callRestuarant(View view){
-        Toast.makeText(view.getContext(), "clicked", Toast.LENGTH_SHORT);
+    public void callRestuarant(View view) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        if (phoneNumber.length()>11) {
+        if (phoneNumber.length() > 11) {
             callIntent.setData(Uri.parse("tel:" + phoneNumber.substring(1, 4) + phoneNumber.substring(6, 9) + phoneNumber.substring(10, phoneNumber.length())));
         }
         if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -106,6 +128,60 @@ public class ResultActivity extends AppCompatActivity {
             return;
         }
         startActivity(callIntent);
+    }
+
+    public void updateLocation(final LatLng latLng){
+        this.runOnUiThread(new Runnable(){
+            public void run(){
+                googleMap.setMinZoomPreference(15);
+                googleMap.addMarker(new MarkerOptions().position(latLng));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            }
+        });
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ResultActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMap.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mMap.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mMap.onStop();
+    }
+    @Override
+    protected void onPause() {
+        mMap.onPause();
+        super.onPause();
+    }
+    @Override
+    protected void onDestroy() {
+        mMap.onDestroy();
+        super.onDestroy();
+    }
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMap.onLowMemory();
     }
 
 
