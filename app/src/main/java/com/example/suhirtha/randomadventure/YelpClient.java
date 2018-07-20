@@ -30,7 +30,7 @@ public class YelpClient{
     public static final String API_KEY = "-zQ4y50-JDbyywxHfjTw5QVtT-dg40f5xhBGzRrQX8VCSmiV1pofn7k_ki1OLhuPP7fzAqZQRfxrszgoHlFQitLoffkl7AJZYO36xmpz2LoJLdm0mzvG5SD8nNlMW3Yx";
     public static final String CLIENT_ID = "tTmiwin5LV1jvFNL51ng4A";
     public static final String CALLBACK_URL_TEMPLATE = "intent://%s#Intent;action=android.intent.action.VIEW;scheme=%s;package=%s;S.browser_fallback_url=%s;end";
-    //public JSONArray
+    public JSONArray restaurantList;
     public JSONObject selectedRestaurant;
 
 
@@ -42,7 +42,13 @@ public class YelpClient{
     //TODO - automatic location, rating, price (in that order of implementation) by tomorrow?
     //TODO - call class from Selection Activity (or resulting fragment)
 
-    public void run(String location) throws Exception {
+    /**
+     * Populates the restaurantList arrayList with a list of restaurants that matches user requirements
+     * @param location - currently, user-entered location as a string literal
+     * @param activity - not sure about passing in an instance of an activity, there has to be a better way
+     * @throws Exception - JSONException
+     */
+    public JSONArray run(String location, final SelectionActivity activity) throws Exception {
         Request request = new Request.Builder()
                 .url(URL+"?location=" + location)
                 .addHeader("Authorization", "Bearer "+API_KEY)
@@ -57,20 +63,22 @@ public class YelpClient{
                 try (ResponseBody responseBody = response.body()) {
                     if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-                    Headers responseHeaders = response.headers();
-
-                    /* what is this printing... why is it printing things...
-                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                    }
-                    */
-
                     String data = responseBody.string();
+
 
                     try {
                         JSONObject object = new JSONObject(data);
                         JSONArray resultArray = object.getJSONArray("businesses"); //TODO: stop hard-coding strings
-
+                        if (resultArray.length() > 0) { //ensures that there is at least one result
+                            restaurantList = resultArray;
+                            try {
+                                activity.resultsReturned(restaurantList);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Log.e("NoResults", "No restaurants seem to match your requirements. You're picky.");
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -78,9 +86,11 @@ public class YelpClient{
                 }
             }
         });
+
+        return restaurantList;
     }
 
-    public JSONObject getBusinessInfo(String businessId, final ResultActivity activity) throws Exception{
+    public JSONObject getBusinessInfo(String businessId, final ResultActivity activity) throws Exception {
         Request request = new Request.Builder()
                 .url("https://api.yelp.com/v3/businesses/"+businessId)
                 .addHeader("Authorization", "Bearer "+API_KEY)

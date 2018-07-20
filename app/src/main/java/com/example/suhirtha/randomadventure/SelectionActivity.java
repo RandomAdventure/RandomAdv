@@ -6,15 +6,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.models.Restaurant;
 
+import org.json.JSONArray;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -22,6 +25,10 @@ import java.util.Arrays;
 
 
 public class SelectionActivity extends AppCompatActivity {
+
+    //private ArrayList<Restaurant> results;
+    private static ArrayList<Restaurant> firstFive;
+    private String testLocation;
 
     //10 random restaurants (in the SF area) for testing purposes
     Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria & Seafood");
@@ -44,32 +51,32 @@ public class SelectionActivity extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction1;
 
 
-//todo - visibility
+    //todo - Toggle visibility
     Button mSearch;
     Button mDone;
     SeekBar mRadius;
     TextView mRadiusDisplay;
     Spinner mCuisine;
-
+    EditText mTestLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
+        firstFive = new ArrayList<>();
         testRestaurants.addAll(Arrays.asList(test1, test2, test3, test4, test5, test6, test7, test8, test9, test10));
 
         fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.saPlaceholderFragment, accordionList).commit();
 
-
-
-
-
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
+        mTestLocation = findViewById(R.id.etTestLocation);
 
+        testLocation = mTestLocation.getText().toString();
+        Log.d("location test", testLocation);
         //onClickListener for 'Search' button - leads to Anna's randomizer activity
         //TODO - create rest
         //TODO - and then pass array of restaurant to Anna
@@ -77,15 +84,20 @@ public class SelectionActivity extends AppCompatActivity {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent anna = new Intent(SelectionActivity.this, RandomizeActivity.class);
-                anna.putExtra("restaurants", Parcels.wrap(testRestaurants));
-                startActivity(anna);
+
+                try {
+                    passRestaurants();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
                 /*
                 Intent anna = new Intent(view.getContext(), RandomizeActivity.class);
                 anna.putExtra("test1", Parcels.wrap(test1));
                 startActivity(anna);
                 */
+
             }
         });
 
@@ -111,10 +123,26 @@ public class SelectionActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
+    }
 
+    //"notify"
+    public void resultsReturned(JSONArray restaurantList) throws Exception {
+        //get first five for testing purposes
 
+        for (int i = 0; i < 5; i++) {
+            Restaurant restaurant = new Restaurant
+                    (restaurantList.getJSONObject(i).getString("id"),restaurantList.getJSONObject(i).getString("name"));
+            firstFive.add(restaurant);
+        }
+        Intent anna = new Intent(SelectionActivity.this, RandomizeActivity.class);
+        anna.putExtra("restaurants", Parcels.wrap(firstFive));
+        startActivity(anna);
 
+    }
 
+    public void passRestaurants() throws Exception {
+        YelpClient client = new YelpClient();
+        client.run(mTestLocation.getText().toString(), this);
     }
 }
 
