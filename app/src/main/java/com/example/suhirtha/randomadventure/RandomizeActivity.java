@@ -13,11 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.suhirtha.randomadventure.models.Restaurant;
-
 import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -32,7 +29,6 @@ public class RandomizeActivity extends AppCompatActivity {
     Random random = new Random();
     int generator;
     int REQUEST_CODE_SELECTION = 10;
-    String[] restaurants= {"Pizzeria", "Italian", "Mexican", "Chuck E Cheese", "Fancy", "Barbeque", "French", "Brazilian", "Cuban", "Vegetarian"}; //hardcode
     String[] chosen = new String[5];
 
     @Override
@@ -61,6 +57,8 @@ public class RandomizeActivity extends AppCompatActivity {
 
         testRestaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
         Log.d("RandomActivity", "Recieved arraylist of size: " + testRestaurants.size());
+
+        //-------------------------------------------------------------------------------------------
 
         for(int i=0; i< chosen.length; i++){ //assigns restaurant to fixed array
             //chosen[i] = restaurants[random.nextInt(testRestaurants.size())];
@@ -97,6 +95,8 @@ public class RandomizeActivity extends AppCompatActivity {
                 res[i].setText(chosen[i]);
             }
         }
+
+        //---------------------------------------------------------------------------------------------------------------------
 
     }
 
