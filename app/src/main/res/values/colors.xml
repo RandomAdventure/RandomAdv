@@ -7,6 +7,8 @@
     <color name="teal">#7CCDC4</color>
     <color name="darkTeal">#0A6B95</color>
     <color name="lightPurple">#B48EB7</color>
+    <color name="clearPurple">#F0B48EB7</color>
     <color name="darkPurple">#6e639f</color>
     <color name="gold">#F7BB32</color>
+    <color name="clear">#00000000</color>
 </resources>
