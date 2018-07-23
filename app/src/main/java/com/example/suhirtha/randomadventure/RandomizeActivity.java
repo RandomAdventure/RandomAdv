@@ -103,9 +103,11 @@ public class RandomizeActivity extends AppCompatActivity {
     public void onClickRandom(View view) {
         generator = random.nextInt(5); //randomly generates a number between 1 and 5
         spinWheel.setRotation(0);
+        generator = 4;
+        
         switch (generator){
             case 4:
-                spinWheel.startAnimation(clockwise); //1440 + 36 === 6 rotations
+                spinWheel.startAnimation(clockwise); //3260 + 36 === 6 rotations
                 Log.d("RandomizeActivity", generator + "Selected");
                 clockwise.setAnimationListener(new Animation.AnimationListener() {
                     @Override
