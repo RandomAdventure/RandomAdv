@@ -1,5 +1,7 @@
 package com.example.suhirtha.randomadventure;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +15,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.suhirtha.randomadventure.models.Restaurant;
+
 import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,7 +30,7 @@ public class RandomizeActivity extends AppCompatActivity {
     YelpClient client;
     ArrayList<Restaurant> testRestaurants;
     ArrayList<Restaurant> testChosen;
-    Animation clockwise, clockwise1, clockwise2 ,clockwise3, clockwise4;
+    Animation clockwise;
     Random random = new Random();
     int generator;
     int REQUEST_CODE_SELECTION = 10;
@@ -41,10 +46,6 @@ public class RandomizeActivity extends AppCompatActivity {
         testChosen = new ArrayList<>();
         client = new YelpClient();
         clockwise = AnimationUtils.loadAnimation(context,R.anim.clockwise);
-        clockwise1 = AnimationUtils.loadAnimation(context,R.anim.clockwise1);
-        clockwise2 = AnimationUtils.loadAnimation(context,R.anim.clockwise2);
-        clockwise3 = AnimationUtils.loadAnimation(context,R.anim.clockwise3);
-        clockwise4 = AnimationUtils.loadAnimation(context,R.anim.clockwise4);
         res[0] = findViewById(R.id.raRestaurant);
         res[1] = findViewById(R.id.raRestaurant1);
         res[2] = findViewById(R.id.raRestaurant2);
@@ -103,113 +104,46 @@ public class RandomizeActivity extends AppCompatActivity {
     public void onClickRandom(View view) {
         generator = random.nextInt(5); //randomly generates a number between 1 and 5
         spinWheel.setRotation(0);
-        generator = 4;
-        
+        int toDegrees =0 ;
+
+
+        generator = 3;
         switch (generator){
-            case 4:
-                spinWheel.startAnimation(clockwise); //3260 + 36 === 6 rotations
+            case 4: //2160 + 36 === 6 rotations
+                toDegrees = 2196;
                 Log.d("RandomizeActivity", generator + "Selected");
-                clockwise.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-
-                        Intent i = new Intent(context, ResultActivity.class);
-                        i.putExtra("test1", Parcels.wrap(testChosen.get(4)));
-                        startActivity(i);
-                        Log.d("RandomizeActivity", generator + "Animation ended");
-                        spinWheel.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
-                });
                 break;
-            case 3:
-                spinWheel.startAnimation(clockwise1);//2160 + +108
+            case 3://2160 + +108
+                toDegrees = 2268;
                 Log.d("RandomizeActivity", generator + "Selected");
-                clockwise1.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        Intent i = new Intent(context, ResultActivity.class);
-                        i.putExtra("test1", Parcels.wrap(testChosen.get(3)));
-                        startActivity(i);
-                        Log.d("RandomizeActivity", generator + "Animation ended");
-                        spinWheel.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
-                });
                 break;
-            case 2:
-                spinWheel.startAnimation(clockwise2); //2160 + 180
+            case 2://2160 + 180
+                toDegrees = 2340;
                 Log.d("RandomizeActivity", generator + "Selected");
-                clockwise2.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        spinWheel.setEnabled(false);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        Intent i = new Intent(context, ResultActivity.class);
-                        i.putExtra("test1", Parcels.wrap(testChosen.get(2)));
-                        startActivity(i);
-                        Log.d("RandomizeActivity", generator + "Animation ended");
-                        spinWheel.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
-                });
                 break;
-            case 1:
-                spinWheel.startAnimation(clockwise3); //2160+ 252
+            case 1://2160+ 252
+                toDegrees = 2411;
                 Log.d("RandomizeActivity", generator + "Selected");
-                clockwise3.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        Intent i = new Intent(context, ResultActivity.class);
-                        i.putExtra("test1", Parcels.wrap(testChosen.get(1)));
-                        startActivity(i);
-                        Log.d("RandomizeActivity", generator + "Animation ended");
-                        spinWheel.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
-                });
                 break;
-            case 0:
-                spinWheel.startAnimation(clockwise4); //2160 + 324
+            case 0: //2160 + 324
+                toDegrees = 2484;
                 Log.d("RandomizeActivity", generator + "Selected");
-                clockwise4.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {spinWheel.setEnabled(false);}
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        Intent i = new Intent(context, ResultActivity.class);
-                        i.putExtra("test1", Parcels.wrap(testChosen.get(0)));
-                        startActivity(i);
-                        Log.d("RandomizeActivity", generator + "Animation ended");
-                        spinWheel.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {spinWheel.setEnabled(true);}
-                });
                 break;
         }
+
+        ObjectAnimator rotateAnimation = ObjectAnimator.ofFloat(spinWheel, "rotation", 0, toDegrees);
+        rotateAnimation.setDuration(10000);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(rotateAnimation);
+        animatorSet.start();
+
+        if(animatorSet.isPaused()){
+            Intent i = new Intent(context, ResultActivity.class);
+            i.putExtra("test1", Parcels.wrap(testChosen.get(generator)));
+            startActivity(i);
+        }
+
+
     }
 
     //toolbar
