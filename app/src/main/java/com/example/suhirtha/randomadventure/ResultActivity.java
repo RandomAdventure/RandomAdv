@@ -1,10 +1,12 @@
 package com.example.suhirtha.randomadventure;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Movie;
 import android.location.Location;
 import android.location.LocationListener;
@@ -19,10 +21,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.googledirection.DirectionCallback;
+import com.akexorcist.googledirection.GoogleDirection;
+import com.akexorcist.googledirection.constant.TransitMode;
+import com.akexorcist.googledirection.constant.TransportMode;
+import com.akexorcist.googledirection.model.Direction;
+import com.akexorcist.googledirection.model.Info;
+import com.akexorcist.googledirection.model.Leg;
+import com.akexorcist.googledirection.model.Route;
+import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.suhirtha.randomadventure.models.Restaurant;
 
 import org.json.JSONArray;
@@ -36,10 +48,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 /**
  * Created by togata on 7/16/18.
@@ -47,6 +64,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private Context context;
+    private Activity activity;
     private TextView mName;
     private RatingBar mRating;
     private TextView mAddress;
@@ -55,6 +74,9 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private CheckBox mReservation;
     private MapView mMap;
     private GoogleMap googleMap;
+    private TextView mDistance;
+    private TextView mDuration;
+    private ProgressBar mProgressBar;
     private YelpClient client;
     private String phoneNumber;
     private double latitude;
@@ -77,6 +99,21 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         mMap = (MapView) findViewById(R.id.rsaMap);
         mMap.onCreate(savedInstanceState);
         mMap.getMapAsync(this);
+        mDistance = (TextView) findViewById(R.id.rsaDistance);
+        mDuration = (TextView) findViewById(R.id.rsaDuration);
+        mProgressBar = (ProgressBar) findViewById(R.id.rsaProgressBar);
+
+        mProgressBar.setIndeterminate(true);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mName.setVisibility(View.INVISIBLE);
+        mRating.setVisibility(View.INVISIBLE);
+        mAddress.setVisibility(View.INVISIBLE);
+        mReservation.setVisibility(View.INVISIBLE);
+        mDelivery.setVisibility(View.INVISIBLE);
+        mPhoneNumber.setVisibility(View.INVISIBLE);
+        mMap.setVisibility(View.INVISIBLE);
+        mDistance.setVisibility(View.INVISIBLE);
+        mDuration.setVisibility(View.INVISIBLE);
 
         client = new YelpClient();
         passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
@@ -85,6 +122,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         } catch (Exception e) {
             e.printStackTrace();
         }
+        context = this.getApplicationContext();
+        activity = this;
     }
 
     public void notifyRestuarantUpdated(JSONObject restuarant) {
@@ -113,6 +152,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                     mReservation.setChecked(true);
                 }
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -130,12 +170,57 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         startActivity(callIntent);
     }
 
-    public void updateLocation(final LatLng latLng){
+    public void updateLocation(final LatLng destination){
         this.runOnUiThread(new Runnable(){
             public void run(){
-                googleMap.setMinZoomPreference(15);
-                googleMap.addMarker(new MarkerOptions().position(latLng));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mProgressBar.setVisibility(View.INVISIBLE);
+                mName.setVisibility(View.VISIBLE);
+                mRating.setVisibility(View.VISIBLE);
+                mAddress.setVisibility(View.VISIBLE);
+                mReservation.setVisibility(View.VISIBLE);
+                mDelivery.setVisibility(View.VISIBLE);
+                mPhoneNumber.setVisibility(View.VISIBLE);
+                mDistance.setVisibility(View.VISIBLE);
+                mDuration.setVisibility(View.VISIBLE);
+                mMap.setVisibility(View.VISIBLE);
+                com.example.suhirtha.randomadventure.Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
+                final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_api_key))
+                        .from(origin)
+                        .to(destination)
+                        .transportMode(TransportMode.WALKING)
+                        .execute(new DirectionCallback() {
+                            @Override
+                            public void onDirectionSuccess(Direction direction, String rawBody) {
+                                Route route = direction.getRouteList().get(0);
+                                Leg leg = route.getLegList().get(0);
+                                ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, Color.RED);
+                                googleMap.addPolyline(polylineOptions);
+
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+                                googleMap.addMarker(new MarkerOptions().position(origin));
+                                googleMap.addMarker(new MarkerOptions().position(destination));
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(origin)
+                                        .tilt(90)
+                                        .zoom(11)
+                                        .build();
+                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                                Info distanceInfo = leg.getDistance();
+                                Info durationInfo = leg.getDuration();
+                                mDistance.setText(distanceInfo.getText());
+                                mDuration.setText(durationInfo.getText());
+
+                            }
+
+                            @Override
+                            public void onDirectionFailure(Throwable t) {
+                                Log.e("getDirections", t.toString());
+                            }
+                        });
             }
         });
     }
@@ -144,11 +229,11 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap map) {
         googleMap = map;
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ResultActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
-
     }
 
     @Override
@@ -183,7 +268,4 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onLowMemory();
         mMap.onLowMemory();
     }
-
-
-
 }
