@@ -105,8 +105,7 @@ public class RandomizeActivity extends AppCompatActivity {
         generator = random.nextInt(5); //randomly generates a number between 1 and 5
         spinWheel.setRotation(0);
         int toDegrees =0 ;
-
-
+        
         generator = 3;
         switch (generator){
             case 4: //2160 + 36 === 6 rotations
@@ -137,13 +136,17 @@ public class RandomizeActivity extends AppCompatActivity {
         animatorSet.playTogether(rotateAnimation);
         animatorSet.start();
 
-        if(animatorSet.isPaused()){
-            Intent i = new Intent(context, ResultActivity.class);
-            i.putExtra("test1", Parcels.wrap(testChosen.get(generator)));
-            startActivity(i);
-        }
-
-
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(context, ResultActivity.class);
+                        i.putExtra("test1", Parcels.wrap(testChosen.get(generator)));
+                        startActivity(i);
+                    }
+                },
+                11000
+        );
     }
 
     //toolbar
