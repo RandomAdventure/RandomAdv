@@ -1,5 +1,6 @@
 package com.example.suhirtha.randomadventure;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -105,7 +106,7 @@ public class RandomizeActivity extends AppCompatActivity {
         generator = random.nextInt(5); //randomly generates a number between 1 and 5
         spinWheel.setRotation(0);
         int toDegrees =0 ;
-        
+
         generator = 3;
         switch (generator){
             case 4: //2160 + 36 === 6 rotations
@@ -133,20 +134,33 @@ public class RandomizeActivity extends AppCompatActivity {
         ObjectAnimator rotateAnimation = ObjectAnimator.ofFloat(spinWheel, "rotation", 0, toDegrees);
         rotateAnimation.setDuration(10000);
         AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.addListener(new Animator.AnimatorListener() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                // ...
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                // ...
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Intent i = new Intent(context, ResultActivity.class);
+                i.putExtra("test1", Parcels.wrap(testChosen.get(generator)));
+                startActivity(i);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                // ...
+            }
+        });
+
         animatorSet.playTogether(rotateAnimation);
         animatorSet.start();
-
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        Intent i = new Intent(context, ResultActivity.class);
-                        i.putExtra("test1", Parcels.wrap(testChosen.get(generator)));
-                        startActivity(i);
-                    }
-                },
-                11000
-        );
     }
 
     //toolbar
