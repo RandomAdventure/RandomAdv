@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -76,6 +77,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap googleMap;
     private TextView mDistance;
     private TextView mDuration;
+    private ImageButton mWalking;
+    private ImageButton mDriving;
     private ProgressBar mProgressBar;
     private YelpClient client;
     private String phoneNumber;
@@ -83,6 +86,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private double longitude;
     private JSONObject restuarant;
     private Restaurant passedRestaurant;
+    private LatLng destination;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         mMap.getMapAsync(this);
         mDistance = (TextView) findViewById(R.id.rsaDistance);
         mDuration = (TextView) findViewById(R.id.rsaDuration);
+        mWalking = (ImageButton) findViewById(R.id.rsaWalking);
+        mDriving = (ImageButton) findViewById(R.id.rsaDriving);
         mProgressBar = (ProgressBar) findViewById(R.id.rsaProgressBar);
 
         mProgressBar.setIndeterminate(true);
@@ -114,6 +120,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         mMap.setVisibility(View.INVISIBLE);
         mDistance.setVisibility(View.INVISIBLE);
         mDuration.setVisibility(View.INVISIBLE);
+        mWalking.setVisibility(View.INVISIBLE);
+        mDriving.setVisibility(View.INVISIBLE);
 
         client = new YelpClient();
         passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
@@ -171,6 +179,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void updateLocation(final LatLng destination){
+        this.destination = destination;
         this.runOnUiThread(new Runnable(){
             public void run(){
                 mProgressBar.setVisibility(View.INVISIBLE);
@@ -183,6 +192,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                 mDistance.setVisibility(View.VISIBLE);
                 mDuration.setVisibility(View.VISIBLE);
                 mMap.setVisibility(View.VISIBLE);
+                mWalking.setVisibility(View.VISIBLE);
+                mDriving.setVisibility(View.VISIBLE);
                 com.example.suhirtha.randomadventure.Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
                 final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
@@ -196,24 +207,23 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                                 Route route = direction.getRouteList().get(0);
                                 Leg leg = route.getLegList().get(0);
                                 ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
-                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, Color.RED);
+                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
                                 googleMap.addPolyline(polylineOptions);
-
                                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
                                 googleMap.addMarker(new MarkerOptions().position(origin));
                                 googleMap.addMarker(new MarkerOptions().position(destination));
-                                CameraPosition cameraPosition = new CameraPosition.Builder()
-                                        .target(origin)
-                                        .tilt(90)
-                                        .zoom(11)
-                                        .build();
-                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                builder.include(origin);
+                                builder.include(destination);
+                                LatLngBounds bounds = builder.build();
+                                int padding = 60;
+                                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                                googleMap.animateCamera(cameraUpdate);
 
                                 Info distanceInfo = leg.getDistance();
                                 Info durationInfo = leg.getDuration();
                                 mDistance.setText(distanceInfo.getText());
                                 mDuration.setText(durationInfo.getText());
-
                             }
 
                             @Override
@@ -223,6 +233,12 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                         });
             }
         });
+    }
+
+    public void drivingDirections(View v){
+        //mDriving.setBackgroundColor(#f0b48eb7);
+        mDriving.setBackgroundColor(getResources().getColor(R.color.clearPurple));
+        mWalking.setBackgroundColor(getResources().getColor(R.color.clear));
     }
 
     @Override
