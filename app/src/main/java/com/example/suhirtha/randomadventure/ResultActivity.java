@@ -199,7 +199,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
                 GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_api_key))
                         .from(origin)
-                        .to(destination)
+                        .to(destination) 
                         .transportMode(TransportMode.WALKING)
                         .execute(new DirectionCallback() {
                             @Override
