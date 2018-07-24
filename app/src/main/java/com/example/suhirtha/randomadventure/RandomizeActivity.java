@@ -12,30 +12,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.suhirtha.randomadventure.models.Restaurant;
-
 import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomizeActivity extends AppCompatActivity {
-    ImageView spinWheel;
-    TextView[] res = new TextView[5];
-    Context context;
-    YelpClient client;
-    ArrayList<Restaurant> testRestaurants;
-    ArrayList<Restaurant> testChosen;
-    Animation clockwise;
-    Random random = new Random();
-    int generator;
-    int REQUEST_CODE_SELECTION = 10;
-    String[] chosen = new String[5];
+    private ImageView spinWheel;
+    private TextView[] res = new TextView[5];
+    private Context context;
+    private YelpClient client;
+    private ArrayList<Restaurant> restaurants;
+    private ArrayList<Restaurant> chosen;
+    private Random random = new Random();
+    private int generator;
+    private int REQUEST_CODE_SELECTION = 10;
+    private String[] selection = new String[5];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +37,9 @@ public class RandomizeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_randomize);
         spinWheel = findViewById(R.id.raWheel);
         context = getApplicationContext();
-        testRestaurants = new ArrayList<>();
-        testChosen = new ArrayList<>();
+        restaurants = new ArrayList<>();
+        chosen = new ArrayList<>();
         client = new YelpClient();
-        clockwise = AnimationUtils.loadAnimation(context,R.anim.clockwise);
         res[0] = findViewById(R.id.raRestaurant);
         res[1] = findViewById(R.id.raRestaurant1);
         res[2] = findViewById(R.id.raRestaurant2);
@@ -57,44 +50,46 @@ public class RandomizeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); //removes title
 
-        testRestaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
-        Log.d("RandomActivity", "Recieved arraylist of size: " + testRestaurants.size());
+        restaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
+        Log.d("RandomActivity", "Recieved arraylist of size: " + restaurants.size());
+
+        spinWheel.setRotation(0);
 
         //-------------------------------------------------------------------------------------------
 
-        for(int i=0; i< chosen.length; i++){ //assigns restaurant to fixed array
-            //chosen[i] = restaurants[random.nextInt(testRestaurants.size())];
-            testChosen.add(testRestaurants.get(random.nextInt(testRestaurants.size())));
-            chosen[i] = testChosen.get(i).getName();
+        for(int i = 0; i< selection.length; i++){ //assigns restaurant to fixed array
+            //selection[i] = restaurants[random.nextInt(restaurants.size())];
+            chosen.add(restaurants.get(random.nextInt(restaurants.size())));
+            selection[i] = chosen.get(i).getName();
         }
 
-        if(testRestaurants.size() >= chosen.length){
+        if(restaurants.size() >= selection.length){
             //if the length of the array of restaurants
-            // is more than the length of the chosen restaurants,
+            // is more than the length of the selection restaurants,
             // recheck for repeated restaurants
-            for(int i=0; i<chosen.length; i++){ //replace pre-existing restaurants
-                for (int k = i + 1; k < chosen.length; k++) {
-                    while (chosen[i] == chosen[k]){
-                        testChosen.remove(k);
-                        testChosen.add(k, testRestaurants.get(random.nextInt(testRestaurants.size())));
-                        chosen[k] = testChosen.get(k).getName();
+            for(int i = 0; i< selection.length; i++){ //replace pre-existing restaurants
+                for (int k = i + 1; k < selection.length; k++) {
+                    while (selection[i] == selection[k]){
+                        chosen.remove(k);
+                        chosen.add(k, restaurants.get(random.nextInt(restaurants.size())));
+                        selection[k] = chosen.get(k).getName();
                     }
                 }
-                Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
-                res[i].setText(chosen[i]);
+                Log.d("RandomizeActivity", "Restaurant selection: " + selection[i]);
+                res[i].setText(selection[i]);
             }
         }
-        else{ //if length of restaurants is less than length chosen, to avoid infinite loop, rechecks once for maximun efficency
-            for(int i=0; i<chosen.length; i++){ //replace pre-existing restaurants
-                for (int k = i + 1; k < chosen.length; k++) {
-                    if (chosen[i] == chosen[k]){
-                        testChosen.remove(k);
-                        testChosen.add(k, testRestaurants.get(random.nextInt(testRestaurants.size())));
-                        chosen[k] = testChosen.get(k).getName();
+        else{ //if length of restaurants is less than length selection, to avoid infinite loop, rechecks once for maximun efficency
+            for(int i = 0; i< selection.length; i++){ //replace pre-existing restaurants
+                for (int k = i + 1; k < selection.length; k++) {
+                    if (selection[i] == selection[k]){
+                        chosen.remove(k);
+                        chosen.add(k, restaurants.get(random.nextInt(restaurants.size())));
+                        selection[k] = chosen.get(k).getName();
                     }
                 }
-                Log.d("RandomizeActivity", "Restaurant chosen: " + chosen[i]);
-                res[i].setText(chosen[i]);
+                Log.d("RandomizeActivity", "Restaurant selection: " + selection[i]);
+                res[i].setText(selection[i]);
             }
         }
 
@@ -104,10 +99,8 @@ public class RandomizeActivity extends AppCompatActivity {
 
     public void onClickRandom(View view) {
         generator = random.nextInt(5); //randomly generates a number between 1 and 5
-        spinWheel.setRotation(0);
         int toDegrees =0 ;
 
-        generator = 3;
         switch (generator){
             case 4: //2160 + 36 === 6 rotations
                 toDegrees = 2196;
@@ -137,26 +130,21 @@ public class RandomizeActivity extends AppCompatActivity {
         animatorSet.addListener(new Animator.AnimatorListener() {
 
             @Override
-            public void onAnimationStart(Animator animation) {
-                // ...
-            }
+            public void onAnimationStart(Animator animation) { spinWheel.setClickable(false); }
 
             @Override
-            public void onAnimationRepeat(Animator animation) {
-                // ...
-            }
+            public void onAnimationRepeat(Animator animation) { spinWheel.setClickable(false); }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 Intent i = new Intent(context, ResultActivity.class);
-                i.putExtra("test1", Parcels.wrap(testChosen.get(generator)));
+                i.putExtra("test1", Parcels.wrap(chosen.get(generator)));
                 startActivity(i);
+                spinWheel.setClickable(true);
             }
 
             @Override
-            public void onAnimationCancel(Animator animation) {
-                // ...
-            }
+            public void onAnimationCancel(Animator animation) { spinWheel.setClickable(false); }
         });
 
         animatorSet.playTogether(rotateAnimation);
@@ -166,7 +154,6 @@ public class RandomizeActivity extends AppCompatActivity {
     //toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_random, menu);
         return true;
     }
@@ -179,6 +166,5 @@ public class RandomizeActivity extends AppCompatActivity {
     public void onClickBack(View view) {
         Intent intent = new Intent(this, SelectionActivity.class);
         startActivityForResult(intent,REQUEST_CODE_SELECTION); //wrapping
-        //shows post after composing on timeline, UNLIKE startActivity
     }
 }
