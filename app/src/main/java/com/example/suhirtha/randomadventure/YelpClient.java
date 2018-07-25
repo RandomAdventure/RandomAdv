@@ -2,6 +2,8 @@ package com.example.suhirtha.randomadventure;
 
 import android.util.Log;
 
+import com.example.suhirtha.randomadventure.models.UserRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,15 +49,20 @@ public class YelpClient{
     //TODO - automatic location, rating, price (in that order of implementation) by tomorrow?
     /**
      * Populates the restaurantList with a list of restaurants that matches user requirements
-     * @param location - currently, user-entered location as a string literal
-     * TODO - create helper method for URL builder? and take in user parameters there?
      * @param activity - not sure about passing in instance of an activity, there has to be a better way
      */
-    public JSONArray getBusinesses(String location, final SelectionActivity activity)  {
+    public JSONArray getBusinesses(UserRequest req, final SelectionActivity activity)  {
 
+        /*
         //Build URL according to user parameters: temporary
         Request request = new Request.Builder()
                 .url(URL+"?location=" + location)
+                .addHeader("Authorization", "Bearer "+API_KEY)
+                .build();
+                */
+
+        Request request = new Request.Builder()
+                .url(req.getCompleteURL())
                 .addHeader("Authorization", "Bearer "+API_KEY)
                 .build();
 

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.models.Restaurant;
+import com.example.suhirtha.randomadventure.models.UserRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,12 +34,17 @@ public class SelectionActivity extends AppCompatActivity {
     private Button mSearch;
     private Button mDone;
     private SeekBar mRadius;
+    private EditText mTestRadius;
+    private EditText mTestPrice;
+
     private TextView mRadiusDisplay;
     private Spinner mCuisine;
     private EditText mTestLocation;
 //--------------------------------------------------------------------------------------------------
     Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
 //--------------------------------------------------------------------------------------------------
+
+    UserRequest request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,8 @@ public class SelectionActivity extends AppCompatActivity {
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
         mTestLocation = findViewById(R.id.etTestLocation);
+        mTestRadius = findViewById(R.id.etTestRadius);
+        mTestPrice = findViewById(R.id.etTestPrice);
         firstFive = new ArrayList<>(); //initialize the holder arrayList
 
         //onClickListener for 'Search' button - leads to Anna's randomizer activity
@@ -61,6 +69,7 @@ public class SelectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    createRequest();
                     passRestaurants();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -117,11 +126,17 @@ public class SelectionActivity extends AppCompatActivity {
         //creates a new YelpClient instance - TODO: static?
         YelpClient client = new YelpClient();
         try {
-            //requests with only location, for now
-            client.getBusinesses(mTestLocation.getText().toString(), this);
+            client.getBusinesses(request, this);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void createRequest() {
+        request = new UserRequest(this, this); //TODO - what.
+        request.setRadius(Integer.parseInt(mTestRadius.getText().toString()));
+        request.setMaxPrice(Integer.parseInt(mTestPrice.getText().toString()));
+        request.buildURL();
     }
 
 }
