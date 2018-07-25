@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.suhirtha.randomadventure.RandomizeActivity"
+    android:background="@color/lightTeal">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/black"
+        android:background="@color/darkTeal">
+
+        <ImageView
+            android:id="@+id/toolbar_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:src="@drawable/logo75" />
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:layout_gravity="start|center_vertical"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:onClick="onClickBack"
+            android:backgroundTint="@android:color/white"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/raWheel"
+        android:layout_width="270dp"
+        android:layout_height="270dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/toolbar"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:adjustViewBounds="true"
+        android:onClick="onClickRandom"
+        app:srcCompat="@drawable/true_color_wheel" />
+
+    <TextView
+        android:id="@+id/raTapSpin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:paddingTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Tap to spin!"
+        android:textColor="@color/darkPurple"
+        android:textSize="30dp"
+        />
+
+    <ImageView
+        android:id="@+id/raSpindle"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_above="@+id/raRestaurant1"
+        android:layout_marginEnd="44dp"
+        android:layout_toStartOf="@+id/raTapSpin"
+        app:srcCompat="@drawable/spindle" />
+
+    <ImageView
+        android:id="@+id/raColor"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@id/raWheel"
+        android:layout_below="@id/toolbar"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/borders"
+        app:srcCompat="@color/darkPurple" />
+
+    <ImageView
+        android:id="@+id/raColor1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/raColor"
+        android:layout_below="@+id/raColor"
+        android:background="@drawable/borders"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        app:srcCompat="@color/lightPurple" />
+
+    <ImageView
+        android:id="@+id/raColor2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/raColor1"
+        android:layout_marginRight="5dp"
+        android:layout_toStartOf="@+id/raRestaurant1"
+        android:background="@drawable/borders"
+        app:srcCompat="@color/darkTeal" />
+
+    <ImageView
+        android:id="@+id/raColor3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/raColor2"
+        android:layout_below="@+id/raColor2"
+        android:background="@drawable/borders"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:srcCompat="@color/teal" />
+
+    <ImageView
+        android:id="@+id/raColor4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/raColor3"
+        android:layout_below="@+id/raColor3"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/borders"
+        app:srcCompat="@color/lightTeal" />
+
+    <TextView
+        android:id="@+id/raRestaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/raColor1"
+        android:layout_alignStart="@+id/raRestaurant1"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Tap to spin!"
+        android:textSize="20dp"
+        android:textColor="@color/darkPurple" />
+
+    <TextView
+        android:id="@+id/raRestaurant1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/raColor2"
+        android:layout_toEndOf="@+id/raColor1"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Tap to spin!"
+        android:textSize="20dp"
+        android:textColor="@color/darkPurple" />
+
+    <TextView
+        android:id="@+id/raRestaurant2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/raColor3"
+        android:layout_toEndOf="@+id/raColor2"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Tap to spin!"
+        android:textSize="20dp"
+        android:textColor="@color/darkPurple" />
+
+    <TextView
+        android:id="@+id/raRestaurant3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/raColor4"
+        android:layout_toEndOf="@+id/raColor3"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Tap to spin!"
+        android:textSize="20dp"
+        android:textColor="@color/darkPurple" />
+
+    <TextView
+        android:id="@+id/raRestaurant4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/raColor4"
+        android:layout_toEndOf="@+id/raColor4"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Tap to spin!"
+        android:textSize="20dp"
+        android:textColor="@color/darkPurple" />
+
+</RelativeLayout>

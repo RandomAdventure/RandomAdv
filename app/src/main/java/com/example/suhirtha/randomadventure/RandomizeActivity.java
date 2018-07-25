@@ -53,8 +53,6 @@ public class RandomizeActivity extends AppCompatActivity {
         restaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
         Log.d("RandomActivity", "Recieved arraylist of size: " + restaurants.size());
 
-        spinWheel.setRotation(0);
-
         //-------------------------------------------------------------------------------------------
 
         for(int i = 0; i< selection.length; i++){ //assigns restaurant to fixed array
