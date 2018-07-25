@@ -9,7 +9,6 @@ public class UserRequest {
 
     private double userLatitude;
     private double userLongitude;
-    private String customLocation; //not applicable... yet
     private int radius; //in miles
     private String term;
     private float minRating = 0; //cannot be implemented here
@@ -23,7 +22,6 @@ public class UserRequest {
 
     private String completeURL;
 
-
     public static final String BASE_URL = "https://api.yelp.com/v3/businesses/search";
 
 
@@ -35,7 +33,6 @@ public class UserRequest {
         completeURL = BASE_URL; //bc strings are immutable!! the only thing I learned in school
 
     }
-
 
     public void setRadius(int radius) {
         this.radius = radius;
