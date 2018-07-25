@@ -194,12 +194,13 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                 mMap.setVisibility(View.VISIBLE);
                 mWalking.setVisibility(View.VISIBLE);
                 mDriving.setVisibility(View.VISIBLE);
+                mDriving.setBackgroundColor(getResources().getColor(R.color.clear));
                 com.example.suhirtha.randomadventure.Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
                 final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
                 GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_api_key))
                         .from(origin)
-                        .to(destination) 
+                        .to(destination)
                         .transportMode(TransportMode.WALKING)
                         .execute(new DirectionCallback() {
                             @Override
@@ -236,9 +237,49 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void drivingDirections(View v){
-        //mDriving.setBackgroundColor(#f0b48eb7);
-        mDriving.setBackgroundColor(getResources().getColor(R.color.clearPurple));
         mWalking.setBackgroundColor(getResources().getColor(R.color.clear));
+        mDriving.setBackgroundColor(getResources().getColor(R.color.clearPurple));
+        this.runOnUiThread(new Runnable(){
+            public void run(){
+                com.example.suhirtha.randomadventure.Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
+                final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_api_key))
+                        .from(origin)
+                        .to(destination)
+                        .transportMode(TransportMode.DRIVING)
+                        .execute(new DirectionCallback() {
+                            @Override
+                            public void onDirectionSuccess(Direction direction, String rawBody) {
+                                Route route = direction.getRouteList().get(0);
+                                Leg leg = route.getLegList().get(0);
+                                ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
+                                googleMap.addPolyline(polylineOptions);
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+                                googleMap.addMarker(new MarkerOptions().position(origin));
+                                googleMap.addMarker(new MarkerOptions().position(destination));
+                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                builder.include(origin);
+                                builder.include(destination);
+                                LatLngBounds bounds = builder.build();
+                                int padding = 60;
+                                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                                googleMap.animateCamera(cameraUpdate);
+
+                                Info distanceInfo = leg.getDistance();
+                                Info durationInfo = leg.getDuration();
+                                mDistance.setText(distanceInfo.getText());
+                                mDuration.setText(durationInfo.getText());
+                            }
+
+                            @Override
+                            public void onDirectionFailure(Throwable t) {
+                                Log.e("getDirections", t.toString());
+                            }
+                        });
+            }
+        });
     }
 
     @Override
