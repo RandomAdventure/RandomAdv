@@ -22,9 +22,11 @@ public class UserRequest {
 
     private String completeURL;
 
+//--------------------------------------------------------------------------------------------------
+
     public static final String BASE_URL = "https://api.yelp.com/v3/businesses/search";
 
-
+//--------------------------------------------------------------------------------------------------
     public UserRequest(Context context, Activity currentActivity) {
 
         userLocation = new Location(context, currentActivity);
@@ -33,7 +35,7 @@ public class UserRequest {
         completeURL = BASE_URL; //bc strings are immutable!! the only thing I learned in school
 
     }
-
+//--------------------------------------------------------------------------------------------------
     public void setRadius(int radius) {
         this.radius = radius;
     }
@@ -56,7 +58,7 @@ public class UserRequest {
         attributesAdded = true;
     }
 
-
+//--------------------------------------------------------------------------------------------------
     public void buildURL() {
         //TODO - confirm: order of params does not matter?
         switch (maxPrice) {
@@ -92,7 +94,7 @@ public class UserRequest {
 
         }
     }
-
+//--------------------------------------------------------------------------------------------------
     public String getCompleteURL() {
         return this.completeURL;
     }
