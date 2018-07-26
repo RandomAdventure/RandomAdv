@@ -133,10 +133,16 @@ public class SelectionActivity extends AppCompatActivity {
     }
 
     public void createRequest() {
-        request = new UserRequest(this, this); //TODO - what.
-        request.setRadius(Integer.parseInt(mTestRadius.getText().toString()));
-        request.setMaxPrice(Integer.parseInt(mTestPrice.getText().toString()));
-        request.buildURL();
+
+        // request = new UserRequest(this, this); //TODO - what.
+        // request.setRadius(Integer.parseInt(mTestRadius.getText().toString()));
+        // request.setMaxPrice(Integer.parseInt(mTestPrice.getText().toString()));
+        // request.buildURL();
+
+        request = new UserRequest(this, this)
+                .setRadius(Integer.parseInt(mTestRadius.getText().toString()))
+                .setMaxPrice(Integer.parseInt(mTestPrice.getText().toString()))
+                .buildURL();
     }
 
 }
