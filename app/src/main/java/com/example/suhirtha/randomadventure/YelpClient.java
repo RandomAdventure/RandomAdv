@@ -25,6 +25,8 @@ import okhttp3.ResponseBody;
 
 public class YelpClient{
 
+    RestaurantListener restaurantListener;
+
 //--------------------------------------------------------------------------------------------------
     //TODO - All (07/19)
     //TODO - put keys and client id in secrets.xml and stop pushing it to github :(
@@ -41,6 +43,11 @@ public class YelpClient{
      * default constructor
      */
     public YelpClient(){
+
+    }
+
+    public YelpClient(RestaurantListener restaurantListener){
+        this.restaurantListener = restaurantListener;
 
     }
 
@@ -103,7 +110,7 @@ public class YelpClient{
     }
 
 
-    public JSONObject getBusinessInfo(String businessId, final ResultActivity activity) throws Exception {
+    public JSONObject getBusinessInfo(String businessId) throws Exception {
         Request request = new Request.Builder()
                 .url("https://api.yelp.com/v3/businesses/"+businessId)
                 .addHeader("Authorization", "Bearer "+API_KEY)
@@ -127,7 +134,7 @@ public class YelpClient{
                         JSONObject object = new JSONObject(data);
                         Log.d("Business", object.getString("name"));
                         selectedRestaurant = object;
-                        activity.notifyRestuarantUpdated(object);
+                        restaurantListener.restaurantInfo(selectedRestaurant);
 
 
                     } catch (JSONException e) {
