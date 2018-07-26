@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = this.getWritableDatabase(); //to check
     }
 
     // Called when the database connection is being configured.
@@ -48,12 +49,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 KEY_RESTAURANT_YELP_ID + " TEXT," +
                 KEY_RESTAURANT_NAME + " TEXT" +
                 ")";
-        sqLiteDatabase.execSQL(CREATE_RESTAURANT_TABLE);
+        sqLiteDatabase.execSQL(CREATE_RESTAURANT_TABLE); //this is the query that we use to create a table
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_RESTAURANTS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_RESTAURANTS); //adds into to the table
         onCreate(sqLiteDatabase);
     }
 

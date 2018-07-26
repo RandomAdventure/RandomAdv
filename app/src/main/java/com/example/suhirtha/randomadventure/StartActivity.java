@@ -51,7 +51,8 @@ public class StartActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_saved:
-                        Toast.makeText(StartActivity.this, "Saved!", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(context, RestaurantsChosenActivity.class);
+                        startActivity(i);
                         return true;
                     case R.id.menu_settings:
                         Toast.makeText(StartActivity.this, "Settings!", Toast.LENGTH_SHORT).show();
