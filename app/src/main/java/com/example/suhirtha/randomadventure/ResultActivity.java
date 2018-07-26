@@ -1,36 +1,25 @@
 package com.example.suhirtha.randomadventure;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.Movie;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.akexorcist.googledirection.DirectionCallback;
-import com.akexorcist.googledirection.GoogleDirection;
-import com.akexorcist.googledirection.constant.TransitMode;
-import com.akexorcist.googledirection.constant.TransportMode;
 import com.akexorcist.googledirection.model.Direction;
 import com.akexorcist.googledirection.model.Info;
 import com.akexorcist.googledirection.model.Leg;
@@ -47,13 +36,9 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -63,7 +48,7 @@ import java.util.ArrayList;
  * Created by togata on 7/16/18.
  */
 
-public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, RestaurantListener {
 
     private Context context;
     private Activity activity;
@@ -87,6 +72,10 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private JSONObject restuarant;
     private Restaurant passedRestaurant;
     private LatLng destination;
+    private Direction directions;
+    private Location currentLocation;
+
+    private ResultViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,18 +112,25 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         mWalking.setVisibility(View.INVISIBLE);
         mDriving.setVisibility(View.INVISIBLE);
 
-        client = new YelpClient();
+        client = new YelpClient(this);
         passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
         try {
-            JSONObject restuarant = client.getBusinessInfo(passedRestaurant.getId(), this);
+            JSONObject restuarant = client.getBusinessInfo(passedRestaurant.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
         context = this.getApplicationContext();
         activity = this;
+
+        currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
+
+        model= ViewModelProviders.of(this).get(ResultViewModel.class);
+
     }
 
-    public void notifyRestuarantUpdated(JSONObject restuarant) {
+    @SuppressLint("ResourceType")
+    @Override
+    public void restaurantInfo(JSONObject restuarant) {
         this.restuarant = restuarant;
         try {
             mName.setText(restuarant.getString("name"));
@@ -149,7 +145,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             latitude = (double) coordinates.get("latitude");
             longitude = (double) coordinates.get("longitude");
             LatLng latLng = new LatLng(latitude, longitude);
-            updateLocation(latLng);
+            this.destination = latLng;
+            walkingDirections((View)findViewById(R.layout.activity_result));
 
             JSONArray transactions = restuarant.getJSONArray("transactions");
             for (int i = 0; i < transactions.length(); i++) {
@@ -178,108 +175,107 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         startActivity(callIntent);
     }
 
-    public void updateLocation(final LatLng destination){
+    public void walkingDirections(View v){
         this.destination = destination;
-        this.runOnUiThread(new Runnable(){
-            public void run(){
-                mProgressBar.setVisibility(View.INVISIBLE);
-                mName.setVisibility(View.VISIBLE);
-                mRating.setVisibility(View.VISIBLE);
-                mAddress.setVisibility(View.VISIBLE);
-                mReservation.setVisibility(View.VISIBLE);
-                mDelivery.setVisibility(View.VISIBLE);
-                mPhoneNumber.setVisibility(View.VISIBLE);
-                mDistance.setVisibility(View.VISIBLE);
-                mDuration.setVisibility(View.VISIBLE);
-                mMap.setVisibility(View.VISIBLE);
-                mWalking.setVisibility(View.VISIBLE);
-                mDriving.setVisibility(View.VISIBLE);
-                mDriving.setBackgroundColor(getResources().getColor(R.color.clear));
-                com.example.suhirtha.randomadventure.Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
-                final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        final Observer<Direction> walkingDirectionObserver = new Observer<Direction>() {
+            @Override
+            public void onChanged(@Nullable final Direction direction) {
+                activity.runOnUiThread(new Runnable(){
+                    public void run(){
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        mName.setVisibility(View.VISIBLE);
+                        mRating.setVisibility(View.VISIBLE);
+                        mAddress.setVisibility(View.VISIBLE);
+                        mReservation.setVisibility(View.VISIBLE);
+                        mDelivery.setVisibility(View.VISIBLE);
+                        mPhoneNumber.setVisibility(View.VISIBLE);
+                        mDistance.setVisibility(View.VISIBLE);
+                        mDuration.setVisibility(View.VISIBLE);
+                        googleMap.clear();
+                        mMap.setVisibility(View.VISIBLE);
+                        mWalking.setVisibility(View.VISIBLE);
+                        mDriving.setVisibility(View.VISIBLE);
+                        mWalking.setBackgroundColor(getResources().getColor(R.color.clearPurple));
+                        mDriving.setBackgroundColor(getResources().getColor(R.color.clear));
+                        Route route = direction.getRouteList().get(0);
+                        Leg leg = route.getLegList().get(0);
+                        ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                        PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
+                        googleMap.addPolyline(polylineOptions);
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+                        googleMap.addMarker(new MarkerOptions().position(origin));
+                        googleMap.addMarker(new MarkerOptions().position(destination));
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        builder.include(origin);
+                        builder.include(destination);
+                        LatLngBounds bounds = builder.build();
+                        int padding = 60;
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                        googleMap.animateCamera(cameraUpdate);
 
-                GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_api_key))
-                        .from(origin)
-                        .to(destination)
-                        .transportMode(TransportMode.WALKING)
-                        .execute(new DirectionCallback() {
-                            @Override
-                            public void onDirectionSuccess(Direction direction, String rawBody) {
-                                Route route = direction.getRouteList().get(0);
-                                Leg leg = route.getLegList().get(0);
-                                ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
-                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
-                                googleMap.addPolyline(polylineOptions);
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-                                googleMap.addMarker(new MarkerOptions().position(origin));
-                                googleMap.addMarker(new MarkerOptions().position(destination));
-                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                                builder.include(origin);
-                                builder.include(destination);
-                                LatLngBounds bounds = builder.build();
-                                int padding = 60;
-                                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                                googleMap.animateCamera(cameraUpdate);
+                        Info distanceInfo = leg.getDistance();
+                        Info durationInfo = leg.getDuration();
+                        mDistance.setText(distanceInfo.getText());
+                        mDuration.setText(durationInfo.getText());
 
-                                Info distanceInfo = leg.getDistance();
-                                Info durationInfo = leg.getDuration();
-                                mDistance.setText(distanceInfo.getText());
-                                mDuration.setText(durationInfo.getText());
-                            }
+                    }
+                });
 
-                            @Override
-                            public void onDirectionFailure(Throwable t) {
-                                Log.e("getDirections", t.toString());
-                            }
-                        });
             }
-        });
+        };
+        model.getWalkingDirections(getResources().getString(R.string.google_maps_api_key), origin, destination).observe(this, walkingDirectionObserver);
     }
 
     public void drivingDirections(View v){
-        mWalking.setBackgroundColor(getResources().getColor(R.color.clear));
-        mDriving.setBackgroundColor(getResources().getColor(R.color.clearPurple));
-        this.runOnUiThread(new Runnable(){
-            public void run(){
-                com.example.suhirtha.randomadventure.Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
-                final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        final Observer<Direction> drivingDirectionObserver = new Observer<Direction>() {
+            @Override
+            public void onChanged(@Nullable final Direction direction) {
+                activity.runOnUiThread(new Runnable(){
+                    public void run(){
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        mName.setVisibility(View.VISIBLE);
+                        mRating.setVisibility(View.VISIBLE);
+                        mAddress.setVisibility(View.VISIBLE);
+                        mReservation.setVisibility(View.VISIBLE);
+                        mDelivery.setVisibility(View.VISIBLE);
+                        mPhoneNumber.setVisibility(View.VISIBLE);
+                        mDistance.setVisibility(View.VISIBLE);
+                        mDuration.setVisibility(View.VISIBLE);
+                        googleMap.clear();
+                        mMap.setVisibility(View.VISIBLE);
+                        mWalking.setVisibility(View.VISIBLE);
+                        mDriving.setVisibility(View.VISIBLE);
+                        mWalking.setBackgroundColor(getResources().getColor(R.color.clear));
+                        mDriving.setBackgroundColor(getResources().getColor(R.color.clearPurple));
+                        Route route = direction.getRouteList().get(0);
+                        Leg leg = route.getLegList().get(0);
+                        ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                        PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
+                        googleMap.addPolyline(polylineOptions);
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+                        googleMap.addMarker(new MarkerOptions().position(origin));
+                        googleMap.addMarker(new MarkerOptions().position(destination));
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        builder.include(origin);
+                        builder.include(destination);
+                        LatLngBounds bounds = builder.build();
+                        int padding = 60;
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                        googleMap.animateCamera(cameraUpdate);
 
-                GoogleDirection.withServerKey(getResources().getString(R.string.google_maps_api_key))
-                        .from(origin)
-                        .to(destination)
-                        .transportMode(TransportMode.DRIVING)
-                        .execute(new DirectionCallback() {
-                            @Override
-                            public void onDirectionSuccess(Direction direction, String rawBody) {
-                                Route route = direction.getRouteList().get(0);
-                                Leg leg = route.getLegList().get(0);
-                                ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
-                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
-                                googleMap.addPolyline(polylineOptions);
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-                                googleMap.addMarker(new MarkerOptions().position(origin));
-                                googleMap.addMarker(new MarkerOptions().position(destination));
-                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                                builder.include(origin);
-                                builder.include(destination);
-                                LatLngBounds bounds = builder.build();
-                                int padding = 60;
-                                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                                googleMap.animateCamera(cameraUpdate);
+                        Info distanceInfo = leg.getDistance();
+                        Info durationInfo = leg.getDuration();
+                        mDistance.setText(distanceInfo.getText());
+                        mDuration.setText(durationInfo.getText());
 
-                                Info distanceInfo = leg.getDistance();
-                                Info durationInfo = leg.getDuration();
-                                mDistance.setText(distanceInfo.getText());
-                                mDuration.setText(durationInfo.getText());
-                            }
+                    }
+                });
 
-                            @Override
-                            public void onDirectionFailure(Throwable t) {
-                                Log.e("getDirections", t.toString());
-                            }
-                        });
             }
-        });
+        };
+        model.getDrivingDirections(getResources().getString(R.string.google_maps_api_key), origin, destination).observe(this, drivingDirectionObserver);
     }
 
     @Override
