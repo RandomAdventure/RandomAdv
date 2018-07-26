@@ -62,7 +62,7 @@ public class YelpClient{
                 */
 
         Request request = new Request.Builder()
-                .url(req.getCompleteURL())
+                .url(req.getCompleteURL() + "&sort_by=rating")
                 .addHeader("Authorization", "Bearer "+API_KEY)
                 .build();
 
