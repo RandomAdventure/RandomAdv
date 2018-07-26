@@ -19,6 +19,7 @@ public class UserRequest {
 
     private boolean attributesAdded;
     private boolean termAdded;
+    private boolean maxPriceSet;
 
     private String completeURL;
 
@@ -36,30 +37,42 @@ public class UserRequest {
 
     }
 //--------------------------------------------------------------------------------------------------
-    public void setRadius(int radius) {
+    /* For future reference: If the setters return the actual instance of the UserRequest class, then
+     * creating a customized UserRequest will be a lot easier:
+     * UserRequest request = new UserRequest().setRadius(*).setCuisine(*).setMinRating(*)... etc.
+     * Conventional syntax of the 'builder pattern'
+     */
+
+    public UserRequest setRadius(int radius) {
         this.radius = radius;
+        return this;
     }
 
-    public void setCuisine(String cuisine) {
+    public UserRequest setCuisine(String cuisine) {
         this.term = cuisine;
         termAdded = true;
+        return this;
     }
 
-    public void setMinRating(float minRating) {
+    public UserRequest setMinRating(float minRating) {
         this.minRating = minRating;
+        return this;
     }
 
-    public void setMaxPrice(int maxPrice) {
+    public UserRequest setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
+        maxPriceSet = true;
+        return this;
     }
 
-    public void setAttributes(String[] attributes) {
+    public UserRequest setAttributes(String[] attributes) {
         this.attributes = attributes;
         attributesAdded = true;
+        return this;
     }
 
 //--------------------------------------------------------------------------------------------------
-    public void buildURL() {
+    public UserRequest buildURL() {
         //TODO - confirm: order of params does not matter?
         switch (maxPrice) {
             case 0: priceString = "1, 2, 3, 4";
@@ -73,7 +86,7 @@ public class UserRequest {
         completeURL += "?latitude=" + this.userLatitude + "&longitude=" + this.userLongitude;
 
         //Add price parameter
-        if (maxPrice != 0) {
+        if (maxPriceSet) {
             completeURL += "&price=" + this.priceString;
         }
 
@@ -93,6 +106,8 @@ public class UserRequest {
             }
 
         }
+
+        return this;
     }
 //--------------------------------------------------------------------------------------------------
     public String getCompleteURL() {
