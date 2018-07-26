@@ -3,9 +3,11 @@ package com.example.suhirtha.randomadventure;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,14 +15,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.example.suhirtha.randomadventure.models.Restaurant;
+
 import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomizeActivity extends AppCompatActivity {
+    private Activity activity;
     private ImageView spinWheel;
+    private ImageView mSpindel;
+    private ImageView[] colors = new ImageView[5];
     private TextView[] res = new TextView[5];
     private Context context;
     private YelpClient client;
@@ -30,28 +39,78 @@ public class RandomizeActivity extends AppCompatActivity {
     private int generator;
     private int REQUEST_CODE_SELECTION = 10;
     private String[] selection = new String[5];
+    private ProgressBar mProgressBar ;
+    private int mProgressStatus = 0;
+    private Handler handler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_randomize);
+        activity = this;
         spinWheel = findViewById(R.id.raWheel);
+        mSpindel = findViewById(R.id.raSpindle);
         context = getApplicationContext();
         restaurants = new ArrayList<>();
         chosen = new ArrayList<>();
         client = new YelpClient();
+        mProgressBar = (ProgressBar) findViewById(R.id.raProgressBar);
+        mProgressBar.setVisibility(ProgressBar.VISIBLE);
         res[0] = findViewById(R.id.raRestaurant);
         res[1] = findViewById(R.id.raRestaurant1);
         res[2] = findViewById(R.id.raRestaurant2);
         res[3] = findViewById(R.id.raRestaurant3);
         res[4] = findViewById(R.id.raRestaurant4);
+        colors[0] = findViewById(R.id.raColor);
+        colors[1] = findViewById(R.id.raColor1);
+        colors[2] = findViewById(R.id.raColor2);
+        colors[3] = findViewById(R.id.raColor3);
+        colors[4] = findViewById(R.id.raColor4);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); //removes title
 
         restaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
         Log.d("RandomActivity", "Recieved arraylist of size: " + restaurants.size());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(mProgressStatus < 100){
+                    mProgressStatus++;
+                    android.os.SystemClock.sleep(10);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mProgressBar.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinWheel.setVisibility(View.VISIBLE);
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        toolbar.setVisibility(View.VISIBLE);
+                        mSpindel.setVisibility(View.VISIBLE);
+                        res[0].setVisibility(View.VISIBLE);
+                        res[1].setVisibility(View.VISIBLE);
+                        res[2].setVisibility(View.VISIBLE);
+                        res[3].setVisibility(View.VISIBLE);
+                        res[4].setVisibility(View.VISIBLE);
+                        colors[0].setVisibility(View.VISIBLE);
+                        colors[1].setVisibility(View.VISIBLE);
+                        colors[2].setVisibility(View.VISIBLE);
+                        colors[3].setVisibility(View.VISIBLE);
+                        colors[4].setVisibility(View.VISIBLE);
+
+                    }
+                });
+
+            }
+        }).start();
 
         //-------------------------------------------------------------------------------------------
 
