@@ -112,6 +112,7 @@ public class SelectionActivity extends AppCompatActivity {
      * @throws Exception - related to faulty API calls
      */
     public void resultsReturned(JSONArray restaurantList) {
+        Log.d("Print received", "Number of restaurants received: " + restaurantList.length() + "---" + restaurantList.toString());
         //generate random integer array from 1-20 (20 because Yelp returns 20 restaurants by default per API call)
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         int randomNum;
@@ -121,7 +122,7 @@ public class SelectionActivity extends AppCompatActivity {
                 randomNumbers.add(randomNum);
             }
         }
-
+        Log.d("Random ints arrayList", randomNumbers.toString());
         for (int i = 0; i < 5; i++) {
             Restaurant restaurant = null;
             try {
@@ -132,6 +133,7 @@ public class SelectionActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             firstFive.add(restaurant);
+            Log.d("To send to Anna", firstFive.toString());
         }
 
         //passes intent with first five restaurants to Anna
