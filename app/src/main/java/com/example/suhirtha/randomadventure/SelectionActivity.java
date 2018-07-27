@@ -1,11 +1,15 @@
 package com.example.suhirtha.randomadventure;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +43,6 @@ public class SelectionActivity extends AppCompatActivity {
 
     private TextView mRadiusDisplay;
     private Spinner mCuisine;
-    private EditText mTestLocation;
 //--------------------------------------------------------------------------------------------------
     Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
 //--------------------------------------------------------------------------------------------------
@@ -59,18 +62,31 @@ public class SelectionActivity extends AppCompatActivity {
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
-        mTestLocation = findViewById(R.id.etTestLocation);
         mTestRadius = findViewById(R.id.etTestRadius);
         mTestPrice = findViewById(R.id.etTestPrice);
         firstFive = new ArrayList<>(); //initialize the holder arrayList
 
-        //onClickListener for 'Search' button - leads to Anna's randomizer activity
+        final SelectionViewModel viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
+
+
+
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
                     createRequest();
-                    passRestaurants();
+                    //passRestaurants();
+                    final Observer<JSONArray> restaurantObserver = new Observer<JSONArray>() {
+                        @Override
+                        public void onChanged(@Nullable JSONArray restaurants) {
+                            Log.d("hello", "Restaurants received");
+                            Log.d("", "");
+                            resultsReturned(viewModel.getRestaurants(request).getValue());
+                        }
+                    };
+                    viewModel.getRestaurants(request).observe(SelectionActivity.this, restaurantObserver);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -98,13 +114,18 @@ public class SelectionActivity extends AppCompatActivity {
      * @throws Exception - related to faulty API calls
      */
     public void resultsReturned(JSONArray restaurantList) {
+        //generate random integer array from 1-20
+        int[] randomNumbers = new int[5];
+        for (int i = 0; i < 5; i++) {
+            randomNumbers[i] = (int) (Math.random() * 20);
+        }
         //currently: picks first five restaurants of returned list
         for (int i = 0; i < 5; i++) {
             Restaurant restaurant = null;
             try {
                 restaurant = new Restaurant
-                        (restaurantList.getJSONObject(i).getString("id"),
-                         restaurantList.getJSONObject(i).getString("name"));
+                        (restaurantList.getJSONObject(randomNumbers[i]).getString("id"),
+                         restaurantList.getJSONObject(randomNumbers[i]).getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -118,20 +139,6 @@ public class SelectionActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * currently: incorrectly named :( - calls YelpClient class by passing in user parameters
-     * TODO - will look a lot more complicated, must account for ALL parameters
-     */
-    public void passRestaurants() {
-        //creates a new YelpClient instance - TODO: static?
-        YelpClient client = new YelpClient();
-        try {
-            client.getBusinesses(request, this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void createRequest() {
 
         // request = new UserRequest(this, this); //TODO - what.
@@ -139,10 +146,14 @@ public class SelectionActivity extends AppCompatActivity {
         // request.setMaxPrice(Integer.parseInt(mTestPrice.getText().toString()));
         // request.buildURL();
 
-        request = new UserRequest(this, this)
-                .setRadius(Integer.parseInt(mTestRadius.getText().toString()))
-                .setMaxPrice(Integer.parseInt(mTestPrice.getText().toString()))
-                .buildURL();
+        //TODO - Ask Stepan
+        if (mTestRadius.getText().toString() != null && !mTestRadius.getText().toString().equals("")
+                && mTestPrice.getText().toString() != null && !mTestPrice.getText().toString().equals("")) {
+            request = new UserRequest(this, this)
+                    .setRadius(Integer.parseInt(mTestRadius.getText().toString()))
+                    .setMaxPrice(Integer.parseInt(mTestPrice.getText().toString())) //TODO - max price and radius may not have been provided
+                    .buildURL();
+        }
     }
 
 }

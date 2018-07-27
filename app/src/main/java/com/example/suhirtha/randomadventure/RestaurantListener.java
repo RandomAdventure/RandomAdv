@@ -1,7 +1,5 @@
 package com.example.suhirtha.randomadventure;
 
-import android.view.View;
-
 import org.json.JSONObject;
 
 /**
@@ -10,4 +8,6 @@ import org.json.JSONObject;
 
 public interface RestaurantListener {
     public void restaurantInfo(JSONObject restaurant);
+
+
 }

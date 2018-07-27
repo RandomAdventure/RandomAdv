@@ -60,14 +60,6 @@ public class YelpClient{
      */
     public JSONArray getBusinesses(UserRequest req, final SelectionActivity activity)  {
 
-        /*
-        //Build URL according to user parameters: temporary
-        Request request = new Request.Builder()
-                .url(URL+"?location=" + location)
-                .addHeader("Authorization", "Bearer "+API_KEY)
-                .build();
-                */
-
         Request request = new Request.Builder()
                 .url(req.getCompleteURL() + "&sort_by=rating")
                 .addHeader("Authorization", "Bearer "+API_KEY)
