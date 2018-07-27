@@ -144,15 +144,11 @@ public class SelectionActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
     public void createRequest() {
 
-        //TODO - Ask Stepan
-        if (mTestRadius.getText().toString() != null && !mTestRadius.getText().toString().equals("")
-                && mTestPrice.getText().toString() != null && !mTestPrice.getText().toString().equals("")) {
-            request = new UserRequest(this, this)
+        request = new UserRequest(this, this)
                     .setRadius(Integer.parseInt(mTestRadius.getText().toString()))
                     .setMaxPrice(Integer.parseInt(mTestPrice.getText().toString())) //TODO - max price and radius may not have been provided
                     .buildURL();
-        }
     }
-
+//--------------------------------------------------------------------------------------------------
 }
 
