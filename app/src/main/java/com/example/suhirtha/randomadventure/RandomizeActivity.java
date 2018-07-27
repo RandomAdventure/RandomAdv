@@ -72,6 +72,7 @@ public class RandomizeActivity extends AppCompatActivity {
         restaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
         Log.d("RandomActivity", "Recieved arraylist of size: " + restaurants.size());
 
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -148,6 +149,7 @@ public class RandomizeActivity extends AppCompatActivity {
         }
 
         //---------------------------------------------------------------------------------------------------------------------
+
 
     }
 
