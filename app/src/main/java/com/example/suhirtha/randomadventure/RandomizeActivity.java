@@ -149,8 +149,6 @@ public class RandomizeActivity extends AppCompatActivity {
         }
 
         //---------------------------------------------------------------------------------------------------------------------
-
-
     }
 
     public void onClickRandom(View view) {
