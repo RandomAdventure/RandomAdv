@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.example.suhirtha.randomadventure.Location;
+import com.example.suhirtha.randomadventure.LocationListenerRandomAdv;
+import com.google.android.gms.maps.model.LatLng;
 
 public class UserRequest {
 
@@ -30,7 +32,12 @@ public class UserRequest {
 //--------------------------------------------------------------------------------------------------
     public UserRequest(Context context, Activity currentActivity) {
 
-        userLocation = new Location(context, currentActivity);
+        userLocation = new Location(context, currentActivity, new LocationListenerRandomAdv() {
+            @Override
+            public void locationChange(LatLng newLocation) {
+                return;
+            }
+        });
         userLatitude = userLocation.getLatitude();
         userLongitude = userLocation.getLongitude();
         completeURL = BASE_URL; //bc strings are immutable!! the only thing I learned in school

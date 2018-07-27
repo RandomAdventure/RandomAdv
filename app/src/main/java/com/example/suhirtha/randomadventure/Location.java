@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by togata on 7/18/18.
  */
@@ -24,13 +26,14 @@ public class Location{
     private double latitude;
     private double longitude;
 
-    public Location(Context context, Activity activity){
+    public Location(Context context, Activity activity, final LocationListenerRandomAdv listener){
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(android.location.Location location) {
                 latitude=location.getLatitude();
                 longitude=location.getLongitude();
                 String msg="New Latitude: "+latitude + "New Longitude: "+longitude;
+                listener.locationChange(new LatLng(latitude, longitude));
             }
 
             @Override
@@ -56,8 +59,14 @@ public class Location{
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         android.location.Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+        else{
+            latitude = 37.484603;
+            longitude = -122.148081;
+        }
         Log.d("location", "Latitude: "+latitude+"");
         Log.d("location", "Longitude: "+longitude+"");
     }

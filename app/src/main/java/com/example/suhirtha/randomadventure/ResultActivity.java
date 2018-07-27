@@ -48,10 +48,10 @@ import java.util.ArrayList;
  * Created by togata on 7/16/18.
  */
 
-public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, RestaurantListener {
+public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, RestaurantListener, LocationListenerRandomAdv {
 
     private Context context;
-    private Activity activity;
+    public ResultActivity activity;
     private TextView mName;
     private RatingBar mRating;
     private TextView mAddress;
@@ -69,11 +69,11 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private String phoneNumber;
     private double latitude;
     private double longitude;
-    private JSONObject restuarant;
+    public JSONObject restuarant;
     private Restaurant passedRestaurant;
-    private LatLng destination;
+    public LatLng destination;
+    private LatLng origin;
     private Direction directions;
-    private Location currentLocation;
 
     private ResultViewModel model;
 
@@ -112,20 +112,20 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         mWalking.setVisibility(View.INVISIBLE);
         mDriving.setVisibility(View.INVISIBLE);
 
-        client = new YelpClient(this);
+        //client = new YelpClient(this);
         passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
-        try {
+        /*try {
             JSONObject restuarant = client.getBusinessInfo(passedRestaurant.getId());
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         context = this.getApplicationContext();
         activity = this;
 
-        currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity);
+        Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, this, this);
+        origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
         model= ViewModelProviders.of(this).get(ResultViewModel.class);
-
     }
 
     @SuppressLint("ResourceType")
@@ -163,6 +163,48 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
+
+    public void restaurant() {
+        final Observer<JSONObject> restuarantInfoObserver = new Observer<JSONObject>() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onChanged(@Nullable JSONObject restuarant) {
+                activity.restuarant = restuarant;
+                try {
+                    mName.setText(restuarant.getString("name"));
+                    mRating.setRating((float) restuarant.getDouble("rating"));
+                    JSONObject location = restuarant.getJSONObject("location");
+                    String address = location.getString("address1") + ", " + location.getString("city") + ", " + location.getString("state") + " " + location.getString("zip_code");
+                    mAddress.setText(address);
+                    phoneNumber = restuarant.getString("display_phone");
+                    mPhoneNumber.setText(phoneNumber);
+
+                    JSONObject coordinates = restuarant.getJSONObject("coordinates");
+                    latitude = (double) coordinates.get("latitude");
+                    longitude = (double) coordinates.get("longitude");
+                    LatLng latLng = new LatLng(latitude, longitude);
+                    activity.destination = latLng;
+                    walkingDirections((View)findViewById(R.layout.activity_result));
+
+                    JSONArray transactions = restuarant.getJSONArray("transactions");
+                    for (int i = 0; i < transactions.length(); i++) {
+                        if (transactions.get(i).equals("delivery")) {
+                            mDelivery.setChecked(true);
+                        }
+                        if (transactions.get(i).equals("restaurant_reservation")) {
+                            mReservation.setChecked(true);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        model.getBusinessInfo(getResources().getString(R.string.yelp_api_key), passedRestaurant.getId()).observe(this, restuarantInfoObserver);
+
+    }
+
     public void callRestuarant(View view) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         if (phoneNumber.length() > 11) {
@@ -175,9 +217,21 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         startActivity(callIntent);
     }
 
+    @SuppressLint("ResourceType")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    callRestuarant((View) findViewById(R.layout.activity_result));
+                }
+                return;
+            }
+        }
+    }
+
     public void walkingDirections(View v){
         this.destination = destination;
-        final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         final Observer<Direction> walkingDirectionObserver = new Observer<Direction>() {
             @Override
             public void onChanged(@Nullable final Direction direction) {
@@ -228,7 +282,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void drivingDirections(View v){
-        final LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         final Observer<Direction> drivingDirectionObserver = new Observer<Direction>() {
             @Override
             public void onChanged(@Nullable final Direction direction) {
@@ -287,6 +340,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             ActivityCompat.requestPermissions(ResultActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
+
+        restaurant();
     }
 
     @Override
@@ -321,4 +376,12 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onLowMemory();
         mMap.onLowMemory();
     }
+
+    @SuppressLint("ResourceType")
+    @Override
+    public void locationChange(LatLng newLocation){
+        origin = newLocation;
+        walkingDirections((View)findViewById(R.layout.activity_result));
+    }
+
 }
