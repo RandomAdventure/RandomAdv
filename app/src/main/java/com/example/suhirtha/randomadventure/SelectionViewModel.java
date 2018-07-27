@@ -21,13 +21,13 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class SelectionViewModel extends ViewModel {
-    public static final String URL = "https://api.yelp.com/v3/businesses/search";
+
+//--------------------------------------------------------------------------------------------------
     public static final String API_KEY = "-zQ4y50-JDbyywxHfjTw5QVtT-dg40f5xhBGzRrQX8VCSmiV1pofn7k_ki1OLhuPP7fzAqZQRfxrszgoHlFQitLoffkl7AJZYO36xmpz2LoJLdm0mzvG5SD8nNlMW3Yx";
     private final OkHttpClient client = new OkHttpClient();
-    public JSONArray JSONList;
-
     private MutableLiveData<JSONArray> restaurantList;
 
+//--------------------------------------------------------------------------------------------------
     public LiveData<JSONArray> getRestaurants(UserRequest request) {
         if (restaurantList == null) {
             restaurantList = new MutableLiveData<>();
@@ -36,6 +36,7 @@ public class SelectionViewModel extends ViewModel {
         return restaurantList;
     }
 
+//--------------------------------------------------------------------------------------------------
     private void loadRestaurants(UserRequest req) {
 
         // Do an asynchronous operation to fetch users.
@@ -56,7 +57,7 @@ public class SelectionViewModel extends ViewModel {
                     if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
                     String data = responseBody.string(); //retrieve JSON response as String
 
-                    //--------------------------------------------------------------------------------------
+                    //------------------------------------------------------------------------------
                     try {
                         JSONObject object = new JSONObject(data);
                         JSONArray resultArray = object.getJSONArray("businesses");
@@ -73,11 +74,12 @@ public class SelectionViewModel extends ViewModel {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    //--------------------------------------------------------------------------------------
+                    //------------------------------------------------------------------------------
                 }
             }
         });
 
     }
+//--------------------------------------------------------------------------------------------------
 
 }
