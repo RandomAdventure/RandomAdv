@@ -112,12 +112,12 @@ public class SelectionActivity extends AppCompatActivity {
      * @throws Exception - related to faulty API calls
      */
     public void resultsReturned(JSONArray restaurantList) {
-        //generate random integer array from 1-20
+        //generate random integer array from 1-20 (20 because Yelp returns 20 restaurants by default per API call)
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         int randomNum;
         while(randomNumbers.size() < 5) {
             randomNum = (int) (Math.random() * 20);
-            if (!randomNumbers.contains(randomNum)) {
+            if (!randomNumbers.contains(randomNum)) { //ensures that the same restaurant isn't chosen
                 randomNumbers.add(randomNum);
             }
         }
