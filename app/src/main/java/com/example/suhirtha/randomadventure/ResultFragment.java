@@ -2,6 +2,7 @@ package com.example.suhirtha.randomadventure;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.akexorcist.googledirection.model.Direction;
 import com.akexorcist.googledirection.model.Info;
 import com.akexorcist.googledirection.model.Leg;
 import com.akexorcist.googledirection.model.Route;
@@ -32,17 +34,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
  * Created by togata on 7/27/18.
  */
 
-public class ResultFragment extends Fragment implements OnMapReadyCallback, ResultFragmentListener {
+public class ResultFragment extends Fragment implements OnMapReadyCallback{
 
     View view;
     private Context context;
-    public ResultActivity activity;
+    public Activity activity;
     private ResultFragment fragment;
     public ResultViewModel model;
     private TextView mName;
@@ -57,6 +61,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
     private TextView mDuration;
     private ImageButton mWalking;
     private ImageButton mDriving;
+    private ResultActivityListener activityListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstances){
@@ -80,7 +85,8 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
         mDriving = (ImageButton) view.findViewById(R.id.rsaDriving);
 
         context = view.getContext();
-        activity = (ResultActivity) getActivity();
+        activity = getActivity();
+        activityListener = (ResultActivityListener) activity;
         fragment = this;
         model = ((ResultActivity) getActivity()).model;
 
@@ -88,14 +94,14 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
     }
 
     public void updateRestaurantInfo() {
-        mName.setText(activity.name);
-        mRating.setRating(activity.rating);
-        mAddress.setText(activity.address);
-        mPhoneNumber.setText(activity.phoneNumber);
-        if (activity.hasDelivery == true) {
+        mName.setText(activityListener.getName());
+        mRating.setRating(activityListener.getRating());
+        mAddress.setText(activityListener.getAddress());
+        mPhoneNumber.setText(activityListener.getPhoneNumber());
+        if (activityListener.getDeliverySetting() == true) {
             mDelivery.setChecked(true);
         }
-        if (activity.takesReservation == true) {
+        if (activityListener.getReservationSetting()== true) {
             mReservation.setChecked(true);
         }
     }
@@ -103,7 +109,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
     public void updateRestaurantDirections(){
         activity.runOnUiThread(new Runnable(){
             public void run(){
-                if (activity.model.transportationMode.equals("walking")){
+                if (activityListener.getTransportationMode().equals("walking")){
                     mWalking.setBackgroundColor(getResources().getColor(R.color.clearPurple));
                     mDriving.setBackgroundColor(getResources().getColor(R.color.clear));
                 }
@@ -112,17 +118,17 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
                     mDriving.setBackgroundColor(getResources().getColor(R.color.clearPurple));
                 }
                 googleMap.clear();
-                Route route = activity.directions.getRouteList().get(0);
+                Route route = activityListener.getDirectionObject().getRouteList().get(0);
                 Leg leg = route.getLegList().get(0);
                 ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
                 PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
                 googleMap.addPolyline(polylineOptions);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(activity.origin));
-                googleMap.addMarker(new MarkerOptions().position(activity.origin));
-                googleMap.addMarker(new MarkerOptions().position(activity.destination));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(activityListener.getOrigin()));
+                googleMap.addMarker(new MarkerOptions().position(activityListener.getOrigin()));
+                googleMap.addMarker(new MarkerOptions().position(activityListener.getDestination()));
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                builder.include(activity.origin);
-                builder.include(activity.destination);
+                builder.include(activityListener.getOrigin());
+                builder.include(activityListener.getDestination());
                 LatLngBounds bounds = builder.build();
                 int padding = 60;
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 900, 750, padding);
@@ -132,16 +138,12 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
                 Info durationInfo = leg.getDuration();
                 mDistance.setText(distanceInfo.getText());
                 mDuration.setText(durationInfo.getText());
-                activity.fragmentTransaction = activity.fragmentManager.beginTransaction();
-                activity.fragmentTransaction.hide(activity.loadingFragment);
-                activity.fragmentTransaction.show(activity.resultFragment);
-                activity.fragmentTransaction.commit();
+                activityListener.showResultFragment();
 
             }
         });
     }
 
-    @Override
     public void populateUserInterface(){
         updateRestaurantInfo();
         updateRestaurantDirections();
@@ -156,7 +158,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
-        activity.beginMappingDirections();
+        activityListener.beginMappingDirections();
     }
 
     @Override
@@ -191,4 +193,20 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
         super.onLowMemory();
         mMap.onLowMemory();
     }
+
+    public interface ResultActivityListener {
+        public void showResultFragment();
+        public String getName();
+        public String getAddress();
+        public boolean getDeliverySetting();
+        public boolean getReservationSetting();
+        public float getRating();
+        public String getPhoneNumber();
+        public String getTransportationMode();
+        public Direction getDirectionObject();
+        public LatLng getOrigin();
+        public LatLng getDestination();
+        public void beginMappingDirections();
+    }
+
 }

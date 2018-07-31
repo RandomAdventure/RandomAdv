@@ -31,7 +31,7 @@ import org.parceler.Parcels;
  * Created by togata on 7/16/18.
  */
 
-public class ResultActivity extends AppCompatActivity implements LocationListenerRandomAdv{
+public class ResultActivity extends AppCompatActivity implements LocationListenerRandomAdv, ResultFragment.ResultActivityListener{
 
     public ViewPager viewPager;
     private ViewPageAdapter adapter;
@@ -51,7 +51,6 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
     public LatLng origin;
     public boolean hasDelivery;
     public boolean takesReservation;
-    private ResultFragmentListener fragmentListener;
     public FragmentManager fragmentManager;
     public LoadingFragment loadingFragment;
     public FragmentTransaction fragmentTransaction;
@@ -82,7 +81,6 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
         passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
         context = this.getApplicationContext();
         activity = this;
-        fragmentListener = resultFragment;
 
         Location currentLocation = new com.example.suhirtha.randomadventure.Location(context, activity, this);
         origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -157,7 +155,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
             @Override
             public void onChanged(@Nullable final Direction direction) {
                 activity.directions = direction;
-                fragmentListener.populateUserInterface();
+                resultFragment.populateUserInterface();
             }
         };
         model.getWalkingDirections(getResources().getString(R.string.google_maps_api_key), origin, destination).observe(this, walkingDirectionObserver);
@@ -176,6 +174,14 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
     }
 
     @SuppressLint("ResourceType")
+    @Override
+    public void locationChange(LatLng newLocation){
+        origin = newLocation;
+        beginMappingDirections();
+    }
+
+    @Override
+    @SuppressLint("ResourceType")
     public void beginMappingDirections(){
         if (resultFragment.googleMap != null && destination != null){
             if (model.transportationMode.equals("walking")) {
@@ -187,10 +193,62 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
         }
     }
 
-    @SuppressLint("ResourceType")
     @Override
-    public void locationChange(LatLng newLocation){
-        origin = newLocation;
-        beginMappingDirections();
+    public void showResultFragment() {
+        fragmentTransaction = activity.fragmentManager.beginTransaction();
+        fragmentTransaction.hide(activity.loadingFragment);
+        fragmentTransaction.show(activity.resultFragment);
+        fragmentTransaction.commit();
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getAddress() {
+        return address;
+    }
+
+    @Override
+    public boolean getDeliverySetting() {
+        return hasDelivery;
+    }
+
+    @Override
+    public boolean getReservationSetting() {
+        return  takesReservation;
+    }
+
+    @Override
+    public float getRating() {
+        return rating;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @Override
+    public String getTransportationMode() {
+        return model.transportationMode;
+    }
+
+    @Override
+    public Direction getDirectionObject() {
+        return directions;
+    }
+
+    @Override
+    public LatLng getOrigin() {
+        return origin;
+    }
+
+    @Override
+    public LatLng getDestination() {
+        return destination;
+    }
+
 }
