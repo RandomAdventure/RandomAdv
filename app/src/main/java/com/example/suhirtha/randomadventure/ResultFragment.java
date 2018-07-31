@@ -83,8 +83,6 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
         activity = (ResultActivity) getActivity();
         fragment = this;
         model = ((ResultActivity) getActivity()).model;
-        //activity.fragmentTransaction.replace(R.id.rsaFrameLayout, activity.loadingFragment, "loading_fragment").commit();
-        //activity.fragmentTransaction.show(activity.loadingFragment);
 
         return view;
     }
@@ -134,8 +132,6 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback, Resu
                 Info durationInfo = leg.getDuration();
                 mDistance.setText(distanceInfo.getText());
                 mDuration.setText(durationInfo.getText());
-                //activity.fragmentTransaction.replace(R.id.rsaFrameLayout, activity.resultFragment, "result_fragment").commit();
-                //activity.fragmentTransaction.hide(activity.loadingFragment);
                 activity.fragmentTransaction = activity.fragmentManager.beginTransaction();
                 activity.fragmentTransaction.hide(activity.loadingFragment);
                 activity.fragmentTransaction.show(activity.resultFragment);

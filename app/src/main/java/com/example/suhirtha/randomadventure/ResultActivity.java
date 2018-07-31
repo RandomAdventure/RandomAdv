@@ -70,7 +70,6 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
             resultFragment = new ResultFragment();
             loadingFragment = new LoadingFragment();
             fragmentTransaction.add(R.id.rsaFrameLayout, resultFragment, "result_fragment");
-            //fragmentTransaction.hide(resultFragment);
             fragmentTransaction.add(R.id.rsaFrameLayout, loadingFragment, "loading_fragment");
             fragmentTransaction.hide(resultFragment);
             fragmentTransaction.commit();
