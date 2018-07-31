@@ -19,8 +19,6 @@ public class UserRequest {
     private String priceString;
     Location userLocation;
 
-    private boolean attributesAdded;
-    private boolean termAdded;
     private boolean maxPriceSet;
 
     private String completeURL;
@@ -51,13 +49,13 @@ public class UserRequest {
      */
 
     public UserRequest setRadius(int radius) {
+        // radius may be null
         this.radius = radius;
         return this;
     }
 
     public UserRequest setCuisine(String cuisine) {
         this.term = cuisine;
-        termAdded = true;
         return this;
     }
 
@@ -66,6 +64,7 @@ public class UserRequest {
         return this;
     }
 
+    //TODO - what is the value of maxPrice if user leaves the editText empty? 0?
     public UserRequest setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
         maxPriceSet = true;
@@ -73,14 +72,14 @@ public class UserRequest {
     }
 
     public UserRequest setAttributes(String[] attributes) {
+        //attributes[] may be null
         this.attributes = attributes;
-        attributesAdded = true;
         return this;
     }
 
 //--------------------------------------------------------------------------------------------------
     public UserRequest buildURL() {
-        //TODO - confirm: order of params does not matter?
+
         switch (maxPrice) {
             case 0: priceString = "1, 2, 3, 4";
             case 1: priceString = "1";
@@ -97,17 +96,17 @@ public class UserRequest {
             completeURL += "&price=" + this.priceString;
         }
 
-        if (termAdded) {
+        if (term != null) {
             //Add term(s)
             completeURL += "&term=" + this.term;
         }
 
         //Add attributes one by one
-        if (attributesAdded && attributes.length != 0) {
+        if (attributes != null && attributes.length != 0) {
             completeURL += "&attributes=";
             completeURL += attributes[0];
         }
-        if (attributesAdded && attributes.length > 1) {
+        if (attributes != null && attributes.length > 1) {
             for (int i = 1; i < attributes.length; i++) {
                 completeURL += "," + attributes[i]; //TODO - avoid concat in loops: use StringBuilder
             }

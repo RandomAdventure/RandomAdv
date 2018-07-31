@@ -2,11 +2,15 @@ package com.example.suhirtha.randomadventure;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.suhirtha.randomadventure.models.Restaurant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anitac on 7/25/18.
@@ -30,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        SQLiteDatabase db = this.getWritableDatabase(); //to check
+
     }
 
     // Called when the database connection is being configured.
@@ -76,17 +80,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(KEY_RESTAURANT_NAME, restaurant.getId());
             values.put(KEY_RESTAURANT_YELP_ID, restaurant.getName());
+            values.put(KEY_RESTAURANT_NAME, restaurant.getId());
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
-            db.insertOrThrow(TABLE_RESTAURANTS, null, values);
+            db.insertOrThrow(TABLE_RESTAURANTS, null, values); //THIS is what adds it to the database with the correct info
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d("DatabaseHelper", "Error while trying to add post to database");
         } finally {
             db.endTransaction();
         }
+    }
+
+    public Cursor getAllData() {
+        List<Restaurant> restaurants = new ArrayList<>();
+        SQLiteDatabase database = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_RESTAURANTS, null); //select all from table
+
+        return cursor;
     }
 
 }

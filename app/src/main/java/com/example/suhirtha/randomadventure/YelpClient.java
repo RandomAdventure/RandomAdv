@@ -53,7 +53,6 @@ public class YelpClient{
 
     //TODO - Suhi (07/19)
     //TODO - enable reading in user input: (user-entered) location, attributes/cuisine,
-    //TODO - automatic location, rating, price (in that order of implementation) by tomorrow?
     /**
      * Populates the restaurantList with a list of restaurants that matches user requirements
      * @param activity - not sure about passing in instance of an activity, there has to be a better way
@@ -101,7 +100,7 @@ public class YelpClient{
         return restaurantList;
     }
 
-
+//--------------------------------------------------------------------------------------------------
     public JSONObject getBusinessInfo(String businessId) throws Exception {
         Request request = new Request.Builder()
                 .url("https://api.yelp.com/v3/businesses/"+businessId)
@@ -137,6 +136,8 @@ public class YelpClient{
         });
         return selectedRestaurant;
     }
+//--------------------------------------------------------------------------------------------------
 
 }
+
 

@@ -14,8 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.models.Restaurant;
 import com.example.suhirtha.randomadventure.models.UserRequest;
@@ -41,8 +39,6 @@ public class SelectionActivity extends AppCompatActivity {
     private EditText mTestRadius;
     private EditText mTestPrice;
 
-    private TextView mRadiusDisplay;
-    private Spinner mCuisine;
 //--------------------------------------------------------------------------------------------------
     Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
 //--------------------------------------------------------------------------------------------------
@@ -68,7 +64,7 @@ public class SelectionActivity extends AppCompatActivity {
 
         final SelectionViewModel viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
 
-
+        //------------------------------------------------------------------------------------------
 
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +89,8 @@ public class SelectionActivity extends AppCompatActivity {
             }
         });
 
+        //------------------------------------------------------------------------------------------
+
         //onClickListener for 'Done' button - leads to Tatum's result activity
         //TODO - remove eventually: kept for Tatum's testing
         mDone.setOnClickListener(new View.OnClickListener() {
@@ -106,30 +104,36 @@ public class SelectionActivity extends AppCompatActivity {
 
     }
 
+//--------------------------------------------------------------------------------------------------
     /**
      * currently: takes the first five restaurants in restaurantList, populates 'firstFive',
      * and passes them to Anna
-     * TODO - randomly choose five restaurants, then populate an arrayList, which is then passed to Anna
      * @param restaurantList - the full list of relevant restaurants returned by YelpClient
      * @throws Exception - related to faulty API calls
      */
     public void resultsReturned(JSONArray restaurantList) {
-        //generate random integer array from 1-20
-        int[] randomNumbers = new int[5];
-        for (int i = 0; i < 5; i++) {
-            randomNumbers[i] = (int) (Math.random() * 20);
+        Log.d("Print received", "Number of restaurants received: " + restaurantList.length() + "---" + restaurantList.toString());
+        //generate random integer array from 1-20 (20 because Yelp returns 20 restaurants by default per API call)
+        ArrayList<Integer> randomNumbers = new ArrayList<>();
+        int randomNum;
+        while(randomNumbers.size() < 5) {
+            randomNum = (int) (Math.random() * 20);
+            if (!randomNumbers.contains(randomNum)) { //ensures that the same restaurant isn't chosen
+                randomNumbers.add(randomNum);
+            }
         }
-        //currently: picks first five restaurants of returned list
+        Log.d("Random ints arrayList", randomNumbers.toString());
         for (int i = 0; i < 5; i++) {
             Restaurant restaurant = null;
             try {
                 restaurant = new Restaurant
-                        (restaurantList.getJSONObject(randomNumbers[i]).getString("id"),
-                         restaurantList.getJSONObject(randomNumbers[i]).getString("name"));
+                        (restaurantList.getJSONObject(randomNumbers.get(i)).getString("id"),
+                         restaurantList.getJSONObject(randomNumbers.get(i)).getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             firstFive.add(restaurant);
+            Log.d("To send to Anna", firstFive.toString());
         }
 
         //passes intent with first five restaurants to Anna
@@ -139,22 +143,14 @@ public class SelectionActivity extends AppCompatActivity {
 
     }
 
+//--------------------------------------------------------------------------------------------------
     public void createRequest() {
 
-        // request = new UserRequest(this, this); //TODO - what.
-        // request.setRadius(Integer.parseInt(mTestRadius.getText().toString()));
-        // request.setMaxPrice(Integer.parseInt(mTestPrice.getText().toString()));
-        // request.buildURL();
-
-        //TODO - Ask Stepan
-        if (mTestRadius.getText().toString() != null && !mTestRadius.getText().toString().equals("")
-                && mTestPrice.getText().toString() != null && !mTestPrice.getText().toString().equals("")) {
-            request = new UserRequest(this, this)
+        request = new UserRequest(this, this)
                     .setRadius(Integer.parseInt(mTestRadius.getText().toString()))
                     .setMaxPrice(Integer.parseInt(mTestPrice.getText().toString())) //TODO - max price and radius may not have been provided
                     .buildURL();
-        }
     }
-
+//--------------------------------------------------------------------------------------------------
 }
 
