@@ -52,8 +52,11 @@ public class ResultViewModel extends ViewModel {
     private MutableLiveData<JSONObject> restaurant;
     private RestaurantListener restaurantListener;
     private final OkHttpClient client = new OkHttpClient();
+    public String transportationMode;
 
-    public ResultViewModel(){}
+    public ResultViewModel(){
+        transportationMode = "walking";
+    }
 
     public MutableLiveData<Direction> getWalkingDirections(String api_key, LatLng origin, LatLng destination){
         if (walkingDirections==null){
