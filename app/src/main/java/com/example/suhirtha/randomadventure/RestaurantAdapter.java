@@ -46,7 +46,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     public int getItemCount() {
         return mCursor.getCount();
     }
-    
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView restaurantName;

@@ -9,6 +9,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions { //for Room
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -17,6 +22,10 @@ android {
         }
     }
     buildToolsVersion '28.0.1'
+}
+
+ext {
+    roomVersion = "1.1.1"
 }
 
 dependencies {
@@ -39,5 +48,8 @@ dependencies {
     implementation 'com.akexorcist:googledirectionlibrary:1.1.1'
     implementation "android.arch.lifecycle:extensions:1.1.0"
     implementation "android.arch.lifecycle:viewmodel:1.1.0"
+    // Room for simple persistence with an ORM
+    implementation "android.arch.persistence.room:runtime:$roomVersion" //Room
+    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion" // Room
 
 }
