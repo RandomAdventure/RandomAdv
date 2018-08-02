@@ -112,6 +112,19 @@ public class RandomizeActivity extends AppCompatActivity {
 
         //-------------------------------------------------------------------------------------------
 
+        /* Suhi's code */
+
+        /* Suhi **/
+
+        for (int i = 0; i < restaurants.size(); i++) {
+            res[i].setText(restaurants.get(i).getName());
+            chosen.addAll(restaurants);
+        }
+
+        /* End of Suhi's code **/
+
+
+        /*
         for(int i = 0; i< selection.length; i++){ //assigns restaurant to fixed array
             //selection[i] = restaurants[random.nextInt(restaurants.size())];
             chosen.add(restaurants.get(random.nextInt(restaurants.size())));
@@ -147,7 +160,7 @@ public class RandomizeActivity extends AppCompatActivity {
                 res[i].setText(selection[i]);
             }
         }
-
+*/
         //---------------------------------------------------------------------------------------------------------------------
     }
 

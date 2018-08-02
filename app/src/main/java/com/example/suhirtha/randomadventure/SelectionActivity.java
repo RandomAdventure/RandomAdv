@@ -9,12 +9,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
+import com.example.suhirtha.randomadventure.models.DataModel;
 import com.example.suhirtha.randomadventure.models.Restaurant;
 import com.example.suhirtha.randomadventure.models.UserRequest;
 
@@ -25,7 +29,10 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 
 
-public class SelectionActivity extends AppCompatActivity {
+public class SelectionActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener {
+
+    RecyclerView recyclerView;
+    ArrayList<DataModel> arrayList;
 
     private static ArrayList<Restaurant> firstFive;
 //--------------------------------------------------------------------------------------------------
@@ -58,11 +65,37 @@ public class SelectionActivity extends AppCompatActivity {
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
-        mTestRadius = findViewById(R.id.etTestRadius);
-        mTestPrice = findViewById(R.id.etTestPrice);
+        //mTestRadius = findViewById(R.id.etTestRadius);
+        //mTestPrice = findViewById(R.id.etTestPrice);
         firstFive = new ArrayList<>(); //initialize the holder arrayList
 
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        arrayList = new ArrayList<>();
+        arrayList.add(new DataModel("Location", R.drawable.car, "#7CCDC4"));
+        arrayList.add(new DataModel("Cuisine", R.drawable.beer, "#0A6B95"));
+        arrayList.add(new DataModel("Rating", R.drawable.ferrari, "#B48EB7"));
+        arrayList.add(new DataModel("Price", R.drawable.battle, "#6e639f"));
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, arrayList, this);
+        recyclerView.setAdapter(adapter);
+
+        /**
+         AutoFitGridLayoutManager that auto fits the cells by the column width defined.
+         **/
+
+        /** AutoFitGridLayoutManager layoutManager = new AutoFitGridLayoutManager(this, 500);
+        recyclerView.setLayoutManager(layoutManager); **/
+
+        /**
+         Simple GridLayoutManager that spans two columns
+         **/
+        GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
+
+        //------------------------------------------------------------------------------------------
+
         final SelectionViewModel viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
+
 
         //------------------------------------------------------------------------------------------
 
@@ -152,5 +185,10 @@ public class SelectionActivity extends AppCompatActivity {
                     .buildURL();
     }
 //--------------------------------------------------------------------------------------------------
+
+    @Override
+    public void onItemClick(DataModel item) {
+        Toast.makeText(getApplicationContext(), item.title + " is clicked", Toast.LENGTH_SHORT).show();
+    }
 }
 
