@@ -4,24 +4,21 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
-import com.example.suhirtha.randomadventure.models.Restaurant;
 
 import java.util.ArrayList;
 
 public class RestaurantsChosenActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Context context;
-    private YelpClient client;
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdaptor;
-    RecyclerView lvitems;
-    ArrayList<Restaurant> restaurants;
-    RestaurantAdapter restaurantAdapter;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +26,12 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurants_chosen);
         context = getApplicationContext();
         db = new DatabaseHelper(context);
-        //restaurantAdapter = new RestaurantAdapter(items);
-        client = new YelpClient();
+        items = new ArrayList<>();
         itemsAdaptor = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        lvitems = (RecyclerView) findViewById(R.id.recyclerRestaurant);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerRestaurant);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RestaurantAdapter(items);
+        recyclerView.setAdapter(adapter);
 
 
         //Restaurant test = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
