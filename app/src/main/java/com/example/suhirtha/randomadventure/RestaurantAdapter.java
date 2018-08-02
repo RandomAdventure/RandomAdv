@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
+
 import java.util.ArrayList;
 
 /**
@@ -14,10 +16,10 @@ import java.util.ArrayList;
  */
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
-    private ArrayList<String> mRestaurants;
+    private ArrayList<DatabaseRestaurant> mRestaurants;
     private DatabaseHelper db;
 
-    public RestaurantAdapter(ArrayList<String> restaurants){
+    public RestaurantAdapter(ArrayList<DatabaseRestaurant> restaurants){
         mRestaurants = restaurants;
     }
 
@@ -30,7 +32,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewholder, int i) {
-        viewholder.restaurantName.setText(mRestaurants.get(i));
+        viewholder.restaurantName.setText(mRestaurants.get(i).getRestaurantName());
     }
 
     @Override

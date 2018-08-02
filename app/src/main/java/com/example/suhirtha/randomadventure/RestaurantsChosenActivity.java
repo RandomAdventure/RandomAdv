@@ -10,12 +10,14 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
+
 import java.util.ArrayList;
 
 public class RestaurantsChosenActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private Context context;
-    ArrayList<String> items;
+    ArrayList<DatabaseRestaurant> items;
     ArrayAdapter<String> itemsAdaptor;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -26,12 +28,12 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurants_chosen);
         context = getApplicationContext();
         db = new DatabaseHelper(context);
-        items = new ArrayList<>();
-        itemsAdaptor = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        items = new ArrayList<DatabaseRestaurant>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerRestaurant);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RestaurantAdapter(items);
         recyclerView.setAdapter(adapter);
+
 
 
         //Restaurant test = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
@@ -59,6 +61,10 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
         }
 
 
+        for (int i = 0; i < 5; i++) {
+            DatabaseRestaurant restaurant = new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria #" + i);
+            items.add(restaurant);
+        }
     }
 
 }
