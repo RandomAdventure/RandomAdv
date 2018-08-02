@@ -75,8 +75,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+    }
+
+    /**
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
         viewHolder.setData(((DataModel)mValues.get(i)));
     }
+    **/
 
 
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
