@@ -30,7 +30,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 **/
     private static ArrayList<Restaurant> firstFive;
 //--------------------------------------------------------------------------------------------------
-    final Fragment accordionList = new AccordionFragment();
+    final Fragment selection = new SelectionFragment();
     private FragmentTransaction fragmentTransaction1;
 //--------------------------------------------------------------------------------------------------
     private Button mSearch;
@@ -52,9 +52,11 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
         setContentView(R.layout.activity_selection);
 
         //fragment code
+        /**
         fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.saSelectionFragment, accordionList).commit();
-
+        **/
+        
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
