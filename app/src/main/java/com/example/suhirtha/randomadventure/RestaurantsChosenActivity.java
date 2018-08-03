@@ -38,7 +38,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
 
         //do this in the background, wrap in background
         //need this to insert data
-        DatabaseHelper db = Room.databaseBuilder(getApplicationContext(), DatabaseHelper.class, "saved_restaurants")
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
                 .allowMainThreadQueries() //TODO change this
                 .build();
 
@@ -49,7 +49,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
 
 
         //USED TO INSERT INFO TO DATABASE
-        //db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#"));
+        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#"));
     }
 
     //toolbar
@@ -71,7 +71,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
     public void onClickDelete(View view) {
         //TODO delete everything in database
         Log.d("RChosenActivity", "Deleting database completely");
-        DatabaseHelper db = Room.databaseBuilder(getApplicationContext(), DatabaseHelper.class, "saved_restaurants")
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
                 .allowMainThreadQueries() //TODO change this
                 .build();
         db.restaurantDao().deleteAll();

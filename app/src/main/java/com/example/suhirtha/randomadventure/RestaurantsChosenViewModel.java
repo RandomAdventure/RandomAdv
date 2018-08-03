@@ -12,7 +12,7 @@ import java.util.List;
  * Created by anitac on 8/3/18.
  */
 
-public class RestaurantsChosenCiewModel extends ViewModel {
+public class RestaurantsChosenViewModel extends ViewModel {
 
     private MutableLiveData<List<DatabaseRestaurant>> restaurants;
     public LiveData<List<DatabaseRestaurant>> getUsers() {

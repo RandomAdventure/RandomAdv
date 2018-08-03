@@ -45,7 +45,6 @@
         android:textSize="90dp"
         android:textColor="@color/darkPurple"
         android:clickable="true"
-        android:onClick="OnClick"
         />
 
 

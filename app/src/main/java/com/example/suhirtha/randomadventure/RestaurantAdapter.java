@@ -67,7 +67,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
                 //do this in the background, wrap in background
                 //need this to insert data
-                DatabaseHelper db = Room.databaseBuilder(context, DatabaseHelper.class, "saved_restaurants")
+                AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "saved_restaurants")
                         .allowMainThreadQueries() //TODO change this
                         .build();
 
