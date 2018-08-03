@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.suhirtha.randomadventure.SelectionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -133,7 +131,6 @@
                         app:layout_constraintVertical_bias="0.0" />
                 </android.support.constraint.ConstraintLayout>
 
-
             </LinearLayout>
 
             <LinearLayout
@@ -171,12 +168,6 @@
 
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
-
 
     </ScrollView>
 
