@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
-    <color name="lightTeal">#E0FEE2</color>
+    <color name="lightTeal">#e0fee2</color>
     <color name="teal">#7CCDC4</color>
     <color name="darkTeal">#0A6B95</color>
     <color name="lightPurple">#B48EB7</color>
@@ -11,4 +11,5 @@
     <color name="darkPurple">#6e639f</color>
     <color name="gold">#F7BB32</color>
     <color name="clear">#00000000</color>
+    <color name="lightDarkTeal">#66a2bb</color>
 </resources>
