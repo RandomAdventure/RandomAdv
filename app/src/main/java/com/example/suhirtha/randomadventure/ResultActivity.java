@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.view.View;
 
 import com.akexorcist.googledirection.model.Direction;
 import com.example.suhirtha.randomadventure.models.Restaurant;
+import com.example.suhirtha.randomadventure.models.ResultActivityModel;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -54,6 +56,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
     public FragmentManager fragmentManager;
     public LoadingFragment loadingFragment;
     public FragmentTransaction fragmentTransaction;
+    private boolean bundleNull;
 
     @SuppressLint("ResourceType")
     @Override
@@ -68,14 +71,15 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
             fragmentTransaction = fragmentManager.beginTransaction();
             resultFragment = new ResultFragment();
             loadingFragment = new LoadingFragment();
-            fragmentTransaction.add(R.id.rsaFrameLayout, resultFragment, "result_fragment");
             fragmentTransaction.add(R.id.rsaFrameLayout, loadingFragment, "loading_fragment");
             fragmentTransaction.hide(resultFragment);
             fragmentTransaction.commit();
+            bundleNull = true;
         }
         else{
             loadingFragment = (LoadingFragment) getSupportFragmentManager().findFragmentByTag("loading_fragment");
             resultFragment = (ResultFragment) getSupportFragmentManager().findFragmentByTag("result_fragment");
+            bundleNull = false;
         }
 
         passedRestaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("test1"));
@@ -114,6 +118,17 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
                             takesReservation = true;
                         }
                     }
+                    ResultActivityModel resultActivityModel = new ResultActivityModel(origin, destination, model.transportationMode, name, address, rating, hasDelivery, takesReservation, phoneNumber);
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    if (bundleNull) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("model", resultActivityModel);
+                        resultFragment.setArguments(bundle);
+                        fragmentTransaction.add(R.id.rsaFrameLayout, resultFragment, "result_fragment");
+                    }
+                    fragmentTransaction.hide(activity.loadingFragment);
+                    fragmentTransaction.show(activity.resultFragment);
+                    fragmentTransaction.commit();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -155,7 +170,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
             @Override
             public void onChanged(@Nullable final Direction direction) {
                 activity.directions = direction;
-                resultFragment.populateUserInterface();
+                resultFragment.populateUserInterface(direction);
             }
         };
         model.getWalkingDirections(getResources().getString(R.string.google_maps_api_key), origin, destination).observe(this, walkingDirectionObserver);
@@ -166,8 +181,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
         final Observer<Direction> drivingDirectionObserver = new Observer<Direction>() {
             @Override
             public void onChanged(@Nullable final Direction direction) {
-                activity.directions = direction;
-                resultFragment.populateUserInterface();
+                resultFragment.populateUserInterface(direction);
             }
         };
         model.getDrivingDirections(getResources().getString(R.string.google_maps_api_key), origin, destination).observe(this, drivingDirectionObserver);
@@ -191,64 +205,6 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
                 drivingDirections((View) findViewById(R.layout.activity_result));
             }
         }
-    }
-
-    @Override
-    public void showResultFragment() {
-        fragmentTransaction = activity.fragmentManager.beginTransaction();
-        fragmentTransaction.hide(activity.loadingFragment);
-        fragmentTransaction.show(activity.resultFragment);
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getAddress() {
-        return address;
-    }
-
-    @Override
-    public boolean getDeliverySetting() {
-        return hasDelivery;
-    }
-
-    @Override
-    public boolean getReservationSetting() {
-        return  takesReservation;
-    }
-
-    @Override
-    public float getRating() {
-        return rating;
-    }
-
-    @Override
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    @Override
-    public String getTransportationMode() {
-        return model.transportationMode;
-    }
-
-    @Override
-    public Direction getDirectionObject() {
-        return directions;
-    }
-
-    @Override
-    public LatLng getOrigin() {
-        return origin;
-    }
-
-    @Override
-    public LatLng getDestination() {
-        return destination;
     }
 
 }
