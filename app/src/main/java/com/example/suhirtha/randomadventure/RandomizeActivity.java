@@ -221,7 +221,7 @@ public class RandomizeActivity extends AppCompatActivity {
     //toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_random, menu);
+        getMenuInflater().inflate(R.menu.menu_general, menu);
         return true;
     }
 
