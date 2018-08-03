@@ -26,8 +26,8 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="104dp"
-                android:layout_height="27dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="8dp"
@@ -41,14 +41,15 @@
                 android:textSize="24sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.406"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.252" />
+                card_view:layout_constraintVertical_bias="0.26" />
 
             <ImageView
                 android:id="@+id/ivLogo"
-                android:layout_width="133dp"
-                android:layout_height="80dp"
+                android:layout_width="125dp"
+                android:layout_height="83dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -64,8 +65,8 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="82dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tvTitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="8dp"
@@ -77,10 +78,10 @@
                 android:textSize="14sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.461"
+                card_view:layout_constraintHorizontal_bias="0.432"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.618" />
+                card_view:layout_constraintVertical_bias="0.617" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>

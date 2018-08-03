@@ -14,12 +14,17 @@ import com.example.suhirtha.randomadventure.models.DataModel;
 
 import java.util.ArrayList;
 
+import io.reactivex.subjects.PublishSubject;
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     ArrayList mValues;
     Context mContext;
     protected ItemListener mListener;
+
+    private final PublishSubject<String> onClickSubject = PublishSubject.create();
+
 
     public RecyclerViewAdapter(Context context, ArrayList values, ItemListener itemListener) {
 
@@ -75,8 +80,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        String[] mDataset = { "Data", "In", "Adapter", "Hello", "I'm dumb" };
 
         viewHolder.setData(((DataModel)mValues.get(i)));
+
+        final String element = mDataset[i];
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickSubject.onNext(element);
+            }
+        });
     }
 
 
@@ -97,4 +112,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public interface ItemListener {
         void onItemClick(DataModel item);
     }
+
+    //create interface: SelectionAdapterInterface
+
 }

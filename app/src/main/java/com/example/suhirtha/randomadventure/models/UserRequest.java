@@ -7,6 +7,8 @@ import com.example.suhirtha.randomadventure.Location;
 import com.example.suhirtha.randomadventure.LocationListenerRandomAdv;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+
 public class UserRequest {
 
     private double userLatitude;
@@ -15,7 +17,7 @@ public class UserRequest {
     private String term;
     private float minRating = 0; //cannot be implemented here
     private int maxPrice = 0;
-    private String[] attributes;
+    private ArrayList<String> attributes;
     private String priceString;
     Location userLocation;
 
@@ -36,6 +38,7 @@ public class UserRequest {
                 return;
             }
         });
+
         userLatitude = userLocation.getLatitude();
         userLongitude = userLocation.getLongitude();
         completeURL = BASE_URL; //bc strings are immutable!! the only thing I learned in school
@@ -71,7 +74,7 @@ public class UserRequest {
         return this;
     }
 
-    public UserRequest setAttributes(String[] attributes) {
+    public UserRequest setAttributes(ArrayList<String> attributes) {
         //attributes[] may be null
         this.attributes = attributes;
         return this;
@@ -102,13 +105,13 @@ public class UserRequest {
         }
 
         //Add attributes one by one
-        if (attributes != null && attributes.length != 0) {
+        if (attributes != null && attributes.size() != 0) {
             completeURL += "&attributes=";
-            completeURL += attributes[0];
+            completeURL += attributes.get(0);
         }
-        if (attributes != null && attributes.length > 1) {
-            for (int i = 1; i < attributes.length; i++) {
-                completeURL += "," + attributes[i]; //TODO - avoid concat in loops: use StringBuilder
+        if (attributes != null && attributes.size() > 1) {
+            for (int i = 1; i < attributes.size(); i++) {
+                completeURL += "," + attributes.get(0); //TODO - avoid concat in loops: use StringBuilder
             }
 
         }

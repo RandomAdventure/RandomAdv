@@ -1,18 +1,12 @@
 package com.example.suhirtha.randomadventure;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -28,24 +22,14 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+
+public class SelectionActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener, SelectionFragment.SelectionListener {
 /**
-import com.rxjava2.android.samples.R;
-import com.rxjava2.android.samples.utils.AppConstant;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.PublishSubject;
- **/
-
-
-public class SelectionActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener {
-
     RecyclerView recyclerView;
     ArrayList<DataModel> arrayList;
-
+**/
     private static ArrayList<Restaurant> firstFive;
 //--------------------------------------------------------------------------------------------------
-    final FragmentManager fragmentManager = getSupportFragmentManager();
     final Fragment accordionList = new AccordionFragment();
     private FragmentTransaction fragmentTransaction1;
 //--------------------------------------------------------------------------------------------------
@@ -58,11 +42,8 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 //--------------------------------------------------------------------------------------------------
     Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
 //--------------------------------------------------------------------------------------------------
-
     UserRequest request;
-
-    //private final PublishSubject<String> onClickSubject = PublishSubject.create();
-
+//--------------------------------------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +53,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 
         //fragment code
         fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction1.replace(R.id.saPlaceholderFragment, accordionList).commit();
+        fragmentTransaction1.replace(R.id.saSelectionFragment, accordionList).commit();
 
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
@@ -81,37 +62,38 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
         //mTestPrice = findViewById(R.id.etTestPrice);
         firstFive = new ArrayList<>(); //initialize the holder arrayList
 
+        /**
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         arrayList = new ArrayList<>();
         arrayList.add(new DataModel("Location", R.drawable.locate, "#7CCDC4"));
         arrayList.add(new DataModel("Cuisine", R.drawable.worldwide, "#0A6B95"));
         arrayList.add(new DataModel("Rating", R.drawable.star, "#B48EB7"));
         arrayList.add(new DataModel("Price", R.drawable.price, "#6e639f"));
-
-
+        **/
+/**
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, arrayList, this);
         recyclerView.setAdapter(adapter);
 
-        /**
-         AutoFitGridLayoutManager that auto fits the cells by the column width defined.
-         **/
 
-        /** AutoFitGridLayoutManager layoutManager = new AutoFitGridLayoutManager(this, 500);
-        recyclerView.setLayoutManager(layoutManager); **/
+        // AutoFitGridLayoutManager that auto fits the cells by the column width defined.
 
-        /**
-         Simple GridLayoutManager that spans two columns
-         **/
+
+        AutoFitGridLayoutManager layoutManager = new AutoFitGridLayoutManager(this, 500);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+         //Simple GridLayoutManager that spans two columns -- actually just 1. I'm dumb. //TODO - fix.
+
         GridLayoutManager manager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-
+ **/
         //------------------------------------------------------------------------------------------
 
         final SelectionViewModel viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
 
-
         //------------------------------------------------------------------------------------------
 
+        /**
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,9 +116,9 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
                 }
             }
         });
-
+**/
         //------------------------------------------------------------------------------------------
-
+/**
         //onClickListener for 'Done' button - leads to Tatum's result activity
         //TODO - remove eventually: kept for Tatum's testing
         mDone.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +129,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
                 startActivity(tatum);
             }
         });
-
+**/
     }
 
 //--------------------------------------------------------------------------------------------------
@@ -203,5 +185,24 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     public void onItemClick(DataModel item) {
         Toast.makeText(getApplicationContext(), item.title + " is clicked", Toast.LENGTH_SHORT).show();
     }
+
+//--------------------------------------------------------------------------------------------------
+
+    @Override
+    public void makeRequest(UserRequest request) {
+
+    }
+
+//--------------------------------------------------------------------------------------------------
+
+    @Override
+    public void tatumTest() {
+        Intent tatum = new Intent(SelectionActivity.this, ResultActivity.class);
+        tatum.putExtra("test1", Parcels.wrap(test1));
+        startActivity(tatum);
+    }
+
+//--------------------------------------------------------------------------------------------------
+
 }
 
