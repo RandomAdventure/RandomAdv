@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface RestaurantDao {
-    @Query("SELECT * FROM restautant")
+    @Query("SELECT * FROM restautgit ant")
     List<DatabaseRestaurant> getAllRestaurants();
 
     @Insert
