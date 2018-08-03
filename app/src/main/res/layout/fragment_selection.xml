@@ -47,13 +47,12 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/sfEditDistance"
+                <SeekBar
+                    android:id="@+id/sfDistanceBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Farthest Distance"
-                    android:textAlignment="center" />
+                    android:layout_margin="10dp"
+                    style="@style/purpleColorScheme"/>
 
             </LinearLayout>
 
@@ -80,13 +79,12 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/sfEditCuisine"
+                <Spinner
+                    android:id="@+id/spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Type of Food"
-                    android:textAlignment="center" />
+                    android:layout_margin="10dp"
+                    android:outlineAmbientShadowColor="@color/teal" />
 
             </LinearLayout>
 
@@ -156,13 +154,14 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/sfEditPrice"
+                <SeekBar
+                    android:id="@+id/sfPriceBar"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Maximum Price"
-                    android:textAlignment="center" />
+                    android:max="4"
+                    android:progress="1"
+                    android:layout_margin="10dp"/>
 
             </LinearLayout>
 
@@ -182,6 +181,7 @@
                     android:fontFamily="@font/montserrat_regular"
                     android:text="Search"
                     android:textColor="@color/darkTeal"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.166"
@@ -201,6 +201,7 @@
                     android:fontFamily="@font/montserrat_regular"
                     android:text="Done"
                     android:textColor="@color/darkTeal"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.876"
