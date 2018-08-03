@@ -213,6 +213,45 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/sfEditDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="181dp"
+                android:layout_marginTop="656dp"
+                android:text="TextView" />
+
+            <EditText
+                android:id="@+id/sfEditPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="181dp"
+                android:layout_marginTop="656dp"
+                android:text="TextView" />
+
+            <EditText
+                android:id="@+id/sfEditCuisine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="181dp"
+                android:layout_marginTop="656dp"
+                android:text="TextView" />
+
+        </LinearLayout>
+
     </ScrollView>
+
+
 
 </RelativeLayout>
