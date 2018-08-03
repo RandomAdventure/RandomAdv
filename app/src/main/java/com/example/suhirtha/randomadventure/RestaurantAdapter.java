@@ -2,6 +2,7 @@ package com.example.suhirtha.randomadventure;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,14 +41,34 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         return mRestaurants.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView restaurantName;
 
         public ViewHolder(View itemView){
             super(itemView);
             restaurantName = itemView.findViewById(R.id.nameRestaurant);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+
+            if (position != RecyclerView.NO_POSITION) {
+                DatabaseRestaurant restaurant = mRestaurants.get(position);
+                Log.d("RestaurantAdapter", "Deleting database at position: " + position);
+            }
+
+            //do this in the background, wrap in background
+            //need this to insert data
+//            DatabaseHelper db = Room.databaseBuilder(this, DatabaseHelper.class, "saved_restaurants")
+//                    .allowMainThreadQueries() //TODO change this
+//                    .build();
+//
+//            db.restaurantDao().delete();
         }
     }
+
 
 
 }
