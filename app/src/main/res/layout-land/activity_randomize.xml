@@ -25,7 +25,7 @@
             android:src="@drawable/logo75" />
 
         <ImageButton
-            android:id="@+id/btn_settings"
+            android:id="@+id/btn_back"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginRight="?attr/actionBarSize"
