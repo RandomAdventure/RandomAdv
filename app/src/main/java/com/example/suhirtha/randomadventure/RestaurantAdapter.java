@@ -1,5 +1,7 @@
 package com.example.suhirtha.randomadventure;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,9 +21,13 @@ import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
     private List<DatabaseRestaurant> mRestaurants;
+    Context context;
 
-    public RestaurantAdapter(List<DatabaseRestaurant> restaurants){
+
+
+    public RestaurantAdapter(Context context, List<DatabaseRestaurant> restaurants){
         mRestaurants = restaurants;
+        this.context= context;
     }
 
     @Override
@@ -57,15 +63,18 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             if (position != RecyclerView.NO_POSITION) {
                 DatabaseRestaurant restaurant = mRestaurants.get(position);
                 Log.d("RestaurantAdapter", "Deleting database at position: " + position);
+
+
+                //do this in the background, wrap in background
+                //need this to insert data
+                DatabaseHelper db = Room.databaseBuilder(context, DatabaseHelper.class, "saved_restaurants")
+                        .allowMainThreadQueries() //TODO change this
+                        .build();
+
+                db.restaurantDao().delete(restaurant);
             }
 
-            //do this in the background, wrap in background
-            //need this to insert data
-//            DatabaseHelper db = Room.databaseBuilder(this, DatabaseHelper.class, "saved_restaurants")
-//                    .allowMainThreadQueries() //TODO change this
-//                    .build();
-//
-//            db.restaurantDao().delete();
+
         }
     }
 

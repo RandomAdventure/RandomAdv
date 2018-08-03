@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     int REQUEST_CODE_SELECTION = 150;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,12 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
 
         restaurants = new ArrayList<DatabaseRestaurant>();
         restaurants = db.restaurantDao().getAllRestaurants();
-        adapter = new RestaurantAdapter(restaurants);
+        adapter = new RestaurantAdapter(this, restaurants);
         recyclerView.setAdapter(adapter);
 
 
         //USED TO INSERT INFO TO DATABASE
-        //db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName3"));
+        //db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#"));
     }
 
     //toolbar
@@ -66,4 +68,14 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StartActivity.class);
         startActivityForResult(intent,REQUEST_CODE_SELECTION); //wrapping
     }
+    public void onClickDelete(View view) {
+        //TODO delete everything in database
+        Log.d("RChosenActivity", "Deleting database completely");
+        DatabaseHelper db = Room.databaseBuilder(getApplicationContext(), DatabaseHelper.class, "saved_restaurants")
+                .allowMainThreadQueries() //TODO change this
+                .build();
+        db.restaurantDao().deleteAll();
+        adapter.notifyDataSetChanged();
+    }
+
 }
