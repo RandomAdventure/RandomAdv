@@ -56,7 +56,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
         fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.saSelectionFragment, accordionList).commit();
         **/
-        
+
         //initialize fields
         mSearch = findViewById(R.id.btnSearch);
         mDone = findViewById(R.id.btnDone);
