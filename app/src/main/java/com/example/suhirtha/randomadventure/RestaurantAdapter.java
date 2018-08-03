@@ -9,17 +9,17 @@ import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anitac on 7/31/18.
  */
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
-    private ArrayList<DatabaseRestaurant> mRestaurants;
-    private DatabaseHelper db;
 
-    public RestaurantAdapter(ArrayList<DatabaseRestaurant> restaurants){
+public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
+    private List<DatabaseRestaurant> mRestaurants;
+
+    public RestaurantAdapter(List<DatabaseRestaurant> restaurants){
         mRestaurants = restaurants;
     }
 

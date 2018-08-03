@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
  * Created by anitac on 8/2/18.
  */
 
-@Entity
+@Entity (tableName = "restaurant")
 public class DatabaseRestaurant {
 
     @PrimaryKey(autoGenerate = true)
@@ -35,6 +35,14 @@ public class DatabaseRestaurant {
 
     public String getRestaurantName() {
         return restaurantName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setRestaurantName(String restaurantName) {

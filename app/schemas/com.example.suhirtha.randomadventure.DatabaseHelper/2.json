@@ -1,0 +1,43 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "ca54e3ed2b802ffe2bcc9b14138ece11",
+    "entities": [
+      {
+        "tableName": "RestaurantAdapter",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mRestaurants` TEXT, `mObservable` TEXT, `mHasStableIds` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "mRestaurants",
+            "columnName": "mRestaurants",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mObservable",
+            "columnName": "mObservable",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mHasStableIds",
+            "columnName": "mHasStableIds",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ca54e3ed2b802ffe2bcc9b14138ece11\")"
+    ]
+  }
+}
