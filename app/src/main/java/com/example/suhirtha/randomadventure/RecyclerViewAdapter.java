@@ -2,13 +2,12 @@ package com.example.suhirtha.randomadventure;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.models.DataModel;
@@ -16,7 +15,7 @@ import com.example.suhirtha.randomadventure.models.DataModel;
 import java.util.ArrayList;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     ArrayList mValues;
     Context mContext;
@@ -33,7 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
         public TextView textView;
         public ImageView imageView;
-        public RelativeLayout relativeLayout;
+        public ConstraintLayout constraintLayout;
         DataModel item;
 
         public ViewHolder(View v) {
@@ -43,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             v.setOnClickListener(this);
             textView = (TextView) v.findViewById(R.id.tvTitle);
             imageView = (ImageView) v.findViewById(R.id.ivLogo);
-            relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout);
+            constraintLayout = (ConstraintLayout) v.findViewById(R.id.relativeLayout);
             v.findViewById(R.id.relativeLayout);
 
         }
@@ -53,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
             textView.setText(item.title);
             imageView.setImageResource(item.drawable);
-            relativeLayout.setBackgroundColor(Color.parseColor(item.color));
+            constraintLayout.setBackgroundColor(Color.parseColor(item.color));
 
         }
 
@@ -73,23 +72,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         return new ViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
-    }
-
-    /**
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+
         viewHolder.setData(((DataModel)mValues.get(i)));
     }
-    **/
 
 
+
+    /**
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         viewHolder.setData(((DataModel)mValues.get(i)));
     }
-
+    **/
 
 
     @Override
