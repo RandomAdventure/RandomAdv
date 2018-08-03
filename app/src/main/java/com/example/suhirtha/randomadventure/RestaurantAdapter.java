@@ -40,7 +40,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         return mRestaurants.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView restaurantName;
 
