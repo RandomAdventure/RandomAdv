@@ -42,14 +42,16 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     public SelectionFragment() {
         // Required empty public constructor
     }
+
 //--------------------------------------------------------------------------------------------------
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
+
 //--------------------------------------------------------------------------------------------------
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +70,8 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         return selectionView;
     }
 
+//--------------------------------------------------------------------------------------------------
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -81,6 +85,8 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         }
     }
 
+//--------------------------------------------------------------------------------------------------
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -92,12 +98,15 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         }
     }
 
+//--------------------------------------------------------------------------------------------------
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+//--------------------------------------------------------------------------------------------------
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -112,6 +121,8 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         void makeRequest(UserRequest request);
         void tatumTest();
     }
+
+//--------------------------------------------------------------------------------------------------
 
     public UserRequest buildRequest() {
 
@@ -129,5 +140,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         return request;
     }
 
+//--------------------------------------------------------------------------------------------------
 
 }
