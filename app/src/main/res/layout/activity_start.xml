@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.suhirtha.randomadventure.StartActivity"
+    tools:context="com.example.suhirtha.randomadventure.activities.StartActivity"
     android:background="@drawable/gradient">
 
     <android.support.v7.widget.Toolbar

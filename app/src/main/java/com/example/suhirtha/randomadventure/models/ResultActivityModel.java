@@ -1,8 +1,5 @@
 package com.example.suhirtha.randomadventure.models;
 
-import android.os.Parcelable;
-
-import com.example.suhirtha.randomadventure.ResultActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.parceler.Parcel;

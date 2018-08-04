@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.activities;
 
 import android.app.Activity;
 import android.view.View;

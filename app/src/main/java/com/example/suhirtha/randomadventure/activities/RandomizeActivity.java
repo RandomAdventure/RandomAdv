@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -17,8 +17,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.suhirtha.randomadventure.R;
+import com.example.suhirtha.randomadventure.YelpClient;
 import com.example.suhirtha.randomadventure.models.Restaurant;
+
 import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.Random;
 

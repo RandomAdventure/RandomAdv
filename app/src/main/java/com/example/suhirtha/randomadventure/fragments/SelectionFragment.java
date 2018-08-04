@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 
+import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.models.UserRequest;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
  */
 public class SelectionFragment extends Fragment implements View.OnClickListener {
 
+//--------------------------------------------------------------------------------------------------
     private Button mSearch;
     private Button mDone;
     private SeekBar mSeekRadius;
@@ -31,23 +33,23 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     private EditText mCuisine;
     private RatingBar mRating;
     private EditText mPrice;
-
+//--------------------------------------------------------------------------------------------------
     UserRequest request;
-
-
+//--------------------------------------------------------------------------------------------------
     private SelectionListener mListener;
+//--------------------------------------------------------------------------------------------------
 
     public SelectionFragment() {
         // Required empty public constructor
     }
-
+//--------------------------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
     }
-
+//--------------------------------------------------------------------------------------------------
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,7 +80,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 break;
         }
     }
-
 
     @Override
     public void onAttach(Context context) {

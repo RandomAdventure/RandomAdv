@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.suhirtha.randomadventure.R;
 
 public class StartActivity extends AppCompatActivity {
     private Button mFilter;

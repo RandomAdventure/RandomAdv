@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SelectionActivity"
+    tools:context=".activities.SelectionActivity"
     android:id="@+id/relativeLayout2">
 
     <Button
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/saPlaceholderFragment"
-        android:name="com.example.suhirtha.randomadventure.AccordionFragment"
+        android:name="com.example.suhirtha.randomadventure.fragments.AccordionFragment"
         android:layout_width="368dp"
         android:layout_height="28dp"
         android:layout_marginBottom="8dp"

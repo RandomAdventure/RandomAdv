@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.models.MenuRow;
 import com.sysdata.widget.accordion.ItemAdapter;
 

@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -12,9 +12,13 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.example.suhirtha.randomadventure.R;
+import com.example.suhirtha.randomadventure.adapters.RecyclerViewAdapter;
+import com.example.suhirtha.randomadventure.fragments.SelectionFragment;
 import com.example.suhirtha.randomadventure.models.DataModel;
 import com.example.suhirtha.randomadventure.models.Restaurant;
 import com.example.suhirtha.randomadventure.models.UserRequest;
+import com.example.suhirtha.randomadventure.viewModels.SelectionViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

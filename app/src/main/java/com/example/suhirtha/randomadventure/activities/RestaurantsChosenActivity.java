@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.suhirtha.randomadventure.AppDatabase;
+import com.example.suhirtha.randomadventure.R;
+import com.example.suhirtha.randomadventure.adapters.RestaurantAdapter;
 import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
 
 import java.util.ArrayList;

@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    tools:context=".SelectionActivity">
+    tools:context=".activities.SelectionActivity">
 
     <fragment
         android:id="@+id/saSelectionFragment"
-        android:name="com.example.suhirtha.randomadventure.SelectionFragment"
+        android:name="com.example.suhirtha.randomadventure.fragments.SelectionFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"

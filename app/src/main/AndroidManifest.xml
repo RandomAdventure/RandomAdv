@@ -14,16 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity">
+        <activity android:name=".activities.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RandomizeActivity" />
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".SelectionActivity" />
+        <activity android:name=".activities.RandomizeActivity" />
+        <activity android:name=".activities.ResultActivity" />
+        <activity android:name=".activities.SelectionActivity" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -32,7 +32,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".RestaurantsChosenActivity"></activity>
+        <activity android:name=".activities.RestaurantsChosenActivity"></activity>
     </application>
 
 </manifest>

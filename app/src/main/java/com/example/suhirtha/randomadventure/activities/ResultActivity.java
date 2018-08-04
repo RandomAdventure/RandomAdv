@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure;
+package com.example.suhirtha.randomadventure.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -9,18 +9,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.akexorcist.googledirection.model.Direction;
+import com.example.suhirtha.randomadventure.Location;
+import com.example.suhirtha.randomadventure.LocationListenerRandomAdv;
+import com.example.suhirtha.randomadventure.R;
+import com.example.suhirtha.randomadventure.fragments.LoadingFragment;
+import com.example.suhirtha.randomadventure.fragments.ResultFragment;
 import com.example.suhirtha.randomadventure.models.Restaurant;
 import com.example.suhirtha.randomadventure.models.ResultActivityModel;
+import com.example.suhirtha.randomadventure.viewModels.ResultViewModel;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -35,8 +39,6 @@ import org.parceler.Parcels;
 
 public class ResultActivity extends AppCompatActivity implements LocationListenerRandomAdv, ResultFragment.ResultActivityListener{
 
-    public ViewPager viewPager;
-    private ViewPageAdapter adapter;
     public ResultViewModel model;
     private Context context;
     public ResultActivity activity;
