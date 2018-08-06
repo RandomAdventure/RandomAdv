@@ -1,5 +1,6 @@
 package com.example.suhirtha.randomadventure.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.adapters.RestaurantAdapter;
 import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
+import com.example.suhirtha.randomadventure.viewModels.RestaurantsChosenViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     int REQUEST_CODE_SELECTION = 150;
+    RestaurantsChosenViewModel viewModel;
 
 
     @Override
@@ -35,6 +38,8 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.rcaToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); //removes title
+
+        viewModel = ViewModelProviders.of(this).get(RestaurantsChosenViewModel.class);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerRestaurant);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

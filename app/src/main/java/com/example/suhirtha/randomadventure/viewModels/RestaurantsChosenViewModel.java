@@ -15,15 +15,16 @@ import java.util.List;
 public class RestaurantsChosenViewModel extends ViewModel {
 
     private MutableLiveData<List<DatabaseRestaurant>> restaurants;
+
     public LiveData<List<DatabaseRestaurant>> getUsers() {
         if (restaurants == null) {
             restaurants = new MutableLiveData<List<DatabaseRestaurant>>();
-            loadUsers();
+            loadRestaurants();
         }
         return restaurants;
     }
 
-    private void loadUsers() {
+    private void loadRestaurants() {
         // Do an asynchronous operation to fetch users.
     }
 }
