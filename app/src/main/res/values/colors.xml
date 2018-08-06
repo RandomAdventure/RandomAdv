@@ -5,11 +5,18 @@
     <color name="colorAccent">#ff4081</color>
     <color name="lightTeal">#e0fee2</color>
     <color name="teal">#7CCDC4</color>
+    <color name="lightDarkTeal">#66a2bb</color>
     <color name="darkTeal">#0a6b95</color>
+    <color name="darkTeal2">#0a8295</color>
+    <color name="DarkestTeal">#174254</color>
+
+    <color name="lightestPurple">#dfcde0</color>
     <color name="lightPurple">#B48EB7</color>
+    <color name="lightPurple2">#b48eb7</color>
     <color name="clearPurple">#f0b48eb7</color>
     <color name="darkPurple">#6e639f</color>
     <color name="gold">#F7BB32</color>
     <color name="clear">#00000000</color>
-    <color name="lightDarkTeal">#66a2bb</color>
+
+
 </resources>
