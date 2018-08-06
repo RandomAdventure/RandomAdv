@@ -9,9 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.example.suhirtha.randomadventure.R;
@@ -39,11 +36,6 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     final Fragment selection = new SelectionFragment();
     private FragmentTransaction fragmentTransaction1;
 //--------------------------------------------------------------------------------------------------
-    private Button mSearch;
-    private Button mDone;
-    private SeekBar mRadius;
-    private EditText mTestRadius;
-    private EditText mTestPrice;
 
 //--------------------------------------------------------------------------------------------------
     Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
@@ -59,51 +51,35 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
-        //fragment code
-        /**
-        fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction1.replace(R.id.saSelectionFragment, accordionList).commit();
-        **/
-
-        //initialize fields
-        mSearch = findViewById(R.id.btnSearch);
-        mDone = findViewById(R.id.btnDone);
-        //mTestRadius = findViewById(R.id.etTestRadius);
-        //mTestPrice = findViewById(R.id.etTestPrice);
         firstFive = new ArrayList<>(); //initialize the holder arrayList
 
+        viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
+//------------------------------------------------------------------------------------------
         /**
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        arrayList = new ArrayList<>();
-        arrayList.add(new DataModel("Location", R.drawable.locate, "#7CCDC4"));
-        arrayList.add(new DataModel("Cuisine", R.drawable.worldwide, "#0A6B95"));
-        arrayList.add(new DataModel("Rating", R.drawable.star, "#B48EB7"));
-        arrayList.add(new DataModel("Price", R.drawable.price, "#6e639f"));
-        **/
-/**
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, arrayList, this);
-        recyclerView.setAdapter(adapter);
+         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+         arrayList = new ArrayList<>();
+         arrayList.add(new DataModel("Location", R.drawable.locate, "#7CCDC4"));
+         arrayList.add(new DataModel("Cuisine", R.drawable.worldwide, "#0A6B95"));
+         arrayList.add(new DataModel("Rating", R.drawable.star, "#B48EB7"));
+         arrayList.add(new DataModel("Price", R.drawable.price, "#6e639f"));
+
+         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, arrayList, this);
+         recyclerView.setAdapter(adapter);
 
 
-        // AutoFitGridLayoutManager that auto fits the cells by the column width defined.
+         // AutoFitGridLayoutManager that auto fits the cells by the column width defined.
 
 
-        AutoFitGridLayoutManager layoutManager = new AutoFitGridLayoutManager(this, 500);
-        recyclerView.setLayoutManager(layoutManager);
+         AutoFitGridLayoutManager layoutManager = new AutoFitGridLayoutManager(this, 500);
+         recyclerView.setLayoutManager(layoutManager);
 
 
          //Simple GridLayoutManager that spans two columns -- actually just 1. I'm dumb. //TODO - fix.
 
-        GridLayoutManager manager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(manager);
- **/
-        //------------------------------------------------------------------------------------------
+         GridLayoutManager manager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
+         recyclerView.setLayoutManager(manager);
+         **/
 
-        viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
-
-        //------------------------------------------------------------------------------------------
-
-        //------------------------------------------------------------------------------------------
     }
 
 //--------------------------------------------------------------------------------------------------
@@ -163,8 +139,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     @Override
     public void makeRequest(final UserRequest request) {
         try {
-            //createRequest();
-            //passRestaurants();
+
             final Observer<JSONArray> restaurantObserver = new Observer<JSONArray>() {
                 @Override
                 public void onChanged(@Nullable JSONArray restaurants) {

@@ -50,7 +50,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 //--------------------------------------------------------------------------------------------------
 
     public SelectionFragment() {
-        // Required empty public constructor
+
     }
 
 //--------------------------------------------------------------------------------------------------
@@ -77,6 +77,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         mPrice = selectionView.findViewById(R.id.sfPriceBar);
         mOther = selectionView.findViewById(R.id.sfOtherSpinner);
 
+        //Cuisine Spinner
         mCuisine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {   ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
@@ -90,6 +91,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+        //'Other' Spinner
         mOther.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {   ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
@@ -108,7 +110,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
         mSearch.setOnClickListener(this);
         mDone.setOnClickListener(this);
-
 
         // Inflate the layout for this fragment
         return selectionView;
@@ -199,10 +200,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 .setTerms(terms)
                 .setMinRating(mRating.getRating())
                 .setAttribute(attributeSelected);
-
-                //.buildURL();
-
-        //return request;
     }
 
 //--------------------------------------------------------------------------------------------------
