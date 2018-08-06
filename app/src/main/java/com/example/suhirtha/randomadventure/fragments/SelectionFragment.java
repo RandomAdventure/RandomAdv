@@ -1,21 +1,25 @@
 package com.example.suhirtha.randomadventure.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.models.UserRequest;
 
 import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,10 +33,15 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     private Button mSearch;
     private Button mDone;
     private SeekBar mSeekRadius;
-    private EditText mRadius;
-    private EditText mCuisine;
+    private Spinner mCuisine;
     private RatingBar mRating;
-    private EditText mPrice;
+    private SeekBar mPrice;
+    private Spinner mOther;
+    private double mileConversion = 1609.344;
+//--------------------------------------------------------------------------------------------------
+    private String cuisineSelected;
+    private String attributeSelected;
+    private boolean attribute;
 //--------------------------------------------------------------------------------------------------
     UserRequest request;
 //--------------------------------------------------------------------------------------------------
@@ -57,15 +66,49 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         View selectionView = inflater.inflate(R.layout.fragment_selection, container, false);
 
+        populateSpinner(selectionView);
+
         mSearch = selectionView.findViewById(R.id.sfSearchButton);
         mDone = selectionView.findViewById(R.id.sfDoneButton);
-        mRadius = selectionView.findViewById(R.id.sfEditDistance);
-        mCuisine = selectionView.findViewById(R.id.sfEditCuisine);
+        mSeekRadius = selectionView.findViewById(R.id.sfDistanceBar);
+        mCuisine = selectionView.findViewById(R.id.sfCuisineSpinner);
         mRating = selectionView.findViewById(R.id.sfRatingBar);
-        mPrice = selectionView.findViewById(R.id.sfEditPrice);
+        mPrice = selectionView.findViewById(R.id.sfPriceBar);
+        mOther = selectionView.findViewById(R.id.sfOtherSpinner);
+
+        mCuisine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {   ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView) parent.getChildAt(0)).setTextSize(15);
+                cuisineSelected = parent.getItemAtPosition(position).toString(); //this is your selected item
+                Log.d("Cuisine Chosen", cuisineSelected);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+
+        mOther.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {   ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView) parent.getChildAt(0)).setTextSize(15);
+                attributeSelected = parent.getItemAtPosition(position).toString(); //this is your selected item
+                if (attributeSelected == null || attributeSelected.equals("")) {
+                    attribute = false;
+                }
+                Log.d("Attribute chosen", attributeSelected);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
 
         mSearch.setOnClickListener(this);
         mDone.setOnClickListener(this);
+
+
         // Inflate the layout for this fragment
         return selectionView;
     }
@@ -76,6 +119,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sfSearchButton:
+                Log.d("Search Button", "Pressed!");
                 buildRequest();
                 mListener.makeRequest(request);
                 break;
@@ -83,6 +127,28 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 mListener.tatumTest();
                 break;
         }
+    }
+
+//--------------------------------------------------------------------------------------------------
+
+    public void populateSpinner(View view) {
+        Spinner spinner = (Spinner) view.findViewById(R.id.sfCuisineSpinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.cuisine_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        Spinner spinner2 = (Spinner) view.findViewById(R.id.sfOtherSpinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.other_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner2.setAdapter(adapter2);
     }
 
 //--------------------------------------------------------------------------------------------------
@@ -112,10 +178,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface SelectionListener {
         void makeRequest(UserRequest request);
@@ -124,20 +186,22 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
 //--------------------------------------------------------------------------------------------------
 
-    public UserRequest buildRequest() {
+    public void buildRequest() {
 
         // Add attributes to an arraylist
-        ArrayList<String> attributes = new ArrayList<>();
-        attributes.add(mCuisine.getText().toString());
+        ArrayList<String> terms = new ArrayList<>();
+        terms.add(cuisineSelected);
 
-        UserRequest request = new UserRequest(this.getContext(), this.getActivity())
-                .setRadius(Integer.parseInt(mRadius.getText().toString()))
-                .setMaxPrice(Integer.parseInt(mPrice.getText().toString()))
-                .setAttributes(attributes)
+        request = new UserRequest(this.getContext(), this.getActivity())
+                .setRadius((int) (mSeekRadius.getProgress() * mileConversion))
+                .setMaxPrice(mPrice.getProgress())
+                .setTerms(terms)
                 .setMinRating(mRating.getRating())
-                .buildURL();
+                .setAttribute(attributeSelected);
 
-        return request;
+                //.buildURL();
+
+        //return request;
     }
 
 //--------------------------------------------------------------------------------------------------

@@ -121,7 +121,7 @@ public class RandomizeActivity extends AppCompatActivity {
 
         /* Suhi **/
 
-        for (int i = 0; i < restaurants.size(); i++) {
+        for (int i = 0; i < 5; i++) {
             res[i].setText(restaurants.get(i).getName());
             chosen.addAll(restaurants);
         }

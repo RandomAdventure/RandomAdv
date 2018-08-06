@@ -39,6 +39,8 @@ public class SelectionViewModel extends ViewModel {
 //--------------------------------------------------------------------------------------------------
     private void loadRestaurants(UserRequest req) {
 
+        req.buildURL();
+
         // Do an asynchronous operation to fetch users.
 
         Request request = new Request.Builder()

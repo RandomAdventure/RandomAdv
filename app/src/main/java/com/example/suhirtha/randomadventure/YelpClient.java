@@ -59,7 +59,7 @@ public class YelpClient{
      * @param activity - not sure about passing in instance of an activity, there has to be a better way
      */
     public JSONArray getBusinesses(UserRequest req, final SelectionActivity activity)  {
-
+        req.buildURL();
         Request request = new Request.Builder()
                 .url(req.getCompleteURL() + "&sort_by=rating")
                 .addHeader("Authorization", "Bearer "+API_KEY)

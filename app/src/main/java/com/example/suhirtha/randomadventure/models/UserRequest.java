@@ -14,10 +14,11 @@ public class UserRequest {
     private double userLatitude;
     private double userLongitude;
     private int radius; //in miles
+    private String attribute;
     private String term;
     private float minRating = 0; //cannot be implemented here
     private int maxPrice = 0;
-    private ArrayList<String> attributes;
+    private ArrayList<String> terms;
     private String priceString;
     Location userLocation;
 
@@ -57,8 +58,8 @@ public class UserRequest {
         return this;
     }
 
-    public UserRequest setCuisine(String cuisine) {
-        this.term = cuisine;
+    public UserRequest setAttribute(String attribute) {
+        this.term = attribute;
         return this;
     }
 
@@ -74,9 +75,9 @@ public class UserRequest {
         return this;
     }
 
-    public UserRequest setAttributes(ArrayList<String> attributes) {
+    public UserRequest setTerms(ArrayList<String> cusinies) {
         //attributes[] may be null
-        this.attributes = attributes;
+        this.terms = cusinies;
         return this;
     }
 
@@ -99,19 +100,19 @@ public class UserRequest {
             completeURL += "&price=" + this.priceString;
         }
 
-        if (term != null) {
+        if (attribute != null) {
             //Add term(s)
-            completeURL += "&term=" + this.term;
+            completeURL += "&term=" + this.attribute;
         }
 
-        //Add attributes one by one
-        if (attributes != null && attributes.size() != 0) {
-            completeURL += "&attributes=";
-            completeURL += attributes.get(0);
+        //Add terms one by one
+        if (terms != null && terms.size() != 0) {
+            completeURL += "&term=";
+            completeURL += terms.get(0);
         }
-        if (attributes != null && attributes.size() > 1) {
-            for (int i = 1; i < attributes.size(); i++) {
-                completeURL += "," + attributes.get(0); //TODO - avoid concat in loops: use StringBuilder
+        if (terms != null && terms.size() > 1) {
+            for (int i = 1; i < terms.size(); i++) {
+                completeURL += "," + terms.get(0); //TODO - avoid concat in loops: use StringBuilder
             }
 
         }

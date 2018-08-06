@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="other_array">
+    <item></item>
+    <item>Gender Neutral Restrooms</item>
+    <item>Just Opened</item>
+    <item>Allow Reservations</item>
+</string-array>
+</resources>
