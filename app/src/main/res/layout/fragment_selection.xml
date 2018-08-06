@@ -48,12 +48,24 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textSize="18sp" />
 
-                <SeekBar
+                <com.xw.repo.BubbleSeekBar
                     android:id="@+id/sfDistanceBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    style="@style/purpleColorScheme"/>
+                    app:bsb_bubble_color="@color/common_google_signin_btn_text_dark_default"
+                    app:bsb_bubble_text_color="@color/darkTeal"
+                    app:bsb_max="50.0"
+                    app:bsb_min="0.0"
+                    app:bsb_progress="0"
+                    app:bsb_second_track_color="@color/darkTeal"
+                    app:bsb_section_count="5"
+                    app:bsb_section_text_position="bottom_sides"
+                    app:bsb_show_progress_in_float="true"
+                    app:bsb_show_section_mark="true"
+                    app:bsb_show_section_text="true"
+                    app:bsb_show_thumb_text="true"
+                  app:bsb_track_color="@color/darkTeal" />
+
 
             </LinearLayout>
 
@@ -167,9 +179,9 @@
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:max="4"
-                    android:progress="1"
-                    android:layout_margin="10dp"/>
+                    android:progress="1" />
 
             </LinearLayout>
 

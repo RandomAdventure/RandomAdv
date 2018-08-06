@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.models.UserRequest;
+import com.xw.repo.BubbleSeekBar;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 //--------------------------------------------------------------------------------------------------
     private Button mSearch;
     private Button mDone;
-    private SeekBar mSeekRadius;
+    private BubbleSeekBar mSeekRadius;
     private Spinner mCuisine;
     private RatingBar mRating;
     private SeekBar mPrice;
