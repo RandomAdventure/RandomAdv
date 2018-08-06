@@ -59,6 +59,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
     public LoadingFragment loadingFragment;
     public FragmentTransaction fragmentTransaction;
     private boolean bundleNull;
+    private ResultActivityModel resultActivityModel;
 
     @SuppressLint("ResourceType")
     @Override
@@ -72,6 +73,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
         if (savedInstanceState == null) {
             fragmentTransaction = fragmentManager.beginTransaction();
             resultFragment = new ResultFragment();
+            model.resultFragment = resultFragment;
             loadingFragment = new LoadingFragment();
             fragmentTransaction.add(R.id.rsaFrameLayout, loadingFragment, "loading_fragment");
             fragmentTransaction.hide(resultFragment);
@@ -120,7 +122,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
                             takesReservation = true;
                         }
                     }
-                    ResultActivityModel resultActivityModel = new ResultActivityModel(origin, destination, model.transportationMode, name, address, rating, hasDelivery, takesReservation, phoneNumber);
+                    resultActivityModel = new ResultActivityModel(origin, destination, model.transportationMode, name, address, rating, hasDelivery, takesReservation, phoneNumber);
                     fragmentTransaction = fragmentManager.beginTransaction();
                     if (bundleNull) {
                         Bundle bundle = new Bundle();
@@ -168,6 +170,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
 
     public void walkingDirections(View v){
         model.transportationMode = "walking";
+        model.resultFragment.resultActivityModel.setTransportationMode("walking");
         final Observer<Direction> walkingDirectionObserver = new Observer<Direction>() {
             @Override
             public void onChanged(@Nullable final Direction direction) {
@@ -180,6 +183,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
 
     public void drivingDirections(View v){
         model.transportationMode = "driving";
+        model.resultFragment.resultActivityModel.setTransportationMode("driving");
         final Observer<Direction> drivingDirectionObserver = new Observer<Direction>() {
             @Override
             public void onChanged(@Nullable final Direction direction) {

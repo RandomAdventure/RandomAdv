@@ -54,7 +54,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
     private ImageButton mWalking;
     private ImageButton mDriving;
     private ResultActivityListener activityListener;
-    private ResultActivityModel resultActivityModel;
+    public ResultActivityModel resultActivityModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstances){
