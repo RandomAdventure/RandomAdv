@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
@@ -37,8 +36,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -104,7 +101,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
                 AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "saved_restaurants")
                         .allowMainThreadQueries()
                         .build();
-                db.restaurantDao().insertAll(new DatabaseRestaurant(resultActivityModel.getId(), resultActivityModel.getName()));
+                db.restaurantDao().insertAll(new DatabaseRestaurant(resultActivityModel.getId(), resultActivityModel.getName(), resultActivityModel.getAddress(), 0.0 ," "));
                 Intent intent = new Intent(getActivity(), RestaurantDetailActivity.class);
                 startActivity(intent);
             }
