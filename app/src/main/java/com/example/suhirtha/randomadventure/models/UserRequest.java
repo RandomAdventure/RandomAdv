@@ -7,8 +7,6 @@ import com.example.suhirtha.randomadventure.Location;
 import com.example.suhirtha.randomadventure.LocationListenerRandomAdv;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
-
 public class UserRequest {
 
     private double userLatitude;
@@ -18,7 +16,7 @@ public class UserRequest {
     private String term;
     private float minRating = 0; //cannot be implemented here
     private int maxPrice = 0;
-    private ArrayList<String> terms;
+    private String terms;
     private String priceString;
     Location userLocation;
 
@@ -75,9 +73,9 @@ public class UserRequest {
         return this;
     }
 
-    public UserRequest setTerms(ArrayList<String> cusinies) {
+    public UserRequest setTerms(String terms) {
         //attributes[] may be null
-        this.terms = cusinies;
+        this.terms = terms;
         return this;
     }
 
@@ -105,6 +103,7 @@ public class UserRequest {
             completeURL += "&term=" + this.attribute;
         }
 
+        /**
         //Add terms one by one
         if (terms != null && terms.size() != 0) {
             completeURL += "&term=";
@@ -115,6 +114,11 @@ public class UserRequest {
                 completeURL += "," + terms.get(0); //TODO - avoid concat in loops: use StringBuilder
             }
 
+        }
+         **/
+
+        if (terms != null && terms.length() > 0) {
+            completeURL = completeURL + "&term=" + terms;
         }
 
         return this;

@@ -2,9 +2,12 @@ package com.example.suhirtha.randomadventure.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -13,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,7 +25,17 @@ import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.models.UserRequest;
 import com.xw.repo.BubbleSeekBar;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.android.gms.internal.zzhl.runOnUiThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,10 +50,12 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     private Button mDone;
     private BubbleSeekBar mSeekRadius;
     private BubbleSeekBar mSeekPrice;
-    private Spinner mCuisine;
+    //private Spinner mCuisine;
     private RatingBar mRating;
     private Spinner mOther;
     private double mileConversion = 1609.344;
+    //private AutoCompleteTextView mAutoComplete;
+    private MultiAutoCompleteTextView mAutoComplete2;
 //--------------------------------------------------------------------------------------------------
     private String cuisineSelected;
     private String attributeSelected;
@@ -49,12 +65,15 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 //--------------------------------------------------------------------------------------------------
     private SelectionListener mListener;
 //--------------------------------------------------------------------------------------------------
-
-    public SelectionFragment() {
-
-    }
-
+    private String[] testArray = new String[] {"Dessert", "Deli", "Brunch", "Indian", "Buffet", "Ice cream", "Greek", "Fast food",
+                                        "Italian", "Ramen", "Noodles", "Seafood", "Thai", "Ethiopian", "Bars", "Bubble Tea", "Mexican",
+                                        "Halal", "Japanese", "Sushi", "Vegetarian", "Vegan", "Waffles", "Salad", "Hot Dogs", "Food Trucks",
+                                        "Poke", "Pretzels", "Tea", "Kombucha", "Brazilian", "Burgers", "Cafes", "Cajun", "Cake",
+                                        "Cheesecake", "Chinese", "Creperies", "Cuban", "Danish", "Dumplings"};
 //--------------------------------------------------------------------------------------------------
+    public String data;
+    public List<String> suggest;
+    ArrayAdapter<String> mCuisineAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,24 +92,40 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         mSearch = selectionView.findViewById(R.id.sfSearchButton);
         mDone = selectionView.findViewById(R.id.sfDoneButton);
         mSeekRadius = selectionView.findViewById(R.id.sfDistanceBar);
-        mCuisine = selectionView.findViewById(R.id.sfCuisineSpinner);
+        //mCuisine = selectionView.findViewById(R.id.sfCuisineSpinner);
         mRating = selectionView.findViewById(R.id.sfRatingBar);
         mSeekPrice = selectionView.findViewById(R.id.sfPriceSeekBar);
         mOther = selectionView.findViewById(R.id.sfOtherSpinner);
+        //mAutoComplete = selectionView.findViewById(R.id.sfAutoComplete);
+        mAutoComplete2 = (MultiAutoCompleteTextView) selectionView.findViewById(R.id.sfMultiAutoComplete);
 
-        //Cuisine Spinner
-        mCuisine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {   ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                ((TextView) parent.getChildAt(0)).setTextSize(15);
-                cuisineSelected = parent.getItemAtPosition(position).toString(); //this is your selected item
-                Log.d("Cuisine Chosen", cuisineSelected);
+        ArrayAdapter cuisineAdapter  = new ArrayAdapter<>(this.getContext(),
+                android.R.layout.simple_dropdown_item_1line, testArray);
+
+        //mAutoComplete.setAdapter(cuisineAdapter);
+        //mAutoComplete.setThreshold(1);
+
+        mAutoComplete2.setAdapter(cuisineAdapter);
+        mAutoComplete2.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+        mAutoComplete2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String newText = charSequence.toString();
+                new getSuggestions().execute(newText);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
+
 
         //'Other' Spinner
         mOther.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -123,6 +158,12 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+        //gets remote data asynchronously and adds it to AutoCompleteTextView
+        //RemoteData remoteData = new RemoteData(this.getContext());
+        //remoteData.getStoreData();
+
+
+
         mSearch.setOnClickListener(this);
         mDone.setOnClickListener(this);
 
@@ -149,14 +190,14 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 //--------------------------------------------------------------------------------------------------
 
     public void populateSpinner(View view) {
-        Spinner cuisineSpinner = (Spinner) view.findViewById(R.id.sfCuisineSpinner);
+        //Spinner cuisineSpinner = (Spinner) view.findViewById(R.id.sfCuisineSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.cuisine_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        cuisineSpinner.setAdapter(cuisineAdapter);
+        //cuisineSpinner.setAdapter(cuisineAdapter);
 
         Spinner otherSpinner = (Spinner) view.findViewById(R.id.sfOtherSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -205,8 +246,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     public void buildRequest() {
 
         // Add attributes to an arraylist
-        ArrayList<String> terms = new ArrayList<>();
-        terms.add(cuisineSelected);
+        String terms = mAutoComplete2.getText().toString();
 
         request = new UserRequest(this.getContext(), this.getActivity())
                 .setRadius((int) (mSeekRadius.getProgress() * mileConversion))
@@ -218,4 +258,40 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
 //--------------------------------------------------------------------------------------------------
 
+    public class getSuggestions extends AsyncTask<String,String,String> {
+
+        @Override
+        protected String doInBackground(String... key) {
+            String newText = key[0];
+            newText = newText.trim();
+            newText = newText.replace(" ", "+");
+            try{
+
+                HttpClient hClient = new DefaultHttpClient();
+                HttpGet hGet = new HttpGet("https://www.yelp.com/developers/documentation/v3/all_category_list/categories.json");
+                ResponseHandler<String> rHandler = new BasicResponseHandler();
+                data = hClient.execute(hGet,rHandler);
+                Log.d("data", data);
+                suggest = new ArrayList<>();
+                JSONArray jArray = new JSONArray(data);
+                for(int i=0;i < jArray.getJSONArray(1).length();i++){
+                    String SuggestKey = jArray.getJSONArray(1).getString(i);
+                    suggest.add(SuggestKey);
+                }
+
+            }catch(Exception e){
+                Log.w("Error", e.getMessage());
+            }
+            runOnUiThread(new Runnable(){
+                public void run(){
+                    mCuisineAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, suggest);
+                    //mAutoComplete2.setAdapter(mCuisineAdapter);
+                    mCuisineAdapter.notifyDataSetChanged();
+                }
+            });
+
+            return null;
+        }
+
+    }
 }

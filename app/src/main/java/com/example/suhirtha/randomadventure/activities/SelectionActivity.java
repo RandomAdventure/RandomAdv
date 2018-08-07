@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.suhirtha.randomadventure.AutoCompleteSuggestions;
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.adapters.RecyclerViewAdapter;
 import com.example.suhirtha.randomadventure.fragments.SelectionFragment;
@@ -32,9 +34,11 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     ArrayList<DataModel> arrayList;
 **/
     private static ArrayList<Restaurant> firstFive;
+    private String[] suggestions;
 //--------------------------------------------------------------------------------------------------
     final Fragment selection = new SelectionFragment();
     private FragmentTransaction fragmentTransaction1;
+    private FragmentManager fragmentManager;
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
@@ -51,10 +55,14 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
+
+
         firstFive = new ArrayList<>(); //initialize the holder arrayList
 
         viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
 //------------------------------------------------------------------------------------------
+        fragmentManager = getSupportFragmentManager();
+
         /**
          recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
          arrayList = new ArrayList<>();
@@ -80,6 +88,17 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
          recyclerView.setLayoutManager(manager);
          **/
 
+        AutoCompleteSuggestions auto = new AutoCompleteSuggestions(this);
+/**
+        try {
+            suggestions = auto.getSuggestions();
+            Log.d("TestSuggestions", suggestions[0] + suggestions[1] + suggestions[2]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+**/
     }
 
 //--------------------------------------------------------------------------------------------------
@@ -166,6 +185,12 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     }
 
 //--------------------------------------------------------------------------------------------------
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+
 
 }
 

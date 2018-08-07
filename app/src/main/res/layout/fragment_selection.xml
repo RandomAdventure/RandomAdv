@@ -94,6 +94,7 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textSize="18sp" />
 
+                <!-->
                 <Spinner
                     android:id="@+id/sfCuisineSpinner"
                     android:layout_width="402dp"
@@ -106,6 +107,17 @@
                     android:outlineAmbientShadowColor="#ffffff"
                     android:soundEffectsEnabled="true"
                     android:textAlignment="center" />
+                <!-->
+                <MultiAutoCompleteTextView
+                    android:id="@+id/sfMultiAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/lightTeal"
+                    android:hint="What are you craving?"
+                    android:textColor="@color/teal"
+                    android:layout_marginBottom="10dp"/>
+
 
             </LinearLayout>
 
