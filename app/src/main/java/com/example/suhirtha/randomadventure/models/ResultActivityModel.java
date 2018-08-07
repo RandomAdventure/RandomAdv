@@ -16,6 +16,7 @@ public class ResultActivityModel implements Serializable{
     private transient LatLng origin;
     private transient LatLng destination;
     private String transportationMode;
+    private String id;
     private String name;
     private String address;
     private float rating;
@@ -26,10 +27,11 @@ public class ResultActivityModel implements Serializable{
 
     public ResultActivityModel(){}
 
-    public ResultActivityModel(LatLng origin, LatLng destination, String transportationMode, String name, String address, float rating, boolean deliverySetting, boolean reservationSetting, String phoneNumber, String price) {
+    public ResultActivityModel(LatLng origin, LatLng destination, String transportationMode, String id, String name, String address, float rating, boolean deliverySetting, boolean reservationSetting, String phoneNumber, String price) {
         this.origin = origin;
         this.destination = destination;
         this.transportationMode = transportationMode;
+        this.id = id;
         this.name = name;
         this.address = address;
         this.rating = rating;
@@ -117,5 +119,9 @@ public class ResultActivityModel implements Serializable{
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getId() {
+        return id;
     }
 }

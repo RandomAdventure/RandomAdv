@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ import com.example.suhirtha.randomadventure.R;
 
 public class StartActivity extends AppCompatActivity {
     private Button mFilter;
-    private TextView mStart;
+    private ImageButton mStartSelection;
     Context context;
 
     @Override
@@ -24,7 +25,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         mFilter = (Button) findViewById(R.id.saFilter);
-        mStart = findViewById(R.id.saStart);
+        mStartSelection = findViewById(R.id.saStartRandomize);
         context =getApplicationContext();
 
         mFilter.setOnClickListener(new View.OnClickListener() {
@@ -34,7 +35,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        mStart.setOnClickListener(new View.OnClickListener() {
+        mStartSelection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, SelectionActivity.class);

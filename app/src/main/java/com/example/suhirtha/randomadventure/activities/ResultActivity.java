@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.PopupWindow;
 
 import com.akexorcist.googledirection.model.Direction;
 import com.example.suhirtha.randomadventure.Location;
@@ -125,7 +126,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
                     }
 
                     price = restuarant.getString("price");
-                    resultActivityModel = new ResultActivityModel(origin, destination, model.transportationMode, name, address, rating, hasDelivery, takesReservation, phoneNumber, price);
+                    resultActivityModel = new ResultActivityModel(origin, destination, model.transportationMode, restuarant.getString("id"), name, address, rating, hasDelivery, takesReservation, phoneNumber, price);
                     fragmentTransaction = fragmentManager.beginTransaction();
                     if (bundleNull) {
                         Bundle bundle = new Bundle();

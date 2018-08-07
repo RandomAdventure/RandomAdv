@@ -49,7 +49,7 @@ public class RandomizeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_randomize);
+        setContentView(R.layout.activity_randmoize_2);
         activity = this;
         spinWheel = findViewById(R.id.raWheel);
         mSpindel = findViewById(R.id.raSpindle);
@@ -64,11 +64,6 @@ public class RandomizeActivity extends AppCompatActivity {
         res[2] = findViewById(R.id.raRestaurant2);
         res[3] = findViewById(R.id.raRestaurant3);
         res[4] = findViewById(R.id.raRestaurant4);
-        colors[0] = findViewById(R.id.raColor);
-        colors[1] = findViewById(R.id.raColor1);
-        colors[2] = findViewById(R.id.raColor2);
-        colors[3] = findViewById(R.id.raColor3);
-        colors[4] = findViewById(R.id.raColor4);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,11 +98,6 @@ public class RandomizeActivity extends AppCompatActivity {
                         res[2].setVisibility(View.VISIBLE);
                         res[3].setVisibility(View.VISIBLE);
                         res[4].setVisibility(View.VISIBLE);
-                        colors[0].setVisibility(View.VISIBLE);
-                        colors[1].setVisibility(View.VISIBLE);
-                        colors[2].setVisibility(View.VISIBLE);
-                        colors[3].setVisibility(View.VISIBLE);
-                        colors[4].setVisibility(View.VISIBLE);
 
                     }
                 });
