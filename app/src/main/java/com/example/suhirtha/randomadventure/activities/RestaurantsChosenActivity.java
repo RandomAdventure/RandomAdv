@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
@@ -52,12 +53,12 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
 
         //do this in the background, wrap in background
         //need this to insert data
-//        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
-//                .allowMainThreadQueries()
-//                .build();
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
+                .allowMainThreadQueries()
+                .build();
 
 
-        viewModel.getRestaurants().observe(RestaurantsChosenActivity.this, new Observer<List<DatabaseRestaurant>>() {
+        viewModel.getmRestaurants().observe(RestaurantsChosenActivity.this, new Observer<List<DatabaseRestaurant>>() {
             @Override
             public void onChanged(@Nullable List<DatabaseRestaurant> restaurants) {
                 adapter.addItems(restaurants);
@@ -67,7 +68,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
 
 
         //USED TO INSERT INFO TO DATABASE
-//        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#"));
+        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#2"));
     }
 
     //toolbar
@@ -90,10 +91,12 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
         //TODO delete everything in database
         Log.d("RChosenActivity", "Deleting database completely");
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
-                .allowMainThreadQueries() //TODO change this
+                .allowMainThreadQueries()
                 .build();
         db.restaurantDao().deleteAll();
+        Toast.makeText(this, "Database deleted!", Toast.LENGTH_SHORT).show();
         adapter.notifyDataSetChanged();
+
     }
 
     @Override

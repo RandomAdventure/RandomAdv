@@ -17,16 +17,16 @@ import java.util.List;
 
 public class RestaurantsChosenViewModel extends AndroidViewModel {
 
-    private LiveData<List<DatabaseRestaurant>> restaurants;
+    private LiveData<List<DatabaseRestaurant>> mRestaurants;
     private AppDatabase appDatabase;
 
     public RestaurantsChosenViewModel(@NonNull Application application) {
         super(application);
         appDatabase = AppDatabase.getDatabase(this.getApplication());
-        restaurants = appDatabase.restaurantDao().getAllRestaurants();
+        mRestaurants = appDatabase.restaurantDao().getAllRestaurants();
     }
 
-    public LiveData<List<DatabaseRestaurant>> getRestaurants() { return restaurants; }
+    public LiveData<List<DatabaseRestaurant>> getmRestaurants() { return mRestaurants; }
 
     public void deleteRestaurant(DatabaseRestaurant restaurant){
         new deleteAsyncTask(appDatabase).execute(restaurant);
@@ -44,18 +44,5 @@ public class RestaurantsChosenViewModel extends AndroidViewModel {
             return null;
         }
     }
-
-//    public LiveData<List<DatabaseRestaurant>> getUsers() {
-//        if (restaurants == null) {
-//            restaurants = new MutableLiveData<List<DatabaseRestaurant>>();
-//            loadRestaurants();
-//        }
-//        return restaurants;
-//    }
-//
-//    private void loadRestaurants() {
-//        // Do an asynchronous operation to fetch users.
-//    }
-
 
 }
