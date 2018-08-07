@@ -26,7 +26,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/irAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -43,7 +43,7 @@
         app:layout_constraintVertical_bias="0.77" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/irStar"
         android:layout_width="76dp"
         android:layout_height="66dp"
         android:layout_marginBottom="8dp"
@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/blue_star" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/irRating"
         android:layout_width="61dp"
         android:layout_height="17dp"
         android:layout_marginBottom="8dp"
@@ -70,7 +70,7 @@
         android:textAlignment="center"
         android:textColor="@color/darkTeal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/irStar"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

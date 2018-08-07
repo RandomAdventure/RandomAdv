@@ -66,7 +66,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
 
 
         //USED TO INSERT INFO TO DATABASE
-        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#3", "AddressTest", 0.0,"CommentTest"));
+        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#3", "SecondAddressTest", 2.0,"SecondCommentTest"));
     }
 
     //toolbar

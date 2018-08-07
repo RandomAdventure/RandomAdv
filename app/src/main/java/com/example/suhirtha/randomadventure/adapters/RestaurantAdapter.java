@@ -13,8 +13,6 @@ import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.activities.RestaurantDetailActivity;
 import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
 /**
@@ -46,7 +44,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder viewholder, int i) {
         DatabaseRestaurant databaseRestaurant = mRestaurants.get(i);
         viewholder.restaurantName.setText(mRestaurants.get(i).getRestaurantName());
-
+        viewholder.restaurantRating.setText(mRestaurants.get(i).getRating() + "");
+        viewholder.restaurantAdress.setText(mRestaurants.get(i).getAddress());
         viewholder.itemView.setOnLongClickListener(longClickListener);
     }
 
@@ -62,11 +61,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView restaurantName;
+        public TextView restaurantAdress;
+        public TextView restaurantRating;
+        public double ratingValue;
 
         public ViewHolder(View itemView){
             super(itemView);
             restaurantName = itemView.findViewById(R.id.nameRestaurant);
-//            itemView.setOnClickListener(this);
+            restaurantAdress = itemView.findViewById(R.id.irAddress);
+            restaurantRating = itemView.findViewById(R.id.irRating);
+            ratingValue = Double.parseDouble(restaurantRating.getText().toString());
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -75,10 +80,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
             if (position != RecyclerView.NO_POSITION) {
                 DatabaseRestaurant restaurant = mRestaurants.get(position);
-//                Log.d("RestaurantAdapter", "Deleting database at position: " + position);
 
                 Intent i = new Intent(context, RestaurantDetailActivity.class);
-                i.putExtra("details", Parcels.wrap(restaurant));
+//                i.putExtra("details", Parcels.wrap(restaurant));
                 context.startActivity(i);
 
 //                //do this in the background, wrap in background
