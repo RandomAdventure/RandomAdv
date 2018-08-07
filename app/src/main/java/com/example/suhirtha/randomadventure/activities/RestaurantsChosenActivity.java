@@ -1,9 +1,11 @@
 package com.example.suhirtha.randomadventure.activities;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,10 +24,10 @@ import com.example.suhirtha.randomadventure.viewModels.RestaurantsChosenViewMode
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantsChosenActivity extends AppCompatActivity {
-    List<DatabaseRestaurant> restaurants;
+public class RestaurantsChosenActivity extends AppCompatActivity implements View.OnLongClickListener {
+    private  List<DatabaseRestaurant> restaurants;
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    RestaurantAdapter adapter;
     int REQUEST_CODE_SELECTION = 150;
     RestaurantsChosenViewModel viewModel;
 
@@ -39,25 +41,33 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); //removes title
 
+
+        restaurants = new ArrayList<DatabaseRestaurant>();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerRestaurant);
+        adapter = new RestaurantAdapter(this, restaurants, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
         viewModel = ViewModelProviders.of(this).get(RestaurantsChosenViewModel.class);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerRestaurant);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //do this in the background, wrap in background
         //need this to insert data
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
-                .allowMainThreadQueries() //TODO change this
-                .build();
+//        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
+//                .allowMainThreadQueries()
+//                .build();
 
-        restaurants = new ArrayList<DatabaseRestaurant>();
-        restaurants = db.restaurantDao().getAllRestaurants();
-        adapter = new RestaurantAdapter(this, restaurants);
-        recyclerView.setAdapter(adapter);
+
+        viewModel.getRestaurants().observe(RestaurantsChosenActivity.this, new Observer<List<DatabaseRestaurant>>() {
+            @Override
+            public void onChanged(@Nullable List<DatabaseRestaurant> restaurants) {
+                adapter.addItems(restaurants);
+//
+            }
+        });
 
 
         //USED TO INSERT INFO TO DATABASE
-        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#"));
+//        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#"));
     }
 
     //toolbar
@@ -86,4 +96,10 @@ public class RestaurantsChosenActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onLongClick(View view) {
+        DatabaseRestaurant databaseRestaurant = (DatabaseRestaurant) view.getTag();
+        viewModel.deleteRestaurant(databaseRestaurant);
+        return false;
+    }
 }
