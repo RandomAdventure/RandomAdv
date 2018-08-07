@@ -42,7 +42,6 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); //removes title
 
-
         restaurants = new ArrayList<DatabaseRestaurant>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerRestaurant);
         adapter = new RestaurantAdapter(this, restaurants, this);
@@ -62,13 +61,12 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
             @Override
             public void onChanged(@Nullable List<DatabaseRestaurant> restaurants) {
                 adapter.addItems(restaurants);
-//
             }
         });
 
 
         //USED TO INSERT INFO TO DATABASE
-        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#2"));
+        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#3", "AddressTest", 0.0,"CommentTest"));
     }
 
     //toolbar
@@ -87,6 +85,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
         Intent intent = new Intent(this, StartActivity.class);
         startActivityForResult(intent,REQUEST_CODE_SELECTION); //wrapping
     }
+
     public void onClickDelete(View view) {
         //TODO delete everything in database
         Log.d("RChosenActivity", "Deleting database completely");
@@ -96,7 +95,6 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
         db.restaurantDao().deleteAll();
         Toast.makeText(this, "Database deleted!", Toast.LENGTH_SHORT).show();
         adapter.notifyDataSetChanged();
-
     }
 
     @Override

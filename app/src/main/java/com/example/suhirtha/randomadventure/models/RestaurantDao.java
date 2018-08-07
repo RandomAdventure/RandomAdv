@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -14,11 +15,11 @@ import java.util.List;
 
 @Dao
 public interface RestaurantDao {
-    @Query("SELECT * FROM restaurant")
+    @Query("SELECT * FROM restaurants")
     LiveData<List<DatabaseRestaurant>> getAllRestaurants();
 
     @Insert
-    void insert(DatabaseRestaurant restaurant);
+    void insert(DatabaseRestaurant restaurants);
 
     @Insert
     void insertAll(DatabaseRestaurant... restaurants);
@@ -26,7 +27,12 @@ public interface RestaurantDao {
     @Delete
     void delete(DatabaseRestaurant restaurants);
 
-    @Query("DELETE FROM restaurant")
+    @Query("DELETE FROM restaurants")
     void deleteAll();
 
+    @Query("UPDATE restaurants SET rating =:rating, comment =:comment WHERE id=:id")
+    void  updateCritique(int id, Double rating, String comment);
+
+    @Update
+    void update(DatabaseRestaurant restaurant);
 }

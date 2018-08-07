@@ -8,10 +8,11 @@ import android.arch.persistence.room.PrimaryKey;
  * Created by anitac on 8/2/18.
  */
 
-@Entity (tableName = "restaurant")
+@Entity (tableName = "restaurants")
 public class DatabaseRestaurant {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private  int id;
 
     @ColumnInfo(name = "yelp_id")
@@ -20,16 +21,26 @@ public class DatabaseRestaurant {
     @ColumnInfo(name = "restaurant_name")
     protected String restaurantName;
 
-//    @ColumnInfo(name = "rating")
-//    private  String ratings;
-//
-//    @ColumnInfo(name = "comment")
-//    private String comment;
+    @ColumnInfo(name = "address")
+    private String address;
 
-    public DatabaseRestaurant(String yelpId, String restaurantName) {
+    @ColumnInfo(name = "rating")
+    private  Double rating;
+
+    @ColumnInfo(name = "comment")
+    private String comment;
+
+
+
+    public DatabaseRestaurant(String yelpId, String restaurantName, String address, Double rating, String comment) {
         this.yelpId = yelpId;
         this.restaurantName = restaurantName;
+        this.address = address;
+        this.rating = rating;
+        this.comment = comment;
     }
+
+
 
     public String getYelpId() {
         return yelpId;
@@ -45,6 +56,30 @@ public class DatabaseRestaurant {
 
     public int getId() {
         return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void setId(int id) {

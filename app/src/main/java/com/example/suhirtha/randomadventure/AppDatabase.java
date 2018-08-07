@@ -12,7 +12,7 @@ import com.example.suhirtha.randomadventure.models.RestaurantDao;
  * Created by anitac on 7/25/18.
  */
 
-@Database(entities = {DatabaseRestaurant.class}, version = 6)
+@Database(entities = {DatabaseRestaurant.class}, version = 8)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract RestaurantDao restaurantDao();
     private static AppDatabase INSTANCE;
@@ -21,9 +21,11 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             INSTANCE =
                     Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "saved_restaurants")
+                            .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCE;
     }
+
 
 }
