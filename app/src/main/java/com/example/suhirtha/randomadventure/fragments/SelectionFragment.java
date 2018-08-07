@@ -3,8 +3,10 @@ package com.example.suhirtha.randomadventure.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RatingBar;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -34,9 +35,9 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     private Button mSearch;
     private Button mDone;
     private BubbleSeekBar mSeekRadius;
+    private BubbleSeekBar mSeekPrice;
     private Spinner mCuisine;
     private RatingBar mRating;
-    private SeekBar mPrice;
     private Spinner mOther;
     private double mileConversion = 1609.344;
 //--------------------------------------------------------------------------------------------------
@@ -74,7 +75,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         mSeekRadius = selectionView.findViewById(R.id.sfDistanceBar);
         mCuisine = selectionView.findViewById(R.id.sfCuisineSpinner);
         mRating = selectionView.findViewById(R.id.sfRatingBar);
-        mPrice = selectionView.findViewById(R.id.sfPriceBar);
+        mSeekPrice = selectionView.findViewById(R.id.sfPriceSeekBar);
         mOther = selectionView.findViewById(R.id.sfOtherSpinner);
 
         //Cuisine Spinner
@@ -108,6 +109,20 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+        mSeekPrice.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
+            @NonNull
+            @Override
+            public SparseArray<String> onCustomize(int sectionCount, @NonNull SparseArray<String> array) {
+                array.clear();
+                array.put(0, "$");
+                array.put(1, "$$");
+                array.put(2, "$$$");
+                array.put(3, "$$$$");
+
+                return array;
+            }
+        });
+
         mSearch.setOnClickListener(this);
         mDone.setOnClickListener(this);
 
@@ -134,23 +149,23 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 //--------------------------------------------------------------------------------------------------
 
     public void populateSpinner(View view) {
-        Spinner spinner = (Spinner) view.findViewById(R.id.sfCuisineSpinner);
+        Spinner cuisineSpinner = (Spinner) view.findViewById(R.id.sfCuisineSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+        ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.cuisine_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        cuisineSpinner.setAdapter(cuisineAdapter);
 
-        Spinner spinner2 = (Spinner) view.findViewById(R.id.sfOtherSpinner);
+        Spinner otherSpinner = (Spinner) view.findViewById(R.id.sfOtherSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this.getContext(),
+        ArrayAdapter<CharSequence> otherAdapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.other_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        otherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner2.setAdapter(adapter2);
+        otherSpinner.setAdapter(otherAdapter);
     }
 
 //--------------------------------------------------------------------------------------------------
@@ -187,7 +202,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     }
 
 //--------------------------------------------------------------------------------------------------
-
     public void buildRequest() {
 
         // Add attributes to an arraylist
@@ -196,7 +210,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
         request = new UserRequest(this.getContext(), this.getActivity())
                 .setRadius((int) (mSeekRadius.getProgress() * mileConversion))
-                .setMaxPrice(mPrice.getProgress())
+                .setMaxPrice(mSeekPrice.getProgress())
                 .setTerms(terms)
                 .setMinRating(mRating.getRating())
                 .setAttribute(attributeSelected);

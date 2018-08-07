@@ -64,7 +64,8 @@
                     app:bsb_show_section_mark="true"
                     app:bsb_show_section_text="true"
                     app:bsb_show_thumb_text="true"
-                  app:bsb_track_color="@color/darkTeal" />
+                    app:bsb_thumb_text_size="16dp"
+                    app:bsb_track_color="@color/darkTeal" />
 
 
             </LinearLayout>
@@ -174,14 +175,29 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:textSize="18sp" />
 
-                <SeekBar
-                    android:id="@+id/sfPriceBar"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+
+                <com.xw.repo.BubbleSeekBar
+                    android:id="@+id/sfPriceSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:max="4"
-                    android:progress="1" />
+                    android:soundEffectsEnabled="true"
+                    app:bsb_bubble_color="@color/common_google_signin_btn_text_dark_default"
+                    app:bsb_bubble_text_color="@color/darkTeal"
+                    app:bsb_hide_bubble="true"
+                    app:bsb_max="4"
+                    app:bsb_min="1.0"
+                    app:bsb_progress="0"
+                    app:bsb_second_track_color="@color/darkPurple"
+                    app:bsb_section_count="3"
+                    app:bsb_section_text_position="below_section_mark"
+                    app:bsb_section_text_size="16dp"
+                    app:bsb_seek_step_section="true"
+                    app:bsb_show_progress_in_float="true"
+                    app:bsb_show_section_mark="true"
+                    app:bsb_show_section_text="true"
+                    app:bsb_show_thumb_text="true"
+                    app:bsb_thumb_text_size="15dp"
+                    app:bsb_track_color="@color/darkPurple" />
 
             </LinearLayout>
 
@@ -197,7 +213,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="8dp"
-                    android:src="@drawable/car" />
+                    android:src="@drawable/more" />
 
                 <TextView
                     android:id="@+id/sfOtherWord"

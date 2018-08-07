@@ -2,6 +2,7 @@
 <resources>
 <string-array name="other_array">
     <item></item>
+    <item>Wheelchair Accessible</item>
     <item>Gender Neutral Restrooms</item>
     <item>Just Opened</item>
     <item>Allow Reservations</item>
