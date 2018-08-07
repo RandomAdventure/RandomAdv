@@ -20,6 +20,12 @@ public class DatabaseRestaurant {
     @ColumnInfo(name = "restaurant_name")
     protected String restaurantName;
 
+//    @ColumnInfo(name = "rating")
+//    private  String ratings;
+//
+//    @ColumnInfo(name = "comment")
+//    private String comment;
+
     public DatabaseRestaurant(String yelpId, String restaurantName) {
         this.yelpId = yelpId;
         this.restaurantName = restaurantName;
