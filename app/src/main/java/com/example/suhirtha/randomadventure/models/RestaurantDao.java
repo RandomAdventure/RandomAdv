@@ -1,5 +1,6 @@
 package com.example.suhirtha.randomadventure.models;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,7 +15,10 @@ import java.util.List;
 @Dao
 public interface RestaurantDao {
     @Query("SELECT * FROM restaurant")
-    List<DatabaseRestaurant> getAllRestaurants();
+    LiveData<List<DatabaseRestaurant>> getAllRestaurants();
+
+    @Insert
+    void insert(DatabaseRestaurant restaurant);
 
     @Insert
     void insertAll(DatabaseRestaurant... restaurants);
@@ -24,4 +28,5 @@ public interface RestaurantDao {
 
     @Query("DELETE FROM restaurant")
     void deleteAll();
+
 }
