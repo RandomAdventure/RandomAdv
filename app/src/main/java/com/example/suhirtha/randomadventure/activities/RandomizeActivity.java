@@ -44,6 +44,7 @@ public class RandomizeActivity extends AppCompatActivity {
     private ProgressBar mProgressBar ;
     private int mProgressStatus = 0;
     private Handler handler = new Handler();
+    private ImageView logo;
 
 
     @Override
@@ -51,6 +52,7 @@ public class RandomizeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_randmoize_2);
         activity = this;
+        logo = findViewById(R.id.toolbar_logo);
         spinWheel = findViewById(R.id.raWheel);
         mSpindel = findViewById(R.id.raSpindle);
         context = getApplicationContext();
@@ -98,6 +100,7 @@ public class RandomizeActivity extends AppCompatActivity {
                         res[2].setVisibility(View.VISIBLE);
                         res[3].setVisibility(View.VISIBLE);
                         res[4].setVisibility(View.VISIBLE);
+                        logo.setVisibility(View.VISIBLE);
 
                     }
                 });

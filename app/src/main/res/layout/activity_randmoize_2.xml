@@ -85,7 +85,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:src="@drawable/cropped_logo" />
+                android:src="@drawable/cropped_logo"
+                android:visibility="invisible" />
         </RelativeLayout>
 
         <android.support.constraint.ConstraintLayout

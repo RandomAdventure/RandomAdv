@@ -7,28 +7,10 @@
     tools:context="com.example.suhirtha.randomadventure.activities.StartActivity"
     android:background="@drawable/gradient">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@android:color/black"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <Button
-            android:id="@+id/saFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_view_headline_black_24dp"
-            />
-
-    </android.support.v7.widget.Toolbar>
-
     <ImageButton
         android:id="@+id/saStartRandomize"
-        android:layout_width="71dp"
-        android:layout_height="71dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="8dp"
@@ -40,16 +22,15 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.328"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326"
         app:srcCompat="@drawable/chameleon_button" />
 
     <ImageButton
         android:id="@+id/saPreviousRestaurants"
-        android:layout_width="71dp"
-        android:layout_height="71dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -59,26 +40,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.592"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.589"
         app:srcCompat="@drawable/map" />
 
     <TextView
         android:id="@+id/saNewAdventureText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="22dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="Start a new adventure"
+        android:text="start a new adventure"
         android:textAlignment="center"
         android:textColor="@color/DarkestTeal"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.439" />
 
     <TextView
@@ -90,15 +73,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="View previous adventures"
+        android:text="view previous adventures"
         android:textAlignment="center"
         android:textColor="@color/darkPurple"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.686" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.675" />
 
 
 </android.support.constraint.ConstraintLayout>
