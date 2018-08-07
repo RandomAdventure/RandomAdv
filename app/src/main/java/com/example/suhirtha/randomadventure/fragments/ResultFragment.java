@@ -2,6 +2,7 @@ package com.example.suhirtha.randomadventure.fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
@@ -20,6 +22,8 @@ import com.akexorcist.googledirection.model.Leg;
 import com.akexorcist.googledirection.model.Route;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.example.suhirtha.randomadventure.R;
+import com.example.suhirtha.randomadventure.activities.RestaurantDetailActivity;
+import com.example.suhirtha.randomadventure.activities.SelectionActivity;
 import com.example.suhirtha.randomadventure.models.ResultActivityModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +34,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -45,6 +51,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
     private RatingBar mRating;
     private TextView mAddress;
     private TextView mPhoneNumber;
+    private TextView mPrice;
     private CheckBox mDelivery;
     private CheckBox mReservation;
     private MapView mMap;
@@ -63,7 +70,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
 
         mName = (TextView) view.findViewById(R.id.rsaName);
         mAddress = (TextView) view.findViewById(R.id.rsaAddress);
-        mRating = (RatingBar) view.findViewById(R.id.rsaRating);
+        mRating = (RatingBar) view.findViewById(R.id.rdaRating);
         mPhoneNumber = (TextView) view.findViewById(R.id.rsaPhoneNumber);
         mReservation = (CheckBox) view.findViewById(R.id.rsaReservation);
         mReservation.setClickable(false);
@@ -76,6 +83,25 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
         mDuration = (TextView) view.findViewById(R.id.rsaDuration);
         mWalking = (ImageButton) view.findViewById(R.id.rsaWalking);
         mDriving = (ImageButton) view.findViewById(R.id.rsaDriving);
+        mPrice = (TextView) view.findViewById(R.id.rsaPrice);
+
+        ImageButton mReset = (ImageButton) view.findViewById(R.id.rsaRedo);
+        mReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SelectionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton mAddToDatabase = (ImageButton) view.findViewById(R.id.rsaAdd);
+        mAddToDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RestaurantDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         context = view.getContext();
         activityListener = (ResultActivityListener) getActivity();
@@ -89,6 +115,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
         mRating.setRating(resultActivityModel.getRating());
         mAddress.setText(resultActivityModel.getAddress());
         mPhoneNumber.setText(resultActivityModel.getPhoneNumber());
+        mPrice.setText(resultActivityModel.getPrice());
         if (resultActivityModel.getDeliverySetting() == true) {
             mDelivery.setChecked(true);
         }

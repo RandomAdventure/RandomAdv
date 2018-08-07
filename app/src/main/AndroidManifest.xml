@@ -33,6 +33,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activities.RestaurantsChosenActivity"></activity>
+        <activity android:name=".activities.RestaurantDetailActivity" />
     </application>
 
 </manifest>

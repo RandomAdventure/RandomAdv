@@ -13,8 +13,8 @@ import java.io.Serializable;
 @Parcel
 public class ResultActivityModel implements Serializable{
 
-    private LatLng origin;
-    private LatLng destination;
+    private transient LatLng origin;
+    private transient LatLng destination;
     private String transportationMode;
     private String name;
     private String address;
@@ -22,10 +22,11 @@ public class ResultActivityModel implements Serializable{
     private boolean deliverySetting;
     private boolean reservationSetting;
     private String phoneNumber;
+    private String price;
 
     public ResultActivityModel(){}
 
-    public ResultActivityModel(LatLng origin, LatLng destination, String transportationMode, String name, String address, float rating, boolean deliverySetting, boolean reservationSetting, String phoneNumber) {
+    public ResultActivityModel(LatLng origin, LatLng destination, String transportationMode, String name, String address, float rating, boolean deliverySetting, boolean reservationSetting, String phoneNumber, String price) {
         this.origin = origin;
         this.destination = destination;
         this.transportationMode = transportationMode;
@@ -35,6 +36,7 @@ public class ResultActivityModel implements Serializable{
         this.deliverySetting = deliverySetting;
         this.reservationSetting = reservationSetting;
         this.phoneNumber = phoneNumber;
+        this.price = price;
     }
 
     public LatLng getOrigin() {
@@ -107,5 +109,13 @@ public class ResultActivityModel implements Serializable{
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

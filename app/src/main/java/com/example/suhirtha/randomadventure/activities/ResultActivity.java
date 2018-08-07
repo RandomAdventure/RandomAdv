@@ -60,6 +60,7 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
     public FragmentTransaction fragmentTransaction;
     private boolean bundleNull;
     private ResultActivityModel resultActivityModel;
+    private String price;
 
     @SuppressLint("ResourceType")
     @Override
@@ -122,7 +123,9 @@ public class ResultActivity extends AppCompatActivity implements LocationListene
                             takesReservation = true;
                         }
                     }
-                    resultActivityModel = new ResultActivityModel(origin, destination, model.transportationMode, name, address, rating, hasDelivery, takesReservation, phoneNumber);
+
+                    price = restuarant.getString("price");
+                    resultActivityModel = new ResultActivityModel(origin, destination, model.transportationMode, name, address, rating, hasDelivery, takesReservation, phoneNumber, price);
                     fragmentTransaction = fragmentManager.beginTransaction();
                     if (bundleNull) {
                         Bundle bundle = new Bundle();
