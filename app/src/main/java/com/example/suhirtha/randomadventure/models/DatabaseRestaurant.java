@@ -19,7 +19,7 @@ public class DatabaseRestaurant {
     private  String yelpId;
 
     @ColumnInfo(name = "restaurant_name")
-    protected String restaurantName;
+    private String restaurantName;
 
     @ColumnInfo(name = "address")
     private String address;

@@ -27,8 +27,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     Context context;
     private View.OnLongClickListener longClickListener;
 
-
-
     public RestaurantAdapter(Context context, List<DatabaseRestaurant> restaurants, View.OnLongClickListener longClickListener){
         mRestaurants = restaurants;
         this.context= context;
@@ -80,7 +78,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-
             if (position != RecyclerView.NO_POSITION) {
                 DatabaseRestaurant restaurant = mRestaurants.get(position);
 
