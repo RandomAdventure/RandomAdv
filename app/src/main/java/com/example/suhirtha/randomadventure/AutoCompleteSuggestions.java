@@ -26,7 +26,11 @@ public class AutoCompleteSuggestions {
         this.context = context;
     }
 
-    public void readData() throws IOException {
+    /**
+     * Uses InputStream and StringBuilder to read JSON file from resource stored in res/raw
+     * @throws IOException - if file not found
+     */
+    private void readData() throws IOException {
 
         InputStream ins = context.getResources().openRawResource(
                 context.getResources().getIdentifier("categories",
@@ -42,16 +46,22 @@ public class AutoCompleteSuggestions {
         rawJSON = total.toString();
     }
 
-    public void parseJSON() throws JSONException {
+    /**
+     * Parses JSON file (stored in rawJSON) to create category objects (includes all types)
+     * @throws JSONException - if rawJSON does not contain valid JSON
+     */
+    private void parseJSON() throws JSONException {
         if (rawJSON != null) {
             allCategories = new JSONArray(rawJSON);
 
-            //for-each loop not applicable to JSONArray? :(
             int i = 0;
             while (i < allCategories.length()) {
+                //current category object
                 JSONObject categoryTemp = allCategories.getJSONObject(i);
+                //array that stores the current category's 'parents'
                 JSONArray parentsArr = categoryTemp.getJSONArray("parents");
                 if (parentsArr.get(0).equals("food") || parentsArr.get(0).equals("restaurants")) {
+                    //adds category object IF primary parent = restaurant or food
                     desiredCategories.put(categoryTemp);
                 }
                 i++;
@@ -59,6 +69,11 @@ public class AutoCompleteSuggestions {
         }
     }
 
+    /**
+     * Extracts only desired strings of categories (those that fall under 'restaurants' or 'food'
+     * and stores the title value in an array
+     * @throws JSONException
+     */
     public void getDesiredStrings() throws JSONException {
         ArrayList<String> desired = new ArrayList<>();
         int i = 0;
@@ -67,9 +82,16 @@ public class AutoCompleteSuggestions {
             i++;
         }
 
+        //convert desiredStrings to array (because TextWatcher doesn't want arrayLists :/ )
         desiredStrings = desired.toArray(new String[desired.size()]);
     }
 
+    /**
+     * method to be called to run all helper methods - not sure if ideal way to organize it
+     * @return - only desired strings array
+     * @throws IOException - if file not found
+     * @throws JSONException - invalid JSON
+     */
     public String[] getSuggestions() throws IOException, JSONException {
         readData();
         parseJSON();
