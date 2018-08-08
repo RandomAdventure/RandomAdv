@@ -24,36 +24,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.326"
+        app:layout_constraintVertical_bias="0.48"
         app:srcCompat="@drawable/chameleon_button" />
-
-    <ImageButton
-        android:id="@+id/saPreviousRestaurants"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/clear"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.589"
-        app:srcCompat="@drawable/map" />
 
     <TextView
         android:id="@+id/saNewAdventureText"
         android:layout_width="wrap_content"
-        android:layout_height="22dp"
+        android:layout_height="29dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="start a new adventure"
+        android:text="begin your adventure"
         android:textAlignment="center"
         android:textColor="@color/DarkestTeal"
         android:textSize="18sp"
@@ -62,27 +45,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.439" />
-
-    <TextView
-        android:id="@+id/saPrevAdventureText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:text="view previous adventures"
-        android:textAlignment="center"
-        android:textColor="@color/darkPurple"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.675" />
+        app:layout_constraintVertical_bias="0.61" />
 
 
 </android.support.constraint.ConstraintLayout>
