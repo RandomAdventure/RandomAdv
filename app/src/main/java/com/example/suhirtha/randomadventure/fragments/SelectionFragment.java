@@ -71,7 +71,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         populateSpinner(selectionView);
 
         mSearch = selectionView.findViewById(R.id.sfSearchButton);
-        mDone = selectionView.findViewById(R.id.sfDoneButton);
         mSeekRadius = selectionView.findViewById(R.id.sfDistanceBar);
         mCuisine = selectionView.findViewById(R.id.sfCuisineSpinner);
         mRating = selectionView.findViewById(R.id.sfRatingBar);
@@ -124,7 +123,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         });
 
         mSearch.setOnClickListener(this);
-        mDone.setOnClickListener(this);
 
         // Inflate the layout for this fragment
         return selectionView;
@@ -139,9 +137,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 Log.d("Search Button", "Pressed!");
                 buildRequest();
                 mListener.makeRequest(request);
-                break;
-            case R.id.sfDoneButton:
-                mListener.tatumTest();
                 break;
         }
     }
@@ -198,7 +193,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
      */
     public interface SelectionListener {
         void makeRequest(UserRequest request);
-        void tatumTest();
     }
 
 //--------------------------------------------------------------------------------------------------
