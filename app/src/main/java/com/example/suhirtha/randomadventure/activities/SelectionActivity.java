@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.suhirtha.randomadventure.AutoCompleteSuggestions;
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.adapters.RecyclerViewAdapter;
 import com.example.suhirtha.randomadventure.fragments.SelectionFragment;
@@ -34,7 +33,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     ArrayList<DataModel> arrayList;
 **/
     private static ArrayList<Restaurant> firstFive;
-    private String[] suggestions;
+    public String[] suggestions;
 //--------------------------------------------------------------------------------------------------
     final Fragment selection = new SelectionFragment();
     private FragmentTransaction fragmentTransaction1;
@@ -88,8 +87,34 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
          recyclerView.setLayoutManager(manager);
          **/
 
-        AutoCompleteSuggestions auto = new AutoCompleteSuggestions(this);
-/**
+
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("suggestions", Parcels.wrap(suggestions));
+//        // set Fragmentclass Arguments
+//        SelectionFragment fragment = new SelectionFragment();
+//        fragment.setArguments(bundle);
+
+//        try {
+//            auto.getSuggestions();
+//            File file = auto.createTempFile();
+//            BufferedReader br = new BufferedReader(new FileReader(file));
+//            StringBuilder text = new StringBuilder();
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                text.append(line);
+//                text.append('\n');
+//            }
+//            Log.d("File contents", text.toString());
+//            br.close() ;
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+/*
         try {
             suggestions = auto.getSuggestions();
             Log.d("TestSuggestions", suggestions[0] + suggestions[1] + suggestions[2]);

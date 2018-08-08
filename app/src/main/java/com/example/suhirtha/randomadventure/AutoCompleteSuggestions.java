@@ -1,6 +1,8 @@
 package com.example.suhirtha.randomadventure;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import com.example.suhirtha.randomadventure.activities.SelectionActivity;
 
@@ -9,6 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,6 +26,7 @@ public class AutoCompleteSuggestions {
     private JSONArray desiredCategories = new JSONArray();
     private String[] desiredStrings;
     private Context context;
+    private File arrayFile;
 
     public AutoCompleteSuggestions(Context context) {
         this.context = context;
@@ -60,13 +66,15 @@ public class AutoCompleteSuggestions {
                 JSONObject categoryTemp = allCategories.getJSONObject(i);
                 //array that stores the current category's 'parents'
                 JSONArray parentsArr = categoryTemp.getJSONArray("parents");
-                if (parentsArr.get(0).equals("food") || parentsArr.get(0).equals("restaurants")) {
+                if (parentsArr != null && parentsArr.length() != 0 && (parentsArr.get(0).equals("food") || parentsArr.get(0).equals("restaurants"))) {
                     //adds category object IF primary parent = restaurant or food
                     desiredCategories.put(categoryTemp);
+                    Log.d("Category", categoryTemp.getString("title"));
                 }
                 i++;
             }
         }
+        Log.d("Desired categories", "blah");
     }
 
     /**
@@ -99,4 +107,25 @@ public class AutoCompleteSuggestions {
 
         return desiredStrings;
     }
+
+    private File getTempFile(Context context, String url) {
+        try {
+            String fileName = Uri.parse(url).getLastPathSegment();
+            arrayFile = File.createTempFile(fileName, null, context.getCacheDir());
+        } catch (IOException e) {
+            Log.d("Cache file creation", "Error creating cache file");
+        }
+        return arrayFile;
+    }
+
+    public File createTempFile() throws IOException {
+        File categoriesFile = new File(context.getCacheDir(), "categories");
+        FileWriter fw = new FileWriter(categoriesFile.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(desiredStrings.toString());
+        bw.close();
+        return categoriesFile;
+    }
+
+
 }

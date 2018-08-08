@@ -21,6 +21,7 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.suhirtha.randomadventure.AutoCompleteSuggestions;
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.models.UserRequest;
 import com.xw.repo.BubbleSeekBar;
@@ -31,7 +32,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     private String cuisineSelected;
     private String attributeSelected;
     private boolean attribute;
+    String[] suggestions;
 //--------------------------------------------------------------------------------------------------
     UserRequest request;
 //--------------------------------------------------------------------------------------------------
@@ -99,8 +103,18 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         //mAutoComplete = selectionView.findViewById(R.id.sfAutoComplete);
         mAutoComplete2 = (MultiAutoCompleteTextView) selectionView.findViewById(R.id.sfMultiAutoComplete);
 
+       // String[] suggestions = Parcels.unwrap(getArguments().getParcelable("suggestions"));
+        AutoCompleteSuggestions auto = new AutoCompleteSuggestions(getContext());
+        try {
+            suggestions = auto.getSuggestions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         ArrayAdapter cuisineAdapter  = new ArrayAdapter<>(this.getContext(),
-                android.R.layout.simple_dropdown_item_1line, testArray);
+                android.R.layout.simple_dropdown_item_1line, suggestions);
 
         //mAutoComplete.setAdapter(cuisineAdapter);
         //mAutoComplete.setThreshold(1);
