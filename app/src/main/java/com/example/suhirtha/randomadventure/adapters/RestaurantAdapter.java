@@ -87,14 +87,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
                 Intent i = new Intent(context, RestaurantDetailActivity.class);
                 i.putExtra("details", Parcels.wrap(restaurant.getId()));
                 context.startActivity(i);
-
-//                //do this in the background, wrap in background
-//                //need this to insert data
-//                AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "saved_restaurants")
-//                        .allowMainThreadQueries() //TODO change this
-//                        .build();
-//
-//                db.restaurantDao().delete(restaurant);
             }
         }
     }

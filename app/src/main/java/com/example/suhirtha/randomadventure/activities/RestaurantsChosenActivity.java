@@ -32,7 +32,6 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
     int REQUEST_CODE_SELECTION = 150;
     RestaurantsChosenViewModel viewModel;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,24 +48,12 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
         recyclerView.setAdapter(adapter);
         viewModel = ViewModelProviders.of(this).get(RestaurantsChosenViewModel.class);
 
-
-        //do this in the background, wrap in background
-        //need this to insert data
-//        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
-//                .allowMainThreadQueries()
-//                .build();
-
-
         viewModel.getmRestaurants().observe(RestaurantsChosenActivity.this, new Observer<List<DatabaseRestaurant>>() {
             @Override
             public void onChanged(@Nullable List<DatabaseRestaurant> restaurants) {
                 adapter.addItems(restaurants);
             }
         });
-
-
-        //USED TO INSERT INFO TO DATABASE
-        //db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#4", "SecondAddressTest", 1.0,"SecondCommentTest"));
     }
 
     //toolbar
