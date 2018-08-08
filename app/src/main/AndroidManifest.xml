@@ -32,8 +32,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activities.RestaurantsChosenActivity"></activity>
+        <activity android:name=".activities.RestaurantsChosenActivity" />
         <activity android:name=".activities.RestaurantDetailActivity" />
+        <activity android:name=".activities.MapActivity"></activity>
     </application>
 
 </manifest>
