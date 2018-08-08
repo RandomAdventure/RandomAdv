@@ -101,6 +101,6 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
     public boolean onLongClick(View view) {
         DatabaseRestaurant databaseRestaurant = (DatabaseRestaurant) view.getTag();
         viewModel.deleteRestaurant(databaseRestaurant);
-        return false;
+        return true;
     }
 }

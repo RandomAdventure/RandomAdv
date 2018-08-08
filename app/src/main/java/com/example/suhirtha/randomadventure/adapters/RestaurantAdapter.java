@@ -48,6 +48,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         viewholder.restaurantName.setText(mRestaurants.get(i).getRestaurantName());
         viewholder.restaurantRating.setText(mRestaurants.get(i).getRating() + "");
         viewholder.restaurantAdress.setText(mRestaurants.get(i).getAddress());
+        viewholder.itemView.setTag(mRestaurants.get(i));
         viewholder.itemView.setOnLongClickListener(longClickListener);
     }
 
@@ -84,7 +85,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
                 DatabaseRestaurant restaurant = mRestaurants.get(position);
 
                 Intent i = new Intent(context, RestaurantDetailActivity.class);
-                i.putExtra("details", Parcels.wrap(position + 1));
+                i.putExtra("details", Parcels.wrap(restaurant.getId()));
                 context.startActivity(i);
 
 //                //do this in the background, wrap in background

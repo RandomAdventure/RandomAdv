@@ -40,6 +40,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_detail);
 
+
         restaurantName = findViewById(R.id.rdaName);
         ratingBar = findViewById(R.id.rdaRating);
         address = findViewById(R.id.rdaAddress);
@@ -53,6 +54,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
         passedRestaurant = db.restaurantDao().findRestaurantsById(databasePosition);
+
 
         restaurantName.setText(passedRestaurant.getRestaurantName());
         address.setText(passedRestaurant.getAddress());
