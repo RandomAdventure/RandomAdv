@@ -13,6 +13,8 @@ import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.activities.RestaurantDetailActivity;
 import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 /**
@@ -82,7 +84,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
                 DatabaseRestaurant restaurant = mRestaurants.get(position);
 
                 Intent i = new Intent(context, RestaurantDetailActivity.class);
-//                i.putExtra("details", Parcels.wrap(restaurant));
+                i.putExtra("details", Parcels.wrap(position + 1));
                 context.startActivity(i);
 
 //                //do this in the background, wrap in background

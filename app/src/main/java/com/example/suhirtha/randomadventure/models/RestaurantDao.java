@@ -35,4 +35,10 @@ public interface RestaurantDao {
 
     @Update
     void update(DatabaseRestaurant restaurant);
+
+    @Query("SELECT * from restaurants LIMIT 1")
+    DatabaseRestaurant[] getAnyRestaurant();
+
+    @Query("SELECT * FROM restaurants WHERE id LIKE :id ")
+    public abstract DatabaseRestaurant findRestaurantsById(int id);
 }
