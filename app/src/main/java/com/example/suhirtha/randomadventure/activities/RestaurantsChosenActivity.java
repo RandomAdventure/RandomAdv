@@ -52,9 +52,9 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
 
         //do this in the background, wrap in background
         //need this to insert data
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
-                .allowMainThreadQueries()
-                .build();
+//        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
+//                .allowMainThreadQueries()
+//                .build();
 
 
         viewModel.getmRestaurants().observe(RestaurantsChosenActivity.this, new Observer<List<DatabaseRestaurant>>() {
@@ -66,7 +66,7 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
 
 
         //USED TO INSERT INFO TO DATABASE
-        db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#4", "SecondAddressTest", 1.0,"SecondCommentTest"));
+        //db.restaurantDao().insertAll(new DatabaseRestaurant("8dUaybEPHsZMgr1iKgqgMQ", "TestRestaurantName#4", "SecondAddressTest", 1.0,"SecondCommentTest"));
     }
 
     //toolbar
