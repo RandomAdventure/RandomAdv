@@ -12,9 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.suhirtha.randomadventure.R;
-import com.example.suhirtha.randomadventure.adapters.RecyclerViewAdapter;
 import com.example.suhirtha.randomadventure.fragments.SelectionFragment;
-import com.example.suhirtha.randomadventure.models.DataModel;
 import com.example.suhirtha.randomadventure.models.Restaurant;
 import com.example.suhirtha.randomadventure.models.UserRequest;
 import com.example.suhirtha.randomadventure.viewModels.SelectionViewModel;
@@ -26,7 +24,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 
 
-public class SelectionActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener, SelectionFragment.SelectionListener {
+public class SelectionActivity extends AppCompatActivity implements SelectionFragment.SelectionListener {
 /**
     RecyclerView recyclerView;
     ArrayList<DataModel> arrayList;
@@ -128,11 +126,6 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-
-    @Override
-    public void onItemClick(DataModel item) {
-        Toast.makeText(getApplicationContext(), item.title + " is clicked", Toast.LENGTH_SHORT).show();
-    }
 
 //--------------------------------------------------------------------------------------------------
 

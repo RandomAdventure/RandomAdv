@@ -1,7 +1,6 @@
 package com.example.suhirtha.randomadventure.fragments;
 
 import android.Manifest;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,11 +20,8 @@ import com.akexorcist.googledirection.model.Info;
 import com.akexorcist.googledirection.model.Leg;
 import com.akexorcist.googledirection.model.Route;
 import com.akexorcist.googledirection.util.DirectionConverter;
-import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
-import com.example.suhirtha.randomadventure.activities.RestaurantDetailActivity;
 import com.example.suhirtha.randomadventure.activities.SelectionActivity;
-import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
 import com.example.suhirtha.randomadventure.models.ResultActivityModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -90,19 +86,6 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SelectionActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton mAddToDatabase = (ImageButton) view.findViewById(R.id.rsaAdd);
-        mAddToDatabase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "saved_restaurants")
-                        .allowMainThreadQueries()
-                        .build();
-                db.restaurantDao().insertAll(new DatabaseRestaurant(resultActivityModel.getId(), resultActivityModel.getName(), resultActivityModel.getAddress(), 0.0 ," "));
-                Intent intent = new Intent(getActivity(), RestaurantDetailActivity.class);
                 startActivity(intent);
             }
         });

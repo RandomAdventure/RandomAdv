@@ -8,9 +8,7 @@ import com.akexorcist.googledirection.DirectionCallback;
 import com.akexorcist.googledirection.GoogleDirection;
 import com.akexorcist.googledirection.constant.TransportMode;
 import com.akexorcist.googledirection.model.Direction;
-import com.example.suhirtha.randomadventure.RestaurantListener;
 import com.example.suhirtha.randomadventure.fragments.ResultFragment;
-import com.example.suhirtha.randomadventure.models.ResultActivityModel;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
@@ -34,7 +32,6 @@ public class ResultViewModel extends ViewModel {
     private MutableLiveData<Direction> walkingDirections;
     private MutableLiveData<Direction> drivingDirections;
     private MutableLiveData<JSONObject> restaurant;
-    private RestaurantListener restaurantListener;
     private final OkHttpClient client = new OkHttpClient();
     public String transportationMode;
     public ResultFragment resultFragment;

@@ -16,7 +16,6 @@ import com.example.suhirtha.randomadventure.R;
 
 public class StartActivity extends AppCompatActivity {
     private ImageButton mStartSelection;
-    private ImageButton mViewPrevious;
     Context context;
 
     @Override
@@ -25,21 +24,12 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         mStartSelection = findViewById(R.id.saStartRandomize);
-        mViewPrevious = findViewById(R.id.saPreviousRestaurants);
         context = getApplicationContext();
 
         mStartSelection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, SelectionActivity.class);
-                startActivity(i);
-            }
-        });
-
-        mViewPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, RestaurantsChosenActivity.class);
                 startActivity(i);
             }
         });

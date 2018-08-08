@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.suhirtha.randomadventure.R;
-import com.example.suhirtha.randomadventure.YelpClient;
 import com.example.suhirtha.randomadventure.models.Restaurant;
 
 import org.parceler.Parcels;
@@ -34,7 +33,6 @@ public class RandomizeActivity extends AppCompatActivity {
     private ImageView[] colors = new ImageView[5];
     private TextView[] res = new TextView[5];
     private Context context;
-    private YelpClient client;
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Restaurant> chosen;
     private Random random = new Random();
@@ -58,7 +56,6 @@ public class RandomizeActivity extends AppCompatActivity {
         context = getApplicationContext();
         restaurants = new ArrayList<>();
         chosen = new ArrayList<>();
-        client = new YelpClient();
         mProgressBar = (ProgressBar) findViewById(R.id.raProgressBar);
         mProgressBar.setVisibility(ProgressBar.VISIBLE);
         res[0] = findViewById(R.id.raRestaurant);
