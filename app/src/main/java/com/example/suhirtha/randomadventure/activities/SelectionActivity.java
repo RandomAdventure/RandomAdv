@@ -204,8 +204,9 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     public void tatumTest() {
-        Intent tatum = new Intent(SelectionActivity.this, ResultActivity.class);
-        tatum.putExtra("test1", Parcels.wrap(test1));
+        //Intent tatum = new Intent(SelectionActivity.this, ResultActivity.class);
+        //tatum.putExtra("test1", Parcels.wrap(test1));
+        Intent tatum = new Intent(SelectionActivity.this, MapActivity.class);
         startActivity(tatum);
     }
 
