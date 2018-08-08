@@ -41,4 +41,7 @@ public interface RestaurantDao {
 
     @Query("SELECT * FROM restaurants WHERE id LIKE :id ")
     public abstract DatabaseRestaurant findRestaurantsById(int id);
+
+    @Query("SELECT * FROM restaurants  WHERE   id = (SELECT MAX(id)  FROM restaurants)")
+    public abstract DatabaseRestaurant findLastRestaurant();
 }

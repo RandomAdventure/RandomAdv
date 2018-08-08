@@ -37,7 +37,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by togata on 7/27/18.
@@ -62,6 +65,8 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
     private ImageButton mDriving;
     private ResultActivityListener activityListener;
     public ResultActivityModel resultActivityModel;
+    private List<DatabaseRestaurant> restaurants; //ADDED
+    DatabaseRestaurant mRestaurant;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstances){
@@ -85,6 +90,8 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
         mDriving = (ImageButton) view.findViewById(R.id.rsaDriving);
         mPrice = (TextView) view.findViewById(R.id.rsaPrice);
 
+        restaurants = new ArrayList<DatabaseRestaurant>(); //ADDED
+
         ImageButton mReset = (ImageButton) view.findViewById(R.id.rsaRedo);
         mReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +110,8 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
                         .build();
                 db.restaurantDao().insertAll(new DatabaseRestaurant(resultActivityModel.getId(), resultActivityModel.getName(), resultActivityModel.getAddress(), 0.0 ," "));
                 Intent intent = new Intent(getActivity(), RestaurantDetailActivity.class);
+                mRestaurant = db.restaurantDao().findLastRestaurant();
+                intent.putExtra("details", Parcels.wrap(mRestaurant.getId()));
                 startActivity(intent);
             }
         });
