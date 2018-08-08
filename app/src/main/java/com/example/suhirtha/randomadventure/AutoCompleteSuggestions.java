@@ -26,7 +26,11 @@ public class AutoCompleteSuggestions {
         this.context = context;
     }
 
-    public void readData() throws IOException {
+    /**
+     * Uses InputStream and StringBuilder to read JSON file from resource stored in res/raw
+     * @throws IOException - if file not found
+     */
+    private void readData() throws IOException {
 
         InputStream ins = context.getResources().openRawResource(
                 context.getResources().getIdentifier("categories",
@@ -40,131 +44,24 @@ public class AutoCompleteSuggestions {
         }
 
         rawJSON = total.toString();
-
-        /**
-        rawJSON = "[{\n" +
-                "    \"alias\": \"backshop\",\n" +
-                "    \"title\": \"Backshop\",\n" +
-                "    \"parents\": [\n" +
-                "      \"food\"\n" +
-                "    ],\n" +
-                "    \"country_whitelist\": [\n" +
-                "      \"DE\",\n" +
-                "      \"AT\",\n" +
-                "      \"CH\"\n" +
-                "    ]\n" +
-                "  }, " +
-                "  {\n" +
-                "    \"alias\": \"bagels\",\n" +
-                "    \"title\": \"Bagels\",\n" +
-                "    \"parents\": [\n" +
-                "      \"food\"\n" +
-                "    ],\n" +
-                "    \"country_blacklist\": [\n" +
-                "      \"ES\",\n" +
-                "      \"AU\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"alias\": \"baguettes\",\n" +
-                "    \"title\": \"Baguettes\",\n" +
-                "    \"parents\": [\n" +
-                "      \"restaurants\"\n" +
-                "    ],\n" +
-                "    \"country_whitelist\": [\n" +
-                "      \"SE\",\n" +
-                "      \"DE\",\n" +
-                "      \"TR\",\n" +
-                "      \"PT\",\n" +
-                "      \"CZ\",\n" +
-                "      \"NO\",\n" +
-                "      \"IT\",\n" +
-                "      \"MX\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"alias\": \"bailbondsmen\",\n" +
-                "    \"title\": \"Bail Bondsmen\",\n" +
-                "    \"parents\": [\n" +
-                "      \"localservices\"\n" +
-                "    ],\n" +
-                "    \"country_whitelist\": [\n" +
-                "      \"PT\",\n" +
-                "      \"US\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"alias\": \"bakeries\",\n" +
-                "    \"title\": \"Bakeries\",\n" +
-                "    \"parents\": [\n" +
-                "      \"food\"\n" +
-                "    ]\n" +
-                "  }," +
-                "  {\n" +
-                "    \"alias\": \"bangladeshi\",\n" +
-                "    \"title\": \"Bangladeshi\",\n" +
-                "    \"parents\": [\n" +
-                "      \"restaurants\"\n" +
-                "    ],\n" +
-                "    \"country_blacklist\": [\n" +
-                "      \"PT\",\n" +
-                "      \"DK\",\n" +
-                "      \"ES\",\n" +
-                "      \"TR\",\n" +
-                "      \"MX\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"alias\": \"bankruptcy\",\n" +
-                "    \"title\": \"Bankruptcy Law\",\n" +
-                "    \"parents\": [\n" +
-                "      \"lawyers\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"alias\": \"banks\",\n" +
-                "    \"title\": \"Banks & Credit Unions\",\n" +
-                "    \"parents\": [\n" +
-                "      \"financialservices\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"alias\": \"barbers\",\n" +
-                "    \"title\": \"Barbers\",\n" +
-                "    \"parents\": [\n" +
-                "      \"beautysvc\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"alias\": \"barcrawl\",\n" +
-                "    \"title\": \"Bar Crawl\",\n" +
-                "    \"parents\": [\n" +
-                "      \"nightlife\"\n" +
-                "    ],\n" +
-                "    \"country_whitelist\": [\n" +
-                "      \"CH\",\n" +
-                "      \"US\",\n" +
-                "      \"DE\",\n" +
-                "      \"PL\",\n" +
-                "      \"AT\",\n" +
-                "      \"CZ\",\n" +
-                "      \"AR\",\n" +
-                "      \"AU\",\n" +
-                "      \"MX\"\n" +
-                "    ]\n" +
-                "  }]"; **/
     }
 
-    public void parseJSON() throws JSONException {
+    /**
+     * Parses JSON file (stored in rawJSON) to create category objects (includes all types)
+     * @throws JSONException - if rawJSON does not contain valid JSON
+     */
+    private void parseJSON() throws JSONException {
         if (rawJSON != null) {
             allCategories = new JSONArray(rawJSON);
 
-            //for-each loop not applicable to JSONArray? :(
             int i = 0;
             while (i < allCategories.length()) {
+                //current category object
                 JSONObject categoryTemp = allCategories.getJSONObject(i);
+                //array that stores the current category's 'parents'
                 JSONArray parentsArr = categoryTemp.getJSONArray("parents");
                 if (parentsArr.get(0).equals("food") || parentsArr.get(0).equals("restaurants")) {
+                    //adds category object IF primary parent = restaurant or food
                     desiredCategories.put(categoryTemp);
                 }
                 i++;
@@ -172,6 +69,11 @@ public class AutoCompleteSuggestions {
         }
     }
 
+    /**
+     * Extracts only desired strings of categories (those that fall under 'restaurants' or 'food'
+     * and stores the title value in an array
+     * @throws JSONException
+     */
     public void getDesiredStrings() throws JSONException {
         ArrayList<String> desired = new ArrayList<>();
         int i = 0;
@@ -180,9 +82,16 @@ public class AutoCompleteSuggestions {
             i++;
         }
 
+        //convert desiredStrings to array (because TextWatcher doesn't want arrayLists :/ )
         desiredStrings = desired.toArray(new String[desired.size()]);
     }
 
+    /**
+     * method to be called to run all helper methods - not sure if ideal way to organize it
+     * @return - only desired strings array
+     * @throws IOException - if file not found
+     * @throws JSONException - invalid JSON
+     */
     public String[] getSuggestions() throws IOException, JSONException {
         readData();
         parseJSON();
