@@ -144,6 +144,18 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+        mSeekRadius.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
+            @NonNull
+            @Override
+            public SparseArray<String> onCustomize(int sectionCount, @NonNull SparseArray<String> array) {
+                array.clear();
+                array.put(0, "0 mi");
+                array.put(5, "30 mi");
+
+                return array;
+            }
+        });
+
         mSeekPrice.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
             @NonNull
             @Override
