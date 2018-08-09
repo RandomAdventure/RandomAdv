@@ -74,6 +74,8 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
     }
 
     public void onClickDelete(View view) {
+
+//        viewModel.deleteAllRestaurants();
         //TODO delete everything in database
         Log.d("RChosenActivity", "Deleting database completely");
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")

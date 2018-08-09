@@ -33,6 +33,10 @@ public class RestaurantsChosenViewModel extends AndroidViewModel {
         new deleteAsyncTask(appDatabase).execute(restaurant);
     }
 
+//    public void deleteAllRestaurants() {
+//        new deleteAsyncTask(appDatabase)
+//    }
+
     private static class deleteAsyncTask extends AsyncTask<DatabaseRestaurant, Void, Void> {
         private AppDatabase db;
         public deleteAsyncTask(AppDatabase appDatabase) {

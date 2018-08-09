@@ -18,6 +18,9 @@ public interface RestaurantDao {
     @Query("SELECT * FROM restaurants")
     LiveData<List<DatabaseRestaurant>> getAllRestaurants();
 
+    @Query("SELECT * FROM restaurants")
+    List<DatabaseRestaurant> getAllRestaurantsLive();
+
     @Insert
     void insert(DatabaseRestaurant restaurants);
 
