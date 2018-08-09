@@ -108,7 +108,7 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
                 AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "saved_restaurants")
                         .allowMainThreadQueries()
                         .build();
-                db.restaurantDao().insertAll(new DatabaseRestaurant(resultActivityModel.getId(), resultActivityModel.getName(), resultActivityModel.getAddress(), 0.0 ," "));
+                db.restaurantDao().insertAll(new DatabaseRestaurant(resultActivityModel.getId(), resultActivityModel.getName(), resultActivityModel.getAddress(), 0.0 ," ", resultActivityModel.getDestination().latitude, resultActivityModel.getDestination().longitude));
                 Intent intent = new Intent(getActivity(), RestaurantDetailActivity.class);
                 mRestaurant = db.restaurantDao().findLastRestaurant();
                 intent.putExtra("details", Parcels.wrap(mRestaurant.getId()));
