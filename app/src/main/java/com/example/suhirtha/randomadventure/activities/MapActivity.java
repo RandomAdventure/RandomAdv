@@ -1,6 +1,7 @@
 package com.example.suhirtha.randomadventure.activities;
 
 import android.Manifest;
+import android.arch.persistence.room.Room;
 import android.content.pm.PackageManager;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
@@ -8,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.BounceInterpolator;
 
+import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
+import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.os.Handler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -36,10 +40,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         //TODO -- grab latitude and longitude from database
         previousLocations = new ArrayList<LatLng>();
-        previousLocations.add(new LatLng(29.979492, 31.134132));
+        /*previousLocations.add(new LatLng(29.979492, 31.134132));
         previousLocations.add(new LatLng(42.359972, -71.092036));
         previousLocations.add(new LatLng(40.824751, -73.336089));
-        previousLocations.add(new LatLng(48.860823, 2.337547));
+        previousLocations.add(new LatLng(48.860823, 2.337547));*/
+        List<DatabaseRestaurant> databaseRestaurants;
+        AppDatabase db = Room.databaseBuilder(this, AppDatabase.class, "saved_restaurants")
+                .allowMainThreadQueries()
+                .build();
+        databaseRestaurants = db.restaurantDao().getAllRestaurantsLive();
+        int length = databaseRestaurants.size();
+        for (int i = 0; i < length; i++){
+            DatabaseRestaurant tempRestaurant = databaseRestaurants.get(i);
+            LatLng temp = new LatLng(tempRestaurant.getLatitude(), tempRestaurant.getLongitude());
+            previousLocations.add(temp);
+        }
+
         mMap = (MapView) findViewById(R.id.maMap);
         mMap.onCreate(savedInstanceState);
         mMap.getMapAsync(this);
