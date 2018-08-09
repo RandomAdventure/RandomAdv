@@ -26,7 +26,8 @@ public class RestaurantsChosenViewModel extends AndroidViewModel {
         mRestaurants = appDatabase.restaurantDao().getAllRestaurants();
     }
 
-    public LiveData<List<DatabaseRestaurant>> getmRestaurants() { return mRestaurants; }
+    public LiveData<List<DatabaseRestaurant>> getmRestaurants() {
+        return mRestaurants; } //if null, setvalue(mRestaurants)
 
     public void deleteRestaurant(DatabaseRestaurant restaurant){
         new deleteAsyncTask(appDatabase).execute(restaurant);

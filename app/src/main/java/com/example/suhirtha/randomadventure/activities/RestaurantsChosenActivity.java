@@ -81,7 +81,6 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
                 .build();
         db.restaurantDao().deleteAll();
         Toast.makeText(this, "Database deleted!", Toast.LENGTH_SHORT).show();
-        adapter.notifyDataSetChanged();
     }
 
     @Override
