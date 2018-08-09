@@ -12,7 +12,7 @@ import com.example.suhirtha.randomadventure.models.RestaurantDao;
  * Created by anitac on 7/25/18.
  */
 
-@Database(entities = {DatabaseRestaurant.class}, version = 8)
+@Database(entities = {DatabaseRestaurant.class}, version = 9)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract RestaurantDao restaurantDao();
     private static AppDatabase INSTANCE;

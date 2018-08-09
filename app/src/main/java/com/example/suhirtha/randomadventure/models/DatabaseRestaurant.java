@@ -30,14 +30,21 @@ public class DatabaseRestaurant {
     @ColumnInfo(name = "comment")
     private String comment;
 
+    @ColumnInfo(name = "latitude")
+    private double latitude;
+
+    @ColumnInfo(name = "longitude")
+    private  double longitude;
 
 
-    public DatabaseRestaurant(String yelpId, String restaurantName, String address, Double rating, String comment) {
+    public DatabaseRestaurant(String yelpId, String restaurantName, String address, Double rating, String comment, double latitude, double longitude) {
         this.yelpId = yelpId;
         this.restaurantName = restaurantName;
         this.address = address;
         this.rating = rating;
         this.comment = comment;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
@@ -88,5 +95,21 @@ public class DatabaseRestaurant {
 
     public void setRestaurantName(String restaurantName) {
         this.restaurantName = restaurantName;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
