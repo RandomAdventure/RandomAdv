@@ -34,7 +34,8 @@
 
         <activity android:name=".activities.RestaurantsChosenActivity" />
         <activity android:name=".activities.RestaurantDetailActivity" />
-        <activity android:name=".activities.MapActivity"></activity>
+        <activity android:name=".activities.MapActivity" />
+        <activity android:name=".activities.PreviousAdvActivity"></activity>
     </application>
 
 </manifest>

@@ -39,7 +39,7 @@ public class StartActivity extends AppCompatActivity {
         mViewPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, RestaurantsChosenActivity.class);
+                Intent i = new Intent(context, PreviousAdvActivity.class);
                 startActivity(i);
             }
         });

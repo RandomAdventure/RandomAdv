@@ -75,7 +75,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 .build();
         db.restaurantDao().updateCritique(databasePosition, ratingNumber, comment.getText().toString());
 
-        Intent i = new Intent(RestaurantDetailActivity.this, RestaurantsChosenActivity.class);
+        Intent i = new Intent(RestaurantDetailActivity.this, PreviousAdvActivity.class);
         startActivity(i);
     }
 
