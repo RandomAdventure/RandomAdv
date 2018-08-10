@@ -62,7 +62,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     private double mileConversion = 1609.344;
 
 //--------------------------------------------------------------------------------------------------
-    private MultiAutoCompleteTextView mAutoComplete2;
+    private MultiAutoCompleteTextView mCuisineAutoComplete;
 //--------------------------------------------------------------------------------------------------
     private String attributeSelected;
     private boolean attribute;
@@ -101,14 +101,15 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             e.printStackTrace();
         }
 
+//--------------------------------------------------------------------------------------------------
         ArrayAdapter cuisineAdapter  = new ArrayAdapter<>(this.getContext(),
                 android.R.layout.simple_dropdown_item_1line, suggestions);
 
 
-        mAutoComplete2.setAdapter(cuisineAdapter);
-        mAutoComplete2.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        mCuisineAutoComplete.setAdapter(cuisineAdapter);
+        mCuisineAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-        mAutoComplete2.addTextChangedListener(new TextWatcher() {
+        mCuisineAutoComplete.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
@@ -124,7 +125,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-
+//--------------------------------------------------------------------------------------------------
         //'Other' Spinner
         mOther.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -142,6 +143,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+//--------------------------------------------------------------------------------------------------
         mSeekRadius.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
             @NonNull
             @Override
@@ -154,6 +156,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+//--------------------------------------------------------------------------------------------------
         mSeekPrice.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
             @NonNull
             @Override
@@ -167,6 +170,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 return array;
             }
         });
+//--------------------------------------------------------------------------------------------------
 
         mSearch.setOnClickListener(this);
         mDone.setOnClickListener(this);
@@ -250,7 +254,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     public void buildRequest() {
 
         // Add attributes to an arraylist
-        String terms = mAutoComplete2.getText().toString();
+        String terms = mCuisineAutoComplete.getText().toString();
 
         request = new UserRequest(this.getContext(), this.getActivity())
                 .setRadius((int) (mSeekRadius.getProgress() * mileConversion))
