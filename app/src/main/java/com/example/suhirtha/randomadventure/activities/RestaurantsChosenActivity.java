@@ -2,7 +2,6 @@ package com.example.suhirtha.randomadventure.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,13 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.adapters.RestaurantAdapter;
 import com.example.suhirtha.randomadventure.models.DatabaseRestaurant;
@@ -71,18 +67,6 @@ public class RestaurantsChosenActivity extends AppCompatActivity implements View
     public void onClickBack(View view) {
         Intent intent = new Intent(this, StartActivity.class);
         startActivityForResult(intent,REQUEST_CODE_SELECTION); //wrapping
-    }
-
-    public void onClickDelete(View view) {
-
-//        viewModel.deleteAllRestaurants();
-        //TODO delete everything in database
-        Log.d("RChosenActivity", "Deleting database completely");
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
-                .allowMainThreadQueries()
-                .build();
-        db.restaurantDao().deleteAll();
-        Toast.makeText(this, "Database deleted!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
