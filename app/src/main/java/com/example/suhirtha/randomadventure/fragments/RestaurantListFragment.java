@@ -1,4 +1,4 @@
-package com.example.suhirtha.randomadventure.activities;
+package com.example.suhirtha.randomadventure.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;

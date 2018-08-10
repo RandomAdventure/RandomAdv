@@ -17,6 +17,7 @@ import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.ViewPageAdapter;
 import com.example.suhirtha.randomadventure.fragments.MapFragment;
+import com.example.suhirtha.randomadventure.fragments.RestaurantListFragment;
 
 public class PreviousAdvActivity extends AppCompatActivity {
 
@@ -27,7 +28,6 @@ public class PreviousAdvActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle("Instagram");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_previous_adv);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.raaBottomNavigation);
@@ -38,7 +38,6 @@ public class PreviousAdvActivity extends AppCompatActivity {
         adapter.addFragment(new MapFragment(), "Map");
 
         viewPager.setAdapter(adapter);
-        //tabLayout.setupWithViewPager(viewPager);
         Menu menu = bottomNavigationView.getMenu();
         menu.findItem(R.id.nav_restaurants).setIcon(R.drawable.filled_star);
         menu.findItem(R.id.nav_map).setIcon(R.drawable.worldwide);
@@ -69,11 +68,6 @@ public class PreviousAdvActivity extends AppCompatActivity {
                 });
     }
 
-    public void changeFragment(int index){
-        viewPager.setCurrentItem(index);
-    }
-
-    //toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_general, menu);
@@ -91,9 +85,6 @@ public class PreviousAdvActivity extends AppCompatActivity {
     }
 
     public void onClickDelete(View view) {
-
-//        viewModel.deleteAllRestaurants();
-        //TODO delete everything in database
         Log.d("RChosenActivity", "Deleting database completely");
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
                 .allowMainThreadQueries()

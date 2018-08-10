@@ -64,7 +64,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
-        //TODO -- make i ok for it to only have one object in array and not throw error
         double lowestLat = 0;
         double highestLat = 0;
         double lowestLong = 0;
