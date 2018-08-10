@@ -25,7 +25,8 @@
             android:layout_marginRight="?attr/actionBarSize"
             android:backgroundTint="@android:color/white"
             android:onClick="onClickBack"
-            android:src="@drawable/ic_arrow_back_black_24dp" />
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="#FFFFFF"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -50,7 +51,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp">
 
             <TextView
                 android:id="@+id/raTapSpin"
@@ -69,9 +71,9 @@
                 android:id="@+id/raWheel"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/toolbar_logo"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="101dp"
+                android:layout_marginTop="62dp"
                 android:adjustViewBounds="true"
                 android:onClick="onClickRandom"
                 android:padding="20dp"
@@ -94,17 +96,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@color/lightestPurple">
+            android:background="@color/darkPurple">
 
             <TextView
                 android:id="@+id/raRestaurant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:padding="5dp"
+                android:padding="9dp"
                 android:text="TextView"
                 android:textAlignment="center"
-                android:textColor="@color/darkPurple"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -115,17 +117,17 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lightestPurple">
+            android:background="@color/lightPurple2">
 
             <TextView
                 android:id="@+id/raRestaurant1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:padding="5dp"
+                android:padding="9dp"
                 android:text="Tap to spin!"
                 android:textAlignment="center"
-                android:textColor="@color/lightPurple"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -135,17 +137,17 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lightestPurple">
+            android:background="@color/darkTeal">
 
             <TextView
                 android:id="@+id/raRestaurant2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:padding="5dp"
+                android:padding="9dp"
                 android:text="Tap to spin!"
                 android:textAlignment="center"
-                android:textColor="@color/darkTeal"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -155,17 +157,17 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lightestPurple">
+            android:background="@color/teal">
 
             <TextView
                 android:id="@+id/raRestaurant3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:padding="5dp"
+                android:padding="9dp"
                 android:text="Tap to spin!"
                 android:textAlignment="center"
-                android:textColor="@color/teal"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -175,17 +177,17 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lightestPurple">
+            android:background="@color/lightTeal">
 
             <TextView
                 android:id="@+id/raRestaurant4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:padding="5dp"
+                android:padding="9dp"
                 android:text="Tap to spin!"
                 android:textAlignment="center"
-                android:textColor="@color/lightTeal"
+                android:textColor="@color/DarkestTeal"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
@@ -200,6 +202,7 @@
         android:layout_height="100dp"
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:visibility="invisible"
         app:srcCompat="@drawable/spindle" />
 
