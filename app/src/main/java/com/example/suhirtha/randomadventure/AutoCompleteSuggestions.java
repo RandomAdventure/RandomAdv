@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class AutoCompleteSuggestions {
 
     private Context context;
-    private File arrayFile;
 
     public AutoCompleteSuggestions(Context context) {
         this.context = context;
@@ -110,7 +109,7 @@ public class AutoCompleteSuggestions {
      * @param url - filename (WITHOUT extension)
      * @return - created file
      */
-    private File getTempFile(Context context, String url) {
+    private File getTempFile(Context context, String url, File arrayFile) {
         try {
             String fileName = Uri.parse(url).getLastPathSegment();
             arrayFile = File.createTempFile(fileName, null, context.getCacheDir());
