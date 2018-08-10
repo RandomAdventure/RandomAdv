@@ -2,9 +2,9 @@
 <resources>
 <string-array name="other_array">
     <item></item>
-    <item>Wheelchair Accessible</item>
-    <item>Gender Neutral Restrooms</item>
-    <item>Just Opened</item>
-    <item>Allow Reservations</item>
+    <item>wheelchair accessible</item>
+    <item>gender neutral restrooms</item>
+    <item>just opened</item>
+    <item>allow reservations</item>
 </string-array>
 </resources>

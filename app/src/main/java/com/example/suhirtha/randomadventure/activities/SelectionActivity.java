@@ -22,27 +22,25 @@ import com.example.suhirtha.randomadventure.viewModels.SelectionViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
 
 public class SelectionActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener, SelectionFragment.SelectionListener {
-/**
-    RecyclerView recyclerView;
-    ArrayList<DataModel> arrayList;
-**/
-    private static ArrayList<Restaurant> firstFive;
+
+    private static ArrayList<Restaurant> fiveRest;
     public String[] suggestions;
-//--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
     final Fragment selection = new SelectionFragment();
     private FragmentTransaction fragmentTransaction1;
     private FragmentManager fragmentManager;
 //--------------------------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
     Restaurant test1 = new Restaurant("8dUaybEPHsZMgr1iKgqgMQ", "Sotto Mare Oysteria");
-//--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
     UserRequest request;
 
     SelectionViewModel viewModel;
@@ -54,78 +52,13 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
-
-
-        firstFive = new ArrayList<>(); //initialize the holder arrayList
+        fiveRest = new ArrayList<>(); //initialize the holder arrayList
 
         viewModel = ViewModelProviders.of(this).get(SelectionViewModel.class);
-//------------------------------------------------------------------------------------------
+
         fragmentManager = getSupportFragmentManager();
 
-        /**
-         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-         arrayList = new ArrayList<>();
-         arrayList.add(new DataModel("Location", R.drawable.locate, "#7CCDC4"));
-         arrayList.add(new DataModel("Cuisine", R.drawable.worldwide, "#0A6B95"));
-         arrayList.add(new DataModel("Rating", R.drawable.star, "#B48EB7"));
-         arrayList.add(new DataModel("Price", R.drawable.price, "#6e639f"));
-
-         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, arrayList, this);
-         recyclerView.setAdapter(adapter);
-
-
-         // AutoFitGridLayoutManager that auto fits the cells by the column width defined.
-
-
-         AutoFitGridLayoutManager layoutManager = new AutoFitGridLayoutManager(this, 500);
-         recyclerView.setLayoutManager(layoutManager);
-
-
-         //Simple GridLayoutManager that spans two columns -- actually just 1. I'm dumb. //TODO - fix.
-
-         GridLayoutManager manager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
-         recyclerView.setLayoutManager(manager);
-         **/
-
-
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("suggestions", Parcels.wrap(suggestions));
-//        // set Fragmentclass Arguments
-//        SelectionFragment fragment = new SelectionFragment();
-//        fragment.setArguments(bundle);
-
-//        try {
-//            auto.getSuggestions();
-//            File file = auto.createTempFile();
-//            BufferedReader br = new BufferedReader(new FileReader(file));
-//            StringBuilder text = new StringBuilder();
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                text.append(line);
-//                text.append('\n');
-//            }
-//            Log.d("File contents", text.toString());
-//            br.close() ;
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-/*
-        try {
-            suggestions = auto.getSuggestions();
-            Log.d("TestSuggestions", suggestions[0] + suggestions[1] + suggestions[2]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-**/
     }
-
 //--------------------------------------------------------------------------------------------------
     /**
      * currently: takes the first five restaurants in restaurantList, populates 'firstFive',
@@ -136,40 +69,89 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     public void resultsReturned(JSONArray restaurantList) {
         Log.d("Print received", "Number of restaurants received: " + restaurantList.length() + "---" + restaurantList.toString());
         //generate random integer array from 1-20 (20 because Yelp returns 20 restaurants by default per API call)
+
+        if (restaurantList.length() < 5) {
+            Log.d("Not enough restaurants", "Found fewer than 5 restaurants.");
+            Toast.makeText(this, "We could not find enough restaurants that matched your specifications, please try again!",
+                     Toast.LENGTH_LONG).show();
+            Intent myIntent = getIntent();
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            this.startActivity(myIntent);
+            overridePendingTransition(0,0);
+            return;
+        }
+
+
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         int randomNum;
 
 
-        while(randomNumbers.size() < 5) {
-            randomNum = (int) (Math.random() * 20);
+        //creates list of random numbers that correspond to index of restaurant to choose from JSON results
+        while(randomNumbers.size() < 10) {
+            randomNum = (int) (Math.random() * restaurantList.length());
             if (!randomNumbers.contains(randomNum)) { //ensures that the same restaurant isn't chosen
                 randomNumbers.add(randomNum);
+                Log.d("RandomNumberChosen", randomNum + "");
+
             }
         }
 
+        int randomNumIndex = 0;
 
-        Log.d("Random ints arrayList", randomNumbers.toString());
-        for (int i = 0; i < 5; i++) {
-            Restaurant restaurant = null;
+        while (fiveRest.size() < 5) {
+            Restaurant restaurant;
             try {
-                restaurant = new Restaurant
-                        (restaurantList.getJSONObject(randomNumbers.get(i)).getString("id"),
-                         restaurantList.getJSONObject(randomNumbers.get(i)).getString("name"));
+
+                if (randomNumIndex >= 10) {
+                    Log.d("hello", "suhi");
+                    Toast.makeText(this, "Looks like your query returned food trucks! " +
+                            "Please try again.", Toast.LENGTH_LONG).show();
+                    Intent myIntent = getIntent();
+                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    this.startActivity(myIntent);
+                    overridePendingTransition(0,0);
+                    return;
+
+                }
+                int index = randomNumbers.get(randomNumIndex);
+                Log.d("Index of random numbers", index + "");
+                randomNumIndex++;
+                JSONObject chosenRest = restaurantList.getJSONObject(index);
+                boolean isFoodTruck = false;
+
+                //check if chosen restaurant is a food truck
+                JSONArray categories = chosenRest.getJSONArray("categories");
+                for (int i = 0; i < categories.length(); i++) {
+                    if (categories.getJSONObject(i).getString("alias").equals("foodtrucks")) {
+                        isFoodTruck = true;
+                        Log.d("Found a food truck", chosenRest.getString("name"));
+                        break;
+                    }
+                }
+
+                if (isFoodTruck) {
+                    continue;
+                } else {
+                    restaurant = new Restaurant (chosenRest.getString("id"), chosenRest.getString("name"));
+                    fiveRest.add(restaurant);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            firstFive.add(restaurant);
-            Log.d("To send to Anna", firstFive.toString());
+        }
+
+        for (int o = 0; o < 5; o++) {
+            Log.d("Pass to Anna", fiveRest.get(o).getName());
         }
 
         //passes intent with first five restaurants to Anna
         Intent anna = new Intent(SelectionActivity.this, RandomizeActivity.class);
-        anna.putExtra("restaurants", Parcels.wrap(firstFive));
+        anna.putExtra("restaurants", Parcels.wrap(fiveRest));
         startActivity(anna);
 
-    }
 
-//--------------------------------------------------------------------------------------------------
+    }
 
 //--------------------------------------------------------------------------------------------------
 
@@ -204,9 +186,8 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     public void tatumTest() {
-        //Intent tatum = new Intent(SelectionActivity.this, ResultActivity.class);
-        //tatum.putExtra("test1", Parcels.wrap(test1));
-        Intent tatum = new Intent(SelectionActivity.this, PreviousAdvActivity.class);
+        Intent tatum = new Intent(SelectionActivity.this, ResultActivity.class);
+        tatum.putExtra("test1", Parcels.wrap(test1));
         startActivity(tatum);
     }
 
@@ -219,4 +200,3 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 
 
 }
-

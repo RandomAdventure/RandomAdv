@@ -11,9 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -66,7 +64,9 @@ public class AutoCompleteSuggestions {
                 JSONObject categoryTemp = allCategories.getJSONObject(i);
                 //array that stores the current category's 'parents'
                 JSONArray parentsArr = categoryTemp.getJSONArray("parents");
-                if (parentsArr != null && parentsArr.length() != 0 && (parentsArr.get(0).equals("food") || parentsArr.get(0).equals("restaurants"))) {
+                if (parentsArr != null && parentsArr.length() != 0 &&
+                        (parentsArr.get(0).equals("food") || parentsArr.get(0).equals("restaurants")
+                         || parentsArr.get(0).equals("gourmet") || parentsArr.get(0).equals("mexican"))) {
                     //adds category object IF primary parent = restaurant or food
                     desiredCategories.put(categoryTemp);
                     Log.d("Category", categoryTemp.getString("title"));
@@ -108,6 +108,12 @@ public class AutoCompleteSuggestions {
         return desiredStrings;
     }
 
+    /**
+     * Creates cache file to store array of strings: currently not implemented
+     * @param context - (Selection) activity
+     * @param url - filename (WITHOUT extension)
+     * @return - created file
+     */
     private File getTempFile(Context context, String url) {
         try {
             String fileName = Uri.parse(url).getLastPathSegment();
@@ -117,15 +123,5 @@ public class AutoCompleteSuggestions {
         }
         return arrayFile;
     }
-
-    public File createTempFile() throws IOException {
-        File categoriesFile = new File(context.getCacheDir(), "categories");
-        FileWriter fw = new FileWriter(categoriesFile.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(desiredStrings.toString());
-        bw.close();
-        return categoriesFile;
-    }
-
 
 }
