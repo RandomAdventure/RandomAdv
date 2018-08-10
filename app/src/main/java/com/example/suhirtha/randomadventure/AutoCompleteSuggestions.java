@@ -4,8 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.suhirtha.randomadventure.activities.SelectionActivity;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,10 +16,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class AutoCompleteSuggestions {
-    private String rawJSON;
-    private SelectionActivity activity = new SelectionActivity();
-    private JSONArray allCategories = new JSONArray();
-    private JSONArray desiredCategories = new JSONArray();
+
+
     private String[] desiredStrings;
     private Context context;
     private File arrayFile;
@@ -34,7 +30,7 @@ public class AutoCompleteSuggestions {
      * Uses InputStream and StringBuilder to read JSON file from resource stored in res/raw
      * @throws IOException - if file not found
      */
-    private void readData() throws IOException {
+    private String readData() throws IOException {
 
         InputStream ins = context.getResources().openRawResource(
                 context.getResources().getIdentifier("categories",
@@ -47,16 +43,17 @@ public class AutoCompleteSuggestions {
             total.append(line).append('\n');
         }
 
-        rawJSON = total.toString();
+        return total.toString();
     }
 
     /**
      * Parses JSON file (stored in rawJSON) to create category objects (includes all types)
      * @throws JSONException - if rawJSON does not contain valid JSON
      */
-    private void parseJSON() throws JSONException {
+    private JSONArray parseJSON(String rawJSON) throws JSONException {
+        JSONArray desiredCategories = new JSONArray();
         if (rawJSON != null) {
-            allCategories = new JSONArray(rawJSON);
+            JSONArray allCategories = new JSONArray(rawJSON);
 
             int i = 0;
             while (i < allCategories.length()) {
@@ -74,7 +71,8 @@ public class AutoCompleteSuggestions {
                 i++;
             }
         }
-        Log.d("Desired categories", "blah");
+
+        return desiredCategories;
     }
 
     /**
@@ -82,7 +80,7 @@ public class AutoCompleteSuggestions {
      * and stores the title value in an array
      * @throws JSONException
      */
-    public void getDesiredStrings() throws JSONException {
+    public void getDesiredStrings(JSONArray desiredCategories) throws JSONException {
         ArrayList<String> desired = new ArrayList<>();
         int i = 0;
         while (i < desiredCategories.length()) {
@@ -95,15 +93,15 @@ public class AutoCompleteSuggestions {
     }
 
     /**
-     * method to be called to run all helper methods - not sure if ideal way to organize it
+     * method to be called to run all helper methods
      * @return - only desired strings array
      * @throws IOException - if file not found
      * @throws JSONException - invalid JSON
      */
     public String[] getSuggestions() throws IOException, JSONException {
-        readData();
-        parseJSON();
-        getDesiredStrings();
+        String rawJSON = readData();
+        JSONArray desiredCatgeoires = parseJSON(rawJSON);
+        getDesiredStrings(desiredCatgeoires);
 
         return desiredStrings;
     }
