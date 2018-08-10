@@ -52,12 +52,12 @@ import static com.google.android.gms.internal.zzhl.runOnUiThread;
 public class SelectionFragment extends Fragment implements View.OnClickListener {
 
 //--------------------------------------------------------------------------------------------------
-    @BindView(R.id.sfSearchButton) private Button mSearch;
-    @BindView(R.id.sfDoneButton) private Button mDone;
-    @BindView(R.id.sfDistanceBar) private BubbleSeekBar mSeekRadius;
-    @BindView(R.id.sfPriceSeekBar) private BubbleSeekBar mSeekPrice;
-    @BindView(R.id.sfRatingBar) private RatingBar mRating;
-    @BindView(R.id.sfOtherSpinner) private Spinner mOther;
+    @BindView(R.id.sfSearchButton) Button mSearch;
+    @BindView(R.id.sfDoneButton) Button mDone;
+    @BindView(R.id.sfDistanceBar) BubbleSeekBar mSeekRadius;
+    @BindView(R.id.sfPriceSeekBar) BubbleSeekBar mSeekPrice;
+    @BindView(R.id.sfRatingBar) RatingBar mRating;
+    @BindView(R.id.sfOtherSpinner) Spinner mOther;
 
     private double mileConversion = 1609.344;
 
@@ -115,7 +115,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String newText = charSequence.toString();
+                String newText = charSequence.toString(); //TODO - what
                 new getSuggestions().execute(newText);
             }
 
