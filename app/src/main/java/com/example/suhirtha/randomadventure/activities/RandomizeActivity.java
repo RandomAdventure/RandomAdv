@@ -50,7 +50,7 @@ public class RandomizeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_randmoize_2);
+        setContentView(R.layout.activity_randomize);
         activity = this;
         logo = findViewById(R.id.toolbar_logo);
         spinWheel = findViewById(R.id.raWheel);

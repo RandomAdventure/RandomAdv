@@ -27,15 +27,11 @@ public class RestaurantsChosenViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<DatabaseRestaurant>> getmRestaurants() {
-        return mRestaurants; } //if null, setvalue(mRestaurants)
+        return mRestaurants; }
 
     public void deleteRestaurant(DatabaseRestaurant restaurant){
         new deleteAsyncTask(appDatabase).execute(restaurant);
     }
-
-//    public void deleteAllRestaurants() {
-//        new deleteAsyncTask(appDatabase)
-//    }
 
     private static class deleteAsyncTask extends AsyncTask<DatabaseRestaurant, Void, Void> {
         private AppDatabase db;

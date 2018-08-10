@@ -5,179 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.suhirtha.randomadventure.activities.RandomizeActivity"
-    android:background="@color/lightTeal">
+    android:background="@color/lightestPurple">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/black"
-        android:background="@color/darkTeal"
-        android:visibility="invisible">
-
-        <ImageView
-            android:id="@+id/toolbar_logo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:src="@drawable/logo75" />
+        android:background="@color/DarkestTeal"
+        android:minHeight="?attr/actionBarSize"
+        android:visibility="invisible"
+        app:titleTextColor="@android:color/black">
 
         <ImageButton
             android:id="@+id/btn_back"
+            style="@style/Widget.AppCompat.ActionButton"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginRight="?attr/actionBarSize"
             android:layout_gravity="start|center_vertical"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:backgroundTint="@android:color/white"
             android:onClick="onClickBack"
-            android:backgroundTint="@android:color/white"/>
+            android:src="@drawable/ic_arrow_back_black_24dp" />
 
     </android.support.v7.widget.Toolbar>
-
-    <ImageView
-        android:id="@+id/raWheel"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:adjustViewBounds="true"
-        android:onClick="onClickRandom"
-        app:srcCompat="@drawable/true_color_wheel"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/raTapSpin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/raWheel"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Tap to spin!"
-        android:textColor="@color/darkPurple"
-        android:visibility="invisible"/>
-
-    <ImageView
-        android:id="@+id/raSpindle"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/spindle"
-        android:visibility="invisible"/>
-
-    <ImageView
-        android:id="@+id/raColor"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@+id/raWheel"
-        android:layout_margin="2dp"
-        android:layout_below="@+id/raTapSpin"
-        app:srcCompat="@color/darkPurple"
-        android:background="@drawable/borders"
-        android:visibility="invisible"/>
-
-    <ImageView
-        android:id="@+id/raColor1"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@+id/raWheel"
-        android:layout_margin="2dp"
-        android:layout_below="@+id/raColor"
-        app:srcCompat="@color/lightPurple"
-        android:background="@drawable/borders"
-        android:visibility="invisible"/>
-    <ImageView
-        android:id="@+id/raColor2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@+id/raWheel"
-        android:layout_margin="2dp"
-        android:layout_below="@+id/raColor1"
-        app:srcCompat="@color/darkTeal"
-        android:background="@drawable/borders"
-        android:visibility="invisible"/>
-    <ImageView
-        android:id="@+id/raColor3"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@+id/raWheel"
-        android:layout_margin="2dp"
-        android:layout_below="@+id/raColor2"
-        app:srcCompat="@color/teal"
-        android:background="@drawable/borders"
-        android:visibility="invisible"/>
-
-    <ImageView
-        android:id="@+id/raColor4"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@+id/raWheel"
-        android:layout_below="@+id/raColor3"
-        android:layout_margin="2dp"
-        app:srcCompat="@color/lightTeal"
-        android:background="@drawable/borders"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/raRestaurant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/raColor1"
-        android:layout_toEndOf="@+id/raColor"
-        android:fontFamily="@font/montserrat_light"
-        android:text="TextView"
-        android:textColor="@color/darkPurple"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/raRestaurant1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/raColor2"
-        android:layout_toEndOf="@+id/raColor1"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Tap to spin!"
-        android:textColor="@color/darkPurple"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/raRestaurant2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/raColor3"
-        android:layout_toEndOf="@+id/raColor2"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Tap to spin!"
-        android:textColor="@color/darkPurple"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/raRestaurant3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/raColor4"
-        android:layout_toEndOf="@+id/raColor3"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Tap to spin!"
-        android:textColor="@color/darkPurple"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/raRestaurant4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/raColor4"
-        android:layout_toEndOf="@+id/raColor4"
-        android:fontFamily="@font/montserrat_light"
-        android:text="Tap to spin!"
-        android:textColor="@color/darkPurple"
-        android:visibility="invisible"/>
 
     <ProgressBar
         android:id="@+id/raProgressBar"
@@ -192,5 +42,165 @@
         android:progressTint="@color/darkPurple"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/raTapSpin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/raWheel"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Tap to spin!"
+                android:textAlignment="center"
+                android:textColor="@color/darkPurple"
+                android:textSize="18sp"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/raWheel"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="101dp"
+                android:adjustViewBounds="true"
+                android:onClick="onClickRandom"
+                android:padding="20dp"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/color_wheel" />
+
+            <ImageView
+                android:id="@+id/toolbar_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:src="@drawable/cropped_logo"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/lightestPurple">
+
+            <TextView
+                android:id="@+id/raRestaurant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:padding="5dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="@color/darkPurple"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteY="658dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightestPurple">
+
+            <TextView
+                android:id="@+id/raRestaurant1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:padding="5dp"
+                android:text="Tap to spin!"
+                android:textAlignment="center"
+                android:textColor="@color/lightPurple"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteY="658dp" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightestPurple">
+
+            <TextView
+                android:id="@+id/raRestaurant2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:padding="5dp"
+                android:text="Tap to spin!"
+                android:textAlignment="center"
+                android:textColor="@color/darkTeal"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteY="658dp" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightestPurple">
+
+            <TextView
+                android:id="@+id/raRestaurant3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:padding="5dp"
+                android:text="Tap to spin!"
+                android:textAlignment="center"
+                android:textColor="@color/teal"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteY="658dp" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightestPurple">
+
+            <TextView
+                android:id="@+id/raRestaurant4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:padding="5dp"
+                android:text="Tap to spin!"
+                android:textAlignment="center"
+                android:textColor="@color/lightTeal"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteY="658dp" />
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/raSpindle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/spindle" />
 
 </RelativeLayout>
