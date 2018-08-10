@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -153,13 +154,13 @@ public class ResultFragment extends Fragment implements OnMapReadyCallback{
         PolylineOptions polylineOptions = DirectionConverter.createPolyline(context, directionPositionList, 5, getResources().getColor(R.color.darkPurple));
         googleMap.addPolyline(polylineOptions);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(resultActivityModel.getOrigin()));
-        googleMap.addMarker(new MarkerOptions().position(resultActivityModel.getOrigin()));
-        googleMap.addMarker(new MarkerOptions().position(resultActivityModel.getDestination()));
+        googleMap.addMarker(new MarkerOptions().position(resultActivityModel.getOrigin()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+        googleMap.addMarker(new MarkerOptions().position(resultActivityModel.getDestination()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(resultActivityModel.getOrigin());
         builder.include(resultActivityModel.getDestination());
         LatLngBounds bounds = builder.build();
-        int padding = 60;
+        int padding = 80;
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 900, 750, padding);
         googleMap.animateCamera(cameraUpdate);
 

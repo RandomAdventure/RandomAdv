@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
@@ -37,6 +39,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private MapView mMap;
     private GoogleMap googleMap;
     private ArrayList<LatLng> previousLocations;
+    private List<DatabaseRestaurant> databaseRestaurants;
     View v;
 
     @Override
@@ -44,7 +47,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         v = inflater.inflate(R.layout.activity_map, container, false);
         previousLocations = new ArrayList<LatLng>();
-        List<DatabaseRestaurant> databaseRestaurants;
         AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "saved_restaurants")
                 .allowMainThreadQueries()
                 .build();
@@ -64,6 +66,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                return false;
+            }
+        });
         double lowestLat = 0;
         double highestLat = 0;
         double lowestLong = 0;
@@ -86,7 +95,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             for (int i = 0; i < previousLocations.size(); i++) {
                 Marker marker = googleMap.addMarker(new MarkerOptions()
                         .position(previousLocations.get(i))
+                        .title(databaseRestaurants.get(i).getRestaurantName())
+                        .snippet(databaseRestaurants.get(i).getComment())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                marker.hideInfoWindow();
                 dropPinEffect(marker);
                 if (previousLocations.get(i).latitude < lowestLat) {
                     lowestLat = previousLocations.get(i).latitude;
@@ -114,7 +126,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             for (int i = 0; i < previousLocations.size(); i++) {
                 Marker marker = googleMap.addMarker(new MarkerOptions()
                         .position(previousLocations.get(i))
+                        .title(databaseRestaurants.get(i).getRestaurantName())
+                        .snippet(databaseRestaurants.get(i).getComment())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                marker.hideInfoWindow();
                 dropPinEffect(marker);
                 if (previousLocations.get(i).latitude < lowestLat) {
                     lowestLat = previousLocations.get(i).latitude;
@@ -192,7 +207,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if (t > 0.0) {
                     handler.postDelayed(this, 15);
                 } else {
-                    marker.showInfoWindow();
+                    //marker.showInfoWindow();
                 }
             }
         });
