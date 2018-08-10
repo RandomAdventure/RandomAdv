@@ -58,11 +58,10 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     @BindView(R.id.sfPriceSeekBar) BubbleSeekBar mSeekPrice;
     @BindView(R.id.sfRatingBar) RatingBar mRating;
     @BindView(R.id.sfOtherSpinner) Spinner mOther;
+    @BindView(R.id.sfMultiAutoComplete) MultiAutoCompleteTextView mCuisineAutoComplete;
 
     private double mileConversion = 1609.344;
 
-//--------------------------------------------------------------------------------------------------
-    private MultiAutoCompleteTextView mCuisineAutoComplete;
 //--------------------------------------------------------------------------------------------------
     private String attributeSelected;
     private boolean attribute;
