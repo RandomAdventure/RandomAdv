@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 public class AutoCompleteSuggestions {
 
-
-    private String[] desiredStrings;
     private Context context;
     private File arrayFile;
 
@@ -80,7 +78,7 @@ public class AutoCompleteSuggestions {
      * and stores the title value in an array
      * @throws JSONException
      */
-    public void getDesiredStrings(JSONArray desiredCategories) throws JSONException {
+    public String[] getDesiredStrings(JSONArray desiredCategories) throws JSONException {
         ArrayList<String> desired = new ArrayList<>();
         int i = 0;
         while (i < desiredCategories.length()) {
@@ -89,7 +87,7 @@ public class AutoCompleteSuggestions {
         }
 
         //convert desiredStrings to array (because TextWatcher doesn't want arrayLists :/ )
-        desiredStrings = desired.toArray(new String[desired.size()]);
+        return desired.toArray(new String[desired.size()]);
     }
 
     /**
@@ -101,9 +99,9 @@ public class AutoCompleteSuggestions {
     public String[] getSuggestions() throws IOException, JSONException {
         String rawJSON = readData();
         JSONArray desiredCatgeoires = parseJSON(rawJSON);
-        getDesiredStrings(desiredCatgeoires);
 
-        return desiredStrings;
+        return getDesiredStrings(desiredCatgeoires);
+
     }
 
     /**
