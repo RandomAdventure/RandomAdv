@@ -38,6 +38,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.google.android.gms.internal.zzhl.runOnUiThread;
 
 /**
@@ -49,12 +52,12 @@ import static com.google.android.gms.internal.zzhl.runOnUiThread;
 public class SelectionFragment extends Fragment implements View.OnClickListener {
 
 //--------------------------------------------------------------------------------------------------
-    private Button mSearch;
-    private Button mDone;
-    private BubbleSeekBar mSeekRadius;
-    private BubbleSeekBar mSeekPrice;
-    private RatingBar mRating;
-    private Spinner mOther;
+    @BindView(R.id.sfSearchButton) private Button mSearch;
+    @BindView(R.id.sfDoneButton) private Button mDone;
+    @BindView(R.id.sfDistanceBar) private BubbleSeekBar mSeekRadius;
+    @BindView(R.id.sfPriceSeekBar) private BubbleSeekBar mSeekPrice;
+    @BindView(R.id.sfRatingBar) private RatingBar mRating;
+    @BindView(R.id.sfOtherSpinner) private Spinner mOther;
 
     private double mileConversion = 1609.344;
 
@@ -85,17 +88,10 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         View selectionView = inflater.inflate(R.layout.fragment_selection, container, false);
 
+        ButterKnife.bind(this, selectionView);
+
         populateSpinner(selectionView);
 
-        mSearch = selectionView.findViewById(R.id.sfSearchButton);
-        mDone = selectionView.findViewById(R.id.sfDoneButton);
-        mSeekRadius = selectionView.findViewById(R.id.sfDistanceBar);
-        mRating = selectionView.findViewById(R.id.sfRatingBar);
-        mSeekPrice = selectionView.findViewById(R.id.sfPriceSeekBar);
-        mOther = selectionView.findViewById(R.id.sfOtherSpinner);
-        mAutoComplete2 = (MultiAutoCompleteTextView) selectionView.findViewById(R.id.sfMultiAutoComplete);
-
-       // String[] suggestions = Parcels.unwrap(getArguments().getParcelable("suggestions"));
         AutoCompleteSuggestions auto = new AutoCompleteSuggestions(getContext());
         try {
             suggestions = auto.getSuggestions();
@@ -114,9 +110,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
         mAutoComplete2.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
