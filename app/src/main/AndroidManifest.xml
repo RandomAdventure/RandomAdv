@@ -14,16 +14,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.StartActivity">
+        <activity android:name=".activities.StartActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RandomizeActivity" />
+
+        <activity android:name=".activities.RandomizeActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".activities.ResultActivity" />
-        <activity android:name=".activities.SelectionActivity" />
+
+        <activity android:name=".activities.SelectionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.RestaurantsChosenActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activities.RestaurantDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activities.MapActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -32,10 +46,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activities.RestaurantsChosenActivity" />
-        <activity android:name=".activities.RestaurantDetailActivity" />
-        <activity android:name=".activities.MapActivity" />
-        <activity android:name=".activities.PreviousAdvActivity"></activity>
+
+        <activity android:name=".activities.PreviousAdvActivity"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>
