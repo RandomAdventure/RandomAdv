@@ -1,13 +1,19 @@
 package com.example.suhirtha.randomadventure.activities;
 
+import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
+import com.example.suhirtha.randomadventure.AppDatabase;
 import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.ViewPageAdapter;
 import com.example.suhirtha.randomadventure.fragments.MapFragment;
@@ -17,6 +23,7 @@ public class PreviousAdvActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private ViewPageAdapter adapter;
+    private int REQUEST_CODE_SELECTION = 150;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,5 +71,34 @@ public class PreviousAdvActivity extends AppCompatActivity {
 
     public void changeFragment(int index){
         viewPager.setCurrentItem(index);
+    }
+
+    //toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_general, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) { //empty on purpose
+        return true;
+    }
+
+    public void onClickBack(View view) {
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_SELECTION); //wrapping
+    }
+
+    public void onClickDelete(View view) {
+
+//        viewModel.deleteAllRestaurants();
+        //TODO delete everything in database
+        Log.d("RChosenActivity", "Deleting database completely");
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saved_restaurants")
+                .allowMainThreadQueries()
+                .build();
+        db.restaurantDao().deleteAll();
+        Toast.makeText(this, "Database deleted!", Toast.LENGTH_SHORT).show();
     }
 }

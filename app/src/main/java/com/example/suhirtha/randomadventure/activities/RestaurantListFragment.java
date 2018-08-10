@@ -68,35 +68,6 @@ public class RestaurantListFragment extends Fragment implements View.OnLongClick
         return v;
     }
 
-    //toolbar
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_general, menu);
-        return true;
-    }*/
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //empty on purpose
-        return true;
-    }
-
-    public void onClickBack(View view) {
-        Intent intent = new Intent(getActivity(), StartActivity.class);
-        startActivityForResult(intent,REQUEST_CODE_SELECTION); //wrapping
-    }
-
-    public void onClickDelete(View view) {
-
-//        viewModel.deleteAllRestaurants();
-        //TODO delete everything in database
-        Log.d("RChosenActivity", "Deleting database completely");
-        AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "saved_restaurants")
-                .allowMainThreadQueries()
-                .build();
-        db.restaurantDao().deleteAll();
-        Toast.makeText(getActivity(), "Database deleted!", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public boolean onLongClick(View view) {
         DatabaseRestaurant databaseRestaurant = (DatabaseRestaurant) view.getTag();
