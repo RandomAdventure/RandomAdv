@@ -38,6 +38,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.google.android.gms.internal.zzhl.runOnUiThread;
 
 /**
@@ -49,17 +52,16 @@ import static com.google.android.gms.internal.zzhl.runOnUiThread;
 public class SelectionFragment extends Fragment implements View.OnClickListener {
 
 //--------------------------------------------------------------------------------------------------
-    private Button mSearch;
-    private Button mDone;
-    private BubbleSeekBar mSeekRadius;
-    private BubbleSeekBar mSeekPrice;
-    private RatingBar mRating;
-    private Spinner mOther;
+    @BindView(R.id.sfSearchButton) Button mSearch;
+    @BindView(R.id.sfDoneButton) Button mDone;
+    @BindView(R.id.sfDistanceBar) BubbleSeekBar mSeekRadius;
+    @BindView(R.id.sfPriceSeekBar) BubbleSeekBar mSeekPrice;
+    @BindView(R.id.sfRatingBar) RatingBar mRating;
+    @BindView(R.id.sfOtherSpinner) Spinner mOther;
+    @BindView(R.id.sfMultiAutoComplete) MultiAutoCompleteTextView mCuisineAutoComplete;
 
     private double mileConversion = 1609.344;
 
-//--------------------------------------------------------------------------------------------------
-    private MultiAutoCompleteTextView mAutoComplete2;
 //--------------------------------------------------------------------------------------------------
     private String attributeSelected;
     private boolean attribute;
@@ -85,17 +87,10 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         View selectionView = inflater.inflate(R.layout.fragment_selection, container, false);
 
+        ButterKnife.bind(this, selectionView);
+
         populateSpinner(selectionView);
 
-        mSearch = selectionView.findViewById(R.id.sfSearchButton);
-        mDone = selectionView.findViewById(R.id.sfDoneButton);
-        mSeekRadius = selectionView.findViewById(R.id.sfDistanceBar);
-        mRating = selectionView.findViewById(R.id.sfRatingBar);
-        mSeekPrice = selectionView.findViewById(R.id.sfPriceSeekBar);
-        mOther = selectionView.findViewById(R.id.sfOtherSpinner);
-        mAutoComplete2 = (MultiAutoCompleteTextView) selectionView.findViewById(R.id.sfMultiAutoComplete);
-
-       // String[] suggestions = Parcels.unwrap(getArguments().getParcelable("suggestions"));
         AutoCompleteSuggestions auto = new AutoCompleteSuggestions(getContext());
         try {
             suggestions = auto.getSuggestions();
@@ -105,22 +100,21 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             e.printStackTrace();
         }
 
+//--------------------------------------------------------------------------------------------------
         ArrayAdapter cuisineAdapter  = new ArrayAdapter<>(this.getContext(),
                 android.R.layout.simple_dropdown_item_1line, suggestions);
 
 
-        mAutoComplete2.setAdapter(cuisineAdapter);
-        mAutoComplete2.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        mCuisineAutoComplete.setAdapter(cuisineAdapter);
+        mCuisineAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-        mAutoComplete2.addTextChangedListener(new TextWatcher() {
+        mCuisineAutoComplete.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String newText = charSequence.toString();
+                String newText = charSequence.toString(); //TODO - what
                 new getSuggestions().execute(newText);
             }
 
@@ -130,7 +124,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-
+//--------------------------------------------------------------------------------------------------
         //'Other' Spinner
         mOther.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -148,6 +142,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+//--------------------------------------------------------------------------------------------------
         mSeekRadius.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
             @NonNull
             @Override
@@ -160,6 +155,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+//--------------------------------------------------------------------------------------------------
         mSeekPrice.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
             @NonNull
             @Override
@@ -173,6 +169,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 return array;
             }
         });
+//--------------------------------------------------------------------------------------------------
 
         mSearch.setOnClickListener(this);
         mDone.setOnClickListener(this);
@@ -256,7 +253,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     public void buildRequest() {
 
         // Add attributes to an arraylist
-        String terms = mAutoComplete2.getText().toString();
+        String terms = mCuisineAutoComplete.getText().toString();
 
         request = new UserRequest(this.getContext(), this.getActivity())
                 .setRadius((int) (mSeekRadius.getProgress() * mileConversion))

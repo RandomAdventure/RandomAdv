@@ -70,6 +70,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
     compile 'org.apache.httpcomponents:httpclient:4.5.6'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
 
 }

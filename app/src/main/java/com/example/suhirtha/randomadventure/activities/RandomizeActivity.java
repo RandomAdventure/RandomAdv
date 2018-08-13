@@ -190,7 +190,7 @@ public class RandomizeActivity extends AppCompatActivity {
         }
 
         ObjectAnimator rotateAnimation = ObjectAnimator.ofFloat(spinWheel, "rotation", 0, toDegrees);
-        rotateAnimation.setDuration(10000);
+        rotateAnimation.setDuration(7000);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.addListener(new Animator.AnimatorListener() {
 
