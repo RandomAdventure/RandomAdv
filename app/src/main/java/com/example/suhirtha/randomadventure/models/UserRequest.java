@@ -13,10 +13,9 @@ public class UserRequest {
     private double userLongitude;
     private int radius; //in miles
     private String attribute;
-    private String term;
     private float minRating = 0; //cannot be implemented here
     private int maxPrice = 0;
-    private String terms;
+    private String cuisines;
     private String priceString;
     Location userLocation;
 
@@ -56,8 +55,13 @@ public class UserRequest {
         return this;
     }
 
+    public UserRequest setCuisines(String terms) {
+        this.cuisines = terms;
+        return this;
+    }
+
     public UserRequest setAttribute(String attribute) {
-        this.term = attribute;
+        this.cuisines = attribute;
         return this;
     }
 
@@ -66,18 +70,13 @@ public class UserRequest {
         return this;
     }
 
-    //TODO - what is the value of maxPrice if user leaves the editText empty? 0?
     public UserRequest setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
         maxPriceSet = true;
         return this;
     }
 
-    public UserRequest setTerms(String terms) {
-        //attributes[] may be null
-        this.terms = terms;
-        return this;
-    }
+
 
 //--------------------------------------------------------------------------------------------------
     public UserRequest buildURL() {
@@ -92,6 +91,11 @@ public class UserRequest {
 
         //Add user location
         completeURL += "?latitude=" + this.userLatitude + "&longitude=" + this.userLongitude;
+
+        //Add radius
+        if (radius != 0) {
+            completeURL += "&radius=" + this.radius;
+        }
 
         //Add price parameter
         if (maxPriceSet) {
@@ -117,8 +121,8 @@ public class UserRequest {
         }
          **/
 
-        if (terms != null && terms.length() > 0) {
-            completeURL = completeURL + "&term=" + terms;
+        if (cuisines != null && cuisines.length() > 0) {
+            completeURL = completeURL + "&term=" + cuisines;
         }
 
         return this;

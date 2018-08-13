@@ -74,11 +74,11 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
             Log.d("Not enough restaurants", "Found fewer than 5 restaurants.");
             Toast.makeText(this, "We could not find enough restaurants that matched your specifications, please try again!",
                      Toast.LENGTH_LONG).show();
-//            Intent myIntent = getIntent();
-//            myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//            this.startActivity(myIntent);
-//            overridePendingTransition(0,0);
-//            return;
+            Intent myIntent = getIntent();
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            this.startActivity(myIntent);
+            overridePendingTransition(0,0);
+            return;
         }
 
 
@@ -106,11 +106,11 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
                     Log.d("hello", "suhi");
                     Toast.makeText(this, "Looks like your query returned food trucks! " +
                             "Please try again.", Toast.LENGTH_LONG).show();
-//                    Intent myIntent = getIntent();
-//                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                    this.startActivity(myIntent);
-//                    overridePendingTransition(0,0);
-//                    return;
+                    Intent myIntent = getIntent();
+                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    this.startActivity(myIntent);
+                    overridePendingTransition(0,0);
+                    return;
 
                 }
                 int index = randomNumbers.get(randomNumIndex);
@@ -166,11 +166,10 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
     public void makeRequest(final UserRequest request) {
         try {
 
+            this.request = request;
             final Observer<JSONArray> restaurantObserver = new Observer<JSONArray>() {
                 @Override
                 public void onChanged(@Nullable JSONArray restaurants) {
-                    Log.d("hello", "Restaurants received");
-                    Log.d("", "");
                     resultsReturned(viewModel.getRestaurants(request).getValue());
                 }
             };
@@ -184,14 +183,6 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 
 //--------------------------------------------------------------------------------------------------
 
-    @Override
-    public void tatumTest() {
-        Intent tatum = new Intent(SelectionActivity.this, ResultActivity.class);
-        tatum.putExtra("test1", Parcels.wrap(test1));
-        startActivity(tatum);
-    }
-
-//--------------------------------------------------------------------------------------------------
 
 
 

@@ -2,17 +2,15 @@ package com.example.suhirtha.randomadventure.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,22 +24,12 @@ import com.example.suhirtha.randomadventure.R;
 import com.example.suhirtha.randomadventure.models.UserRequest;
 import com.xw.repo.BubbleSeekBar;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.google.android.gms.internal.zzhl.runOnUiThread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,7 +41,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
 //--------------------------------------------------------------------------------------------------
     @BindView(R.id.sfSearchButton) Button mSearch;
-    @BindView(R.id.sfDoneButton) Button mDone;
     @BindView(R.id.sfDistanceBar) BubbleSeekBar mSeekRadius;
     @BindView(R.id.sfPriceSeekBar) BubbleSeekBar mSeekPrice;
     @BindView(R.id.sfRatingBar) RatingBar mRating;
@@ -72,9 +59,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
     private SelectionListener mListener;
 //--------------------------------------------------------------------------------------------------
     public String data;
-    public List<String> suggest;
-    ArrayAdapter<String> mCuisineAdapter;
-
+//--------------------------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +75,9 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
         ButterKnife.bind(this, selectionView);
 
         populateSpinner(selectionView);
+
+        //prevent keyboard from being shown on activity launch
+        this.getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         AutoCompleteSuggestions auto = new AutoCompleteSuggestions(getContext());
         try {
@@ -107,22 +95,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 
         mCuisineAutoComplete.setAdapter(cuisineAdapter);
         mCuisineAutoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-        mCuisineAutoComplete.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String newText = charSequence.toString(); //TODO - what
-                new getSuggestions().execute(newText);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
 //--------------------------------------------------------------------------------------------------
         //'Other' Spinner
@@ -151,6 +123,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 array.put(0, "0 mi");
                 array.put(5, "30 mi");
 
+
                 return array;
             }
         });
@@ -172,7 +145,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 //--------------------------------------------------------------------------------------------------
 
         mSearch.setOnClickListener(this);
-        mDone.setOnClickListener(this);
 
         // Inflate the layout for this fragment
         return selectionView;
@@ -187,9 +159,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
                 Log.d("Search Button", "Pressed!");
                 buildRequest();
                 mListener.makeRequest(request);
-                break;
-            case R.id.sfDoneButton:
-                mListener.tatumTest();
                 break;
         }
     }
@@ -246,59 +215,22 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
      */
     public interface SelectionListener {
         void makeRequest(UserRequest request);
-        void tatumTest();
     }
 
 //--------------------------------------------------------------------------------------------------
     public void buildRequest() {
 
         // Add attributes to an arraylist
-        String terms = mCuisineAutoComplete.getText().toString();
+        String cuisines = mCuisineAutoComplete.getText().toString();
 
         request = new UserRequest(this.getContext(), this.getActivity())
                 .setRadius((int) (mSeekRadius.getProgress() * mileConversion))
                 .setMaxPrice(mSeekPrice.getProgress())
-                .setTerms(terms)
+                .setCuisines(cuisines)
                 .setMinRating(mRating.getRating())
                 .setAttribute(attributeSelected);
     }
 
 //--------------------------------------------------------------------------------------------------
 
-    public class getSuggestions extends AsyncTask<String,String,String> {
-
-        @Override
-        protected String doInBackground(String... key) {
-            String newText = key[0];
-            newText = newText.trim();
-            newText = newText.replace(" ", "+");
-            try{
-
-                HttpClient hClient = new DefaultHttpClient();
-                HttpGet hGet = new HttpGet("https://www.yelp.com/developers/documentation/v3/all_category_list/categories.json");
-                ResponseHandler<String> rHandler = new BasicResponseHandler();
-                data = hClient.execute(hGet,rHandler);
-                Log.d("data", data);
-                suggest = new ArrayList<>();
-                JSONArray jArray = new JSONArray(data);
-                for(int i=0;i < jArray.getJSONArray(1).length();i++){
-                    String SuggestKey = jArray.getJSONArray(1).getString(i);
-                    suggest.add(SuggestKey);
-                }
-
-            }catch(Exception e){
-                Log.w("Error", e.getMessage());
-            }
-            runOnUiThread(new Runnable(){
-                public void run(){
-                    mCuisineAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, suggest);
-                    //mAutoComplete2.setAdapter(mCuisineAdapter);
-                    mCuisineAdapter.notifyDataSetChanged();
-                }
-            });
-
-            return null;
-        }
-
-    }
 }
