@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstances) {
 
         v = inflater.inflate(R.layout.activity_map, container, false);
+
+        final Toolbar toolbar = (Toolbar) v.findViewById(R.id.maToolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         previousLocations = new ArrayList<LatLng>();
         AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "saved_restaurants")
                 .allowMainThreadQueries()
