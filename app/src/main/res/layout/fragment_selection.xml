@@ -9,6 +9,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@color/clearPurple"
         android:backgroundTint="@color/clearPurple">
 
@@ -52,6 +54,9 @@
                     android:id="@+id/sfDistanceBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
                     app:bsb_bubble_color="@color/common_google_signin_btn_text_dark_default"
                     app:bsb_bubble_text_color="@color/darkTeal"
                     app:bsb_max="30.0"
@@ -65,10 +70,7 @@
                     app:bsb_show_section_text="true"
                     app:bsb_show_thumb_text="true"
                     app:bsb_thumb_text_size="16dp"
-                    app:bsb_track_color="@color/darkTeal"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginTop="10dp"/>
+                    app:bsb_track_color="@color/darkTeal" />
 
 
             </LinearLayout>
@@ -95,22 +97,21 @@
                     android:text="cuisine"
                     android:textAlignment="center"
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
                 <MultiAutoCompleteTextView
                     android:id="@+id/sfMultiAutoComplete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"
                     android:backgroundTint="@color/lightTeal"
                     android:hint="What are you craving?"
-                    android:textColorHint="@color/lightDarkTeal"
-                    android:textCursorDrawable="@null"
                     android:textColor="@color/teal"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"/>
+                    android:textColorHint="@color/lightDarkTeal"
+                    android:textCursorDrawable="@null" />
 
 
             </LinearLayout>
@@ -186,6 +187,8 @@
                     android:id="@+id/sfPriceSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
                     android:soundEffectsEnabled="true"
                     app:bsb_bubble_color="@color/common_google_signin_btn_text_dark_default"
                     app:bsb_bubble_text_color="@color/darkTeal"
@@ -203,9 +206,7 @@
                     app:bsb_show_section_text="true"
                     app:bsb_show_thumb_text="true"
                     app:bsb_thumb_text_size="16dp"
-                    app:bsb_track_color="@color/darkPurple"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"/>
+                    app:bsb_track_color="@color/darkPurple" />
 
             </LinearLayout>
 
@@ -239,71 +240,55 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
                     android:backgroundTint="@color/wallet_bright_foreground_holo_dark"
                     android:foregroundTint="#fcfdfe"
                     android:foregroundTintMode="screen"
                     android:outlineAmbientShadowColor="#ffffff"
                     android:soundEffectsEnabled="true"
-                    android:textAlignment="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"/>
+                    android:textAlignment="center" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/sfSearchButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/lightTeal"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="Search"
-                android:textColor="@color/darkTeal"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.166"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/sfDoneButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/lightTeal"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="Done"
-                android:textColor="@color/darkTeal"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.876"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_row_3">
+
+                <Button
+                    android:id="@+id/sfSearchButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:backgroundTint="#00000000"
+                    android:text="search"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.166"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
             </LinearLayout>
+
+
+
 
             <!--> ..................................................................... <!-->
 
 
-
         </LinearLayout>
 
-        </ScrollView>
+    </ScrollView>
 
 
     </RelativeLayout>
