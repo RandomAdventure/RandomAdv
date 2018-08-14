@@ -101,6 +101,7 @@ public class RandomizeActivity extends AppCompatActivity {
                         res[3].setVisibility(View.VISIBLE);
                         res[4].setVisibility(View.VISIBLE);
                         logo.setVisibility(View.VISIBLE);
+                        (findViewById(R.id.raLinearLayout)).setVisibility(View.VISIBLE);
 
                     }
                 });
