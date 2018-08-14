@@ -113,10 +113,10 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 
                 }
                 int index = randomNumbers.get(randomNumIndex);
-                Log.d("niall", index + "");
                 randomNumIndex++;
                 JSONObject chosenRest = restaurantList.getJSONObject(index);
                 boolean isFoodTruck = false;
+                boolean isLongName = false;
 
                 //check if chosen restaurant is a food truck
                 JSONArray categories = chosenRest.getJSONArray("categories");
@@ -128,7 +128,11 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
                     }
                 }
 
-                if (isFoodTruck) {
+                if (chosenRest.getString("name").length() > 22) {
+                    isLongName = true;
+                }
+
+                if (isFoodTruck || isLongName) {
                     continue;
                 } else {
                     restaurant = new Restaurant (chosenRest.getString("id"), chosenRest.getString("name"));
