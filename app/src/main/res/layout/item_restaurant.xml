@@ -4,22 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout3"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:background="@drawable/restaurant_item_gradient"
     android:clickable="true"
-    android:padding="20dp">
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/nameRestaurant"
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
+        android:layout_width="270dp"
+        android:layout_height="33dp"
         android:layout_margin="5dp"
         android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat_regular"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
         android:text="Restaurant Name"
         android:textColor="@color/darkTeal"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintHorizontal_bias="0.022"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,12 +31,16 @@
 
     <TextView
         android:id="@+id/irAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="270dp"
+        android:layout_height="25dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat_regular"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
         android:text="Address"
         android:textColor="@color/darkTeal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,40 +48,38 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.77" />
-
-    <ImageView
-        android:id="@+id/irStar"
-        android:layout_width="76dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/blue_star" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/irRating"
-        android:layout_width="61dp"
-        android:layout_height="17dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="30dp"
+        android:layout_height="26dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_regular"
         android:text="0.0"
         android:textAlignment="center"
         android:textColor="@color/darkTeal"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/irStar"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.919"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.505" />
+        app:layout_constraintVertical_bias="0.703" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="36dp"
+        android:layout_height="23dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.204"
+        app:srcCompat="@drawable/filled_star_2" />
 
 </android.support.constraint.ConstraintLayout>

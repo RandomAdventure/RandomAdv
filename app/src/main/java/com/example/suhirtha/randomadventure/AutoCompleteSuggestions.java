@@ -85,6 +85,7 @@ public class AutoCompleteSuggestions {
             i++;
         }
 
+        desired.add("Ramen");
         //convert desiredStrings to array (because TextWatcher doesn't want arrayLists :/ )
         return desired.toArray(new String[desired.size()]);
     }

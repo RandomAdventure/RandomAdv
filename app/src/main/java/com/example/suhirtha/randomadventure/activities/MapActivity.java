@@ -1,12 +1,9 @@
 package com.example.suhirtha.randomadventure.activities;
 
-import android.Manifest;
 import android.arch.persistence.room.Room;
-import android.content.pm.PackageManager;
-import android.os.SystemClock;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
 import android.view.animation.BounceInterpolator;
 
 import com.example.suhirtha.randomadventure.AppDatabase;
@@ -22,7 +19,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import android.os.Handler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +84,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         for (int i = 0; i < previousLocations.size(); i ++){
             Marker marker = googleMap.addMarker(new MarkerOptions()
                     .position(previousLocations.get(i))
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             //.title(title)
             //.snippet(snippet)
             //.icon(defaultMarker));

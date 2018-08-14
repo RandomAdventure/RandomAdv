@@ -220,7 +220,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener 
 //--------------------------------------------------------------------------------------------------
     public void buildRequest() {
 
-        // Add attributes to an arraylist
         String cuisines = mCuisineAutoComplete.getText().toString();
 
         request = new UserRequest(this.getContext(), this.getActivity())

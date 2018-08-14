@@ -60,11 +60,6 @@ public class UserRequest {
         return this;
     }
 
-    public UserRequest setAttribute(String attribute) {
-        this.cuisines = attribute;
-        return this;
-    }
-
     public UserRequest setMinRating(float minRating) {
         this.minRating = minRating;
         return this;
@@ -73,6 +68,11 @@ public class UserRequest {
     public UserRequest setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
         maxPriceSet = true;
+        return this;
+    }
+
+    public UserRequest setAttribute(String attribute) {
+        this.attribute = attribute;
         return this;
     }
 
@@ -102,28 +102,17 @@ public class UserRequest {
             completeURL += "&price=" + this.priceString;
         }
 
-        if (attribute != null) {
-            //Add term(s)
-            completeURL += "&term=" + this.attribute;
-        }
-
-        /**
-        //Add terms one by one
-        if (terms != null && terms.size() != 0) {
-            completeURL += "&term=";
-            completeURL += terms.get(0);
-        }
-        if (terms != null && terms.size() > 1) {
-            for (int i = 1; i < terms.size(); i++) {
-                completeURL += "," + terms.get(0); //TODO - avoid concat in loops: use StringBuilder
-            }
-
-        }
-         **/
-
+        //Add selected cuisines
         if (cuisines != null && cuisines.length() > 0) {
             completeURL = completeURL + "&term=" + cuisines;
         }
+
+        //Add optional attribute
+        if (attribute != null && attribute.length() > 0) {
+            completeURL += "&attribute=" + attribute;
+        }
+
+
 
         return this;
     }

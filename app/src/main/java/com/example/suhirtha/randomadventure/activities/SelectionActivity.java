@@ -91,7 +91,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
             randomNum = (int) (Math.random() * restaurantList.length());
             if (!randomNumbers.contains(randomNum)) { //ensures that the same restaurant isn't chosen
                 randomNumbers.add(randomNum);
-                Log.d("RandomNumberChosen", randomNum + "");
+                Log.d("louis", randomNum + "");
 
             }
         }
@@ -103,7 +103,6 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
             try {
 
                 if (randomNumIndex >= 10) {
-                    Log.d("hello", "suhi");
                     Toast.makeText(this, "Looks like your query returned food trucks! " +
                             "Please try again.", Toast.LENGTH_LONG).show();
                     Intent myIntent = getIntent();
@@ -114,7 +113,7 @@ public class SelectionActivity extends AppCompatActivity implements RecyclerView
 
                 }
                 int index = randomNumbers.get(randomNumIndex);
-                Log.d("Index of random numbers", index + "");
+                Log.d("niall", index + "");
                 randomNumIndex++;
                 JSONObject chosenRest = restaurantList.getJSONObject(index);
                 boolean isFoodTruck = false;

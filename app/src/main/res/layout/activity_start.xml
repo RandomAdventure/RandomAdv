@@ -9,70 +9,68 @@
 
     <ImageButton
         android:id="@+id/saStartRandomize"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:background="@color/clear"
         android:backgroundTint="@color/clear"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.326"
+        app:layout_constraintVertical_bias="0.239"
         app:srcCompat="@drawable/chameleon_button" />
 
     <ImageButton
         android:id="@+id/saPreviousRestaurants"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="120dp"
+        android:layout_height="121dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+
         android:layout_marginTop="8dp"
         android:background="@color/clear"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.589"
+        app:layout_constraintVertical_bias="0.593"
         app:srcCompat="@drawable/map_better_quality" />
 
     <TextView
         android:id="@+id/saNewAdventureText"
         android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/saStartRandomize"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/montserrat_regular"
+        android:paddingTop="8dp"
         android:text="start a new adventure"
         android:textAlignment="center"
         android:textColor="@color/DarkestTeal"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.439" />
+        app:layout_constraintVertical_bias="0.408" />
 
     <TextView
         android:id="@+id/saPrevAdventureText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_regular"
+        android:paddingTop="8dp"
         android:text="view previous adventures"
         android:textAlignment="center"
         android:textColor="@color/darkPurple"
@@ -82,7 +80,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.675" />
+        app:layout_constraintVertical_bias="0.711" />
 
 
 </android.support.constraint.ConstraintLayout>
